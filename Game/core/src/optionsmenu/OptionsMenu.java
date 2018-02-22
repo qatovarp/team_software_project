@@ -1,4 +1,4 @@
-package HghScoreMenu;
+package optionsmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,13 +10,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-public class HighScoreMenu implements Screen {
+public class OptionsMenu implements Screen {
 	private GameMain game;
 	private OrthographicCamera mainCamera;
 	private Viewport gameViewPort;
 	private Texture background;
+	private OptionMenuButtons buttons;
 
-	public HighScoreMenu(GameMain game) {
+	public OptionsMenu(GameMain game) {
 		this.game = game;
 
 		// sets up the main camera for the main menu.
@@ -24,8 +25,9 @@ public class HighScoreMenu implements Screen {
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 		// sets the mainmenu viewport.
 		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
-		
-		background = new Texture("");
+
+		background = new Texture("gameoptionsmenu/GameOptionsBackgound.png");
+		buttons = new OptionMenuButtons(game);
 	}
 
 	@Override
@@ -39,9 +41,12 @@ public class HighScoreMenu implements Screen {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		game.getBatch().begin();
-		game.getBatch().draw(background,0,0);
-		game.getBatch().end();
+		this.game.getBatch().begin();
+		this.game.getBatch().draw(this.background,0,0);
+		this.game.getBatch().end();
+		
+		game.getBatch().setProjectionMatrix(buttons.getStage().getCamera().combined);
+		buttons.getStage().draw();
 
 	}
 
@@ -71,7 +76,8 @@ public class HighScoreMenu implements Screen {
 
 	@Override
 	public void dispose() {
-		this.background.dispose();
+	 this.background.dispose();
+	 this.buttons.getStage().dispose();
 
 	}
 

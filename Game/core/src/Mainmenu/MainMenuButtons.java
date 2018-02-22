@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
+import highscoremenu.HighScoreMenu;
+import optionsmenu.OptionsMenu;
+
 public class MainMenuButtons {
 
 	private final int DISTANCE_BETWEEN_BUTTONS = 60;
@@ -70,20 +73,20 @@ public class MainMenuButtons {
 		playBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-			
+		
 			}	
 		});
 		
 		highScoreBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-			
+				game.setScreen(new HighScoreMenu(game));
 			}	
 		});
 		optionsBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-			
+			game.setScreen(new OptionsMenu(game));
 			}	
 		});
 		quitBtn.addListener(new ChangeListener() {

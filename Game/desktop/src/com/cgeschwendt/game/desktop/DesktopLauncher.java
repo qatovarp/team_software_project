@@ -12,5 +12,6 @@ public class DesktopLauncher {
 		config.width=GameInfo.WIDTH;
 		config.height = GameInfo.HEIGHT;
 		config.title = GameInfo.GAMENAME;
+		config.resizable = false;
 	}
 }
