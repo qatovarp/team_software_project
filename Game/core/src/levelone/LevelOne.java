@@ -115,7 +115,7 @@ public class LevelOne implements Screen {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) 
 			player.jump();	
 		
-		if(Gdx.input.isKeyJustPressed(key))
+		
 	}
 	
 	
