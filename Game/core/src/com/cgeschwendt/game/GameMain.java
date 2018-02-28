@@ -8,11 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import Mainmenu.MainMenu;
+import levelone.LevelOne;
+import player.Player;
 
 
 public class GameMain extends Game {
 	// the one and only SpriteBatch for the game;
-	SpriteBatch batch;
+	private SpriteBatch batch;
+	private Player player;
 	
 	
 	@Override
@@ -32,5 +35,8 @@ public class GameMain extends Game {
 	}
 	public SpriteBatch getBatch() {
 		return this.batch;
+	}
+	public Player getplayer() {
+		return this.player;
 	}
 }

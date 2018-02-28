@@ -16,6 +16,7 @@ import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import highscoremenu.HighScoreMenu;
+import levelone.LevelOne;
 import optionsmenu.OptionsMenu;
 
 public class MainMenuButtons {
@@ -73,19 +74,23 @@ public class MainMenuButtons {
 		playBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-		
+				game.getScreen().dispose();
+				game.setScreen(new LevelOne(game));
 			}	
 		});
 		
 		highScoreBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				game.getScreen().dispose();
 				game.setScreen(new HighScoreMenu(game));
+			
 			}	
 		});
 		optionsBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+			game.getScreen().dispose();
 			game.setScreen(new OptionsMenu(game));
 			}	
 		});

@@ -57,7 +57,9 @@ public class OptionMenuButtons {
 		normalBtn.setPosition(GameInfo.WIDTH/2, GameInfo.HEIGHT/3+50);
 		difficultBtn.setPosition(GameInfo.WIDTH/2, normalBtn.getY() -65);
 		extreamBtn.setPosition(GameInfo.WIDTH/2, difficultBtn.getY() -65);
-		checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+		
+		this.setCheckedPosition();
+		
 		
 		
 	}
@@ -73,18 +75,29 @@ public class OptionMenuButtons {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+			
+			GameInfo.normal =true;
+			GameInfo.difficult =false;
+			GameInfo.extream =false;
+			
 			}	
 		});
 		difficultBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+				GameInfo.normal =false;
+				GameInfo.difficult =true;
+				GameInfo.extream =false;
 			}	
 		});
 		extreamBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
+				GameInfo.normal =false;
+				GameInfo.difficult =false;
+				GameInfo.extream =true;
 			}
 		});
 	}
@@ -92,6 +105,15 @@ public class OptionMenuButtons {
 	
 	public Stage getStage() {
 		return this.stage;
+	}
+	
+	private void setCheckedPosition() {
+		if(GameInfo.normal)
+			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+		if(GameInfo.difficult)
+			checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+		if(GameInfo.extream)
+			checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
 	}
 	
 }
