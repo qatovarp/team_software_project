@@ -68,6 +68,7 @@ public class OptionMenuButtons {
 		backBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				game.getScreen().dispose();
 				game.setScreen(new MainMenu(game));
 			}	
 		});

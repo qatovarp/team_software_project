@@ -105,14 +105,13 @@ public class HighScoreButtons {
 				new Label.LabelStyle(scoreFont,Color.BLACK));
 		
 		scoreLabel.setPosition(GameInfo.WIDTH/2, GameInfo.HEIGHT/3);
-		
-		
 	}
 	
 	void AddListners() {
 			backBtn.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
+					game.getScreen().dispose();
 					game.setScreen(new MainMenu(game));
 				}	
 			});

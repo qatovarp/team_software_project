@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -28,6 +30,8 @@ import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import Mainmenu.MainMenu;
+import pausemenu.PauseMenu;
+import player.Hearts;
 import player.Player;
 
 public class LevelOne implements Screen {
@@ -39,18 +43,26 @@ public class LevelOne implements Screen {
 	 //tiled map variables
 	private TmxMapLoader maploader;
 	private TiledMap map;
-	private OrthogonalTiledMapRenderer renderer;
+	private OrthogonalTiledMapRenderer maprenderer;
 	
+	// hearts for player
+	private Hearts hearts;
+	
+	private Player player ;
+	 
 	
 	//Box 2D variables
 	private World world;
 	private Box2DDebugRenderer b2dr;
 	
-	private Player player;
+	
 	
 	public LevelOne(GameMain game) {
 		this.game = game;
+		this.player = game.getplayer();
+		
 		this.hud = new Hud(game);
+		hearts= new Hearts(this.game);
 
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM , GameInfo.HEIGHT/GameInfo.PPM);
@@ -59,18 +71,15 @@ public class LevelOne implements Screen {
 		gameViewPort = new StretchViewport(GameInfo.WIDTH , GameInfo.HEIGHT , mainCamera);
 		
 		maploader = new TmxMapLoader();
-		map = maploader.load("Test Level..tmx");
-		renderer = new OrthogonalTiledMapRenderer(map,(1f/GameInfo.PPM));
+		map = maploader.load("LevelOne.tmx");
+		maprenderer = new OrthogonalTiledMapRenderer(map,(1f/GameInfo.PPM));
 		
 		
 		b2dr = new Box2DDebugRenderer();
 		
 		world = new World(new Vector2(0,-9.8f), true);
+		player.playerConstruct(world,128f,950f );
 		
-		player = new Player(world);
-		
-		
-	
 		BodyDef bdef = new BodyDef();
 		PolygonShape shape = new PolygonShape();
 		FixtureDef fdef = new FixtureDef();
@@ -78,7 +87,7 @@ public class LevelOne implements Screen {
 		
 		
 		// this creates ground body
-		for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+		for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			bdef.type = BodyDef.BodyType.KinematicBody;
 			bdef.position.set((rect.getX() + rect.getWidth() / 2)/GameInfo.PPM,  (rect.getY() + rect.getHeight()/2)/GameInfo.PPM)  ;
@@ -87,7 +96,9 @@ public class LevelOne implements Screen {
 			fdef.shape = shape;
 			body.createFixture(fdef);
 		}	
-	
+		
+		
+		
 		
 	}
 
@@ -105,45 +116,53 @@ public class LevelOne implements Screen {
 	 * @author cgeschwendt
 	 */
 	public void handleInput(float dt) {
-		player.setVerticleState();
+		game.getplayer().setVerticleState();
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT )) 
-			player.right();
+			game.getplayer().right();
 	
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT )) 
-		player.left();
+			game.getplayer().left();
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) 
-			player.jump();	
+			game.getplayer().jump();	
 		
-		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			game.setScreen(new PauseMenu(game));
+		}
 	}
 	
 	
 	public void update(float dt) {
 		handleInput(dt);
 		this.offmapCheck();
-		hud.updateTime(dt);
+		hud.updateTime();
 		
         world.step(1 / 60f, 6, 2);
-		mainCamera.position.set(player.position().x,player.position().y+150f/GameInfo.PPM, 0);
+		mainCamera.position.set(game.getplayer().position().x,game.getplayer().position().y+150f/GameInfo.PPM, 0);
 		mainCamera.update();
-		renderer.setView(mainCamera);
+		maprenderer.setView(mainCamera);
 		
 	}
 	
 	@Override
 	public void render(float delta) {
 		update(delta);
-		hud.updateTime(delta);
+		
 	
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		renderer.render();
+		
+		
+		maprenderer.render();
 		b2dr.render(world, mainCamera.combined);
 		
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
+		
+		game.getBatch().begin();
+		hearts.updateHearts();
+		game.getBatch().end();
 
 	}
 
@@ -153,12 +172,12 @@ public class LevelOne implements Screen {
  * @author cgeschwendt	
  */
 	void offmapCheck() {
-		if(player.position().y <0) {
-			player.playerLoseLife();
-			if(player.playerDead()) {
+		if(game.getplayer().position().y < 0) {
+			game.getplayer().playerLoseLife();
+			if(game.getplayer().playerDead()) {
 				Gdx.app.exit();
 			}
-			player.resetPosition();
+			game.getplayer().resetPosition( 128f, 950f);
 		}		
 	}
 		
