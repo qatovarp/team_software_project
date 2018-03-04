@@ -38,6 +38,7 @@ public class OptionMenuButtons {
 		
 		this.createAndLableButtons();
 		this.AddListners();
+		//adds buttons to the stage.
 		stage.addActor(backBtn);
 		stage.addActor(normalBtn);
 		stage.addActor(difficultBtn);
@@ -45,8 +46,11 @@ public class OptionMenuButtons {
 		stage.addActor(checkedBtn);
 	}
 	
+	/**
+	 * Creates screens buttons with positions and images
+	 * @author cgeschwendt
+	 */
 	void createAndLableButtons() {
-		
 		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Back.png"))));
 		normalBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Easy.png"))));
 		difficultBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Medium.png"))));
@@ -59,11 +63,12 @@ public class OptionMenuButtons {
 		extreamBtn.setPosition(GameInfo.WIDTH/2, difficultBtn.getY() -65);
 		
 		this.setCheckedPosition();
-		
-		
-		
 	}
 	
+	/**
+	 * Adds all of the listeners to each button.
+	 * @author cgeschwendt
+	 */
 	void AddListners() {
 		backBtn.addListener(new ChangeListener() {
 			@Override
@@ -75,8 +80,9 @@ public class OptionMenuButtons {
 		normalBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				//moves check mark
 			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
-			
+			//changes game difficulty.
 			GameInfo.normal =true;
 			GameInfo.difficult =false;
 			GameInfo.extream =false;
@@ -86,7 +92,9 @@ public class OptionMenuButtons {
 		difficultBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				//moves check mark
 				checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+				//changes game difficulty.
 				GameInfo.normal =false;
 				GameInfo.difficult =true;
 				GameInfo.extream =false;
@@ -95,7 +103,9 @@ public class OptionMenuButtons {
 		extreamBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				//moves check mark
 				checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
+				//changes game difficulty.
 				GameInfo.normal =false;
 				GameInfo.difficult =false;
 				GameInfo.extream =true;
@@ -108,6 +118,10 @@ public class OptionMenuButtons {
 		return this.stage;
 	}
 	
+	/**
+	 * Sets the position of the checked difficulty based on games difficulty:
+	 * @author cgeschwendt
+	 */
 	private void setCheckedPosition() {
 		if(GameInfo.normal)
 			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);

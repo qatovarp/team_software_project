@@ -38,13 +38,16 @@ public class OptionsMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
+		// clears and redraws the screem.
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		//draws the background
 		this.game.getBatch().begin();
 		this.game.getBatch().draw(this.background,0,0);
 		this.game.getBatch().end();
 		
+		//draws and activates the screens buttons
 		game.getBatch().setProjectionMatrix(buttons.getStage().getCamera().combined);
 		buttons.getStage().draw();
 

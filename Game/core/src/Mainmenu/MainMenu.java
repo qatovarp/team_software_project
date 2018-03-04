@@ -18,6 +18,7 @@ public class MainMenu implements Screen {
 	private Texture background;
 	private MainMenuButtons buttons;
 	
+	
 	public MainMenu(GameMain game) {
 		this.game = game;
 		//sets up the main camera for the main menu.
@@ -25,7 +26,7 @@ public class MainMenu implements Screen {
 		mainCamera.position.set(GameInfo.WIDTH/2f,GameInfo.HEIGHT/2f,0);
 		// sets the mainmenu viewport.
 		gameViewPort= new StretchViewport(GameInfo.WIDTH,GameInfo.HEIGHT, mainCamera);
-		
+		//loads in the buttons and background png.
 		background = new Texture("mainmenu/MainMenuBackground.png");
 		buttons = new MainMenuButtons(game);
 	}
@@ -44,20 +45,19 @@ public class MainMenu implements Screen {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		
+		//Draws the background of the screen
 		game.getBatch().begin();
 		game.getBatch().draw(background,0,0);
 		game.getBatch().end();
 		
+		//Draws the buttons on the screen.
 		game.getBatch().setProjectionMatrix(buttons.getStage().getCamera().combined);
 		buttons.getStage().draw();
 		
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		this.gameViewPort.update(width, height);
-		
+	public void resize(int width, int height) {	
 	}
 
 	@Override

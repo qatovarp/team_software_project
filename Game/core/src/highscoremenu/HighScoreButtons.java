@@ -60,6 +60,7 @@ public class HighScoreButtons {
 		this.loadInHighScores();
 		this.createAndLableButtons();
 		this.AddListners();
+		//adds buttons to the stage
 		stage.addActor(backBtn);
 		stage.addActor(scoreLabel);
 		
@@ -68,6 +69,7 @@ public class HighScoreButtons {
 	/**
 	 * @Input: reads in highScores.txt and stores the data into the high score names and data.
 	 *  IE: Does not output any data.
+	 *  @author cgeschwendt
 	 */
 	private void loadInHighScores() {
 		 String fileName = "highScores.txt";
@@ -90,7 +92,10 @@ public class HighScoreButtons {
 		}
 	}
 
-
+/**
+ * Creates the back button as well as the label which contains the high scores.
+ * @author cgeschwendt
+ */
 	void createAndLableButtons() {
 		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("HighScoreMenu/Back.png"))));
 		backBtn.setPosition(GameInfo.WIDTH/2, 50, Align.center);
@@ -107,6 +112,10 @@ public class HighScoreButtons {
 		scoreLabel.setPosition(GameInfo.WIDTH/2, GameInfo.HEIGHT/3);
 	}
 	
+	/**
+	 * add the back button listner to the back button
+	 * @author cgeschwendt
+	 */
 	void AddListners() {
 			backBtn.addListener(new ChangeListener() {
 				@Override

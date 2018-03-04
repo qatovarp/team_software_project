@@ -33,6 +33,7 @@ import Mainmenu.MainMenu;
 import pausemenu.PauseMenu;
 import player.Hearts;
 import player.Player;
+import player.Player.State;
 
 public class LevelOne implements Screen {
 	private GameMain game;
@@ -86,7 +87,7 @@ public class LevelOne implements Screen {
 		Body body;
 		
 		
-		// this creates ground body
+		// this creates ground body will be moved to ground class later
 		for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			bdef.type = BodyDef.BodyType.KinematicBody;
@@ -96,17 +97,10 @@ public class LevelOne implements Screen {
 			fdef.shape = shape;
 			body.createFixture(fdef);
 		}	
-		
-		
-		
-		
 	}
 
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
 
-	}
+	
 
 	/** Handles the input of keys to the game
 	 * 	KEYS IN OPERATION:
@@ -117,10 +111,10 @@ public class LevelOne implements Screen {
 	 */
 	public void handleInput(float dt) {
 		game.getplayer().setVerticleState();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT )) 
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT ) && game.getplayer().getVerticleState() != State.FALLING ) 
 			game.getplayer().right();
 	
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT )) 
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT ) &&  game.getplayer().getVerticleState() != State.FALLING) 
 			game.getplayer().left();
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) 
@@ -131,7 +125,11 @@ public class LevelOne implements Screen {
 		}
 	}
 	
-	
+	/**
+	 * Created update method to handle specific update
+	 * @author cgeschwendt
+	 * @param dt
+	 */
 	public void update(float dt) {
 		handleInput(dt);
 		this.offmapCheck();
@@ -148,18 +146,19 @@ public class LevelOne implements Screen {
 	public void render(float delta) {
 		update(delta);
 		
-	
+	//clears and redraws the screen
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		
-		
+	//Renders in the map and objects 
 		maprenderer.render();
 		b2dr.render(world, mainCamera.combined);
 		
+	//draws onto the screen the HUD
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
 		
+	//draws hearts to player screen.	
 		game.getBatch().begin();
 		hearts.updateHearts();
 		game.getBatch().end();
@@ -175,7 +174,7 @@ public class LevelOne implements Screen {
 		if(game.getplayer().position().y < 0) {
 			game.getplayer().playerLoseLife();
 			if(game.getplayer().playerDead()) {
-				Gdx.app.exit();
+				game.setScreen(new MainMenu(game));
 			}
 			game.getplayer().resetPosition( 128f, 950f);
 		}		
@@ -184,26 +183,27 @@ public class LevelOne implements Screen {
 	
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void pause() {
 	
-
 	}
 
 	@Override
 	public void resume() {
-		
-
+	
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
