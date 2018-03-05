@@ -1,4 +1,4 @@
-package optionsmenu;
+package pausemenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,24 +10,29 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-public class OptionsMenu implements Screen {
+import Mainmenu.MainMenuButtons;
+
+public class PauseMenu implements Screen {
 	private GameMain game;
 	private OrthographicCamera mainCamera;
 	private Viewport gameViewPort;
 	private Texture background;
-	private OptionMenuButtons buttons;
+	private PauseMenuButtons buttons;
 
-	public OptionsMenu(GameMain game) {
+	
+	public PauseMenu(GameMain game) {
 		this.game = game;
-
+		game.setPrevScreen(game.getScreen());
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 		// sets the mainmenu viewport.
 		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 
-		background = new Texture("gameoptionsmenu/GameOptionsBackgound.png");
-		buttons = new OptionMenuButtons(game);
+		// TODO: set pause background path.
+	//	background = new Texture("");
+		buttons = new PauseMenuButtons(game);
+
 	}
 
 	@Override
@@ -38,16 +43,14 @@ public class OptionsMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// clears and redraws the screem.
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		// clears screen and starts redraw.
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		//draws the background
-		this.game.getBatch().begin();
-		this.game.getBatch().draw(this.background,0,0);
-		this.game.getBatch().end();
-		
-		//draws and activates the screens buttons
+
+		game.getBatch().begin();
+	//	game.getBatch().draw(background, 0, 0);
+		game.getBatch().end();
+
 		game.getBatch().setProjectionMatrix(buttons.getStage().getCamera().combined);
 		buttons.getStage().draw();
 
@@ -79,8 +82,7 @@ public class OptionsMenu implements Screen {
 
 	@Override
 	public void dispose() {
-	 this.background.dispose();
-	 this.buttons.getStage().dispose();
+		// TODO Auto-generated method stub
 
 	}
 

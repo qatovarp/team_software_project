@@ -16,6 +16,7 @@ import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import highscoremenu.HighScoreMenu;
+import levelone.LevelOne;
 import optionsmenu.OptionsMenu;
 
 public class MainMenuButtons {
@@ -46,6 +47,8 @@ public class MainMenuButtons {
 		
 		this.createAndPositionButtons();
 		this.addAllListners();
+		
+		//adds each button to a stage.
 		stage.addActor(highScoreBtn);
 		stage.addActor(musicBtn);
 		stage.addActor(optionsBtn);
@@ -54,7 +57,10 @@ public class MainMenuButtons {
 	
 	}
 	
-	
+	/**
+	 * Creates the buttons by setting the position and loading in a png to display as the image
+	 * @author cgeschwendt
+	 */
 	void createAndPositionButtons() {
 		playBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Start Game.png"))));
 		highScoreBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Highscore.png"))));
@@ -69,23 +75,31 @@ public class MainMenuButtons {
 		musicBtn.setPosition(GameInfo.WIDTH -50 - musicBtn.getWidth(), 50);
 	}
 	
+	/**
+	 * Adds the listeners to the buttons
+	 * @author cgeschwendt
+	 */
 	void addAllListners() {
 		playBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-		
+				game.getScreen().dispose();
+				game.setScreen(new LevelOne(game));
 			}	
 		});
 		
 		highScoreBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				game.getScreen().dispose();
 				game.setScreen(new HighScoreMenu(game));
+			
 			}	
 		});
 		optionsBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+			game.getScreen().dispose();
 			game.setScreen(new OptionsMenu(game));
 			}	
 		});
@@ -102,7 +116,6 @@ public class MainMenuButtons {
 			}	
 		});
 	}
-	
 	
 	public Stage getStage() {
 		return this.stage;

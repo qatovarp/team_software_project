@@ -38,6 +38,7 @@ public class OptionMenuButtons {
 		
 		this.createAndLableButtons();
 		this.AddListners();
+		//adds buttons to the stage.
 		stage.addActor(backBtn);
 		stage.addActor(normalBtn);
 		stage.addActor(difficultBtn);
@@ -45,8 +46,11 @@ public class OptionMenuButtons {
 		stage.addActor(checkedBtn);
 	}
 	
+	/**
+	 * Creates screens buttons with positions and images
+	 * @author cgeschwendt
+	 */
 	void createAndLableButtons() {
-		
 		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Back.png"))));
 		normalBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Easy.png"))));
 		difficultBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Medium.png"))));
@@ -57,34 +61,54 @@ public class OptionMenuButtons {
 		normalBtn.setPosition(GameInfo.WIDTH/2, GameInfo.HEIGHT/3+50);
 		difficultBtn.setPosition(GameInfo.WIDTH/2, normalBtn.getY() -65);
 		extreamBtn.setPosition(GameInfo.WIDTH/2, difficultBtn.getY() -65);
-		checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
 		
-		
+		this.setCheckedPosition();
 	}
 	
+	/**
+	 * Adds all of the listeners to each button.
+	 * @author cgeschwendt
+	 */
 	void AddListners() {
 		backBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				game.getScreen().dispose();
 				game.setScreen(new MainMenu(game));
 			}	
 		});
 		normalBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				//moves check mark
 			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+			//changes game difficulty.
+			GameInfo.normal =true;
+			GameInfo.difficult =false;
+			GameInfo.extream =false;
+			
 			}	
 		});
 		difficultBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				//moves check mark
 				checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+				//changes game difficulty.
+				GameInfo.normal =false;
+				GameInfo.difficult =true;
+				GameInfo.extream =false;
 			}	
 		});
 		extreamBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				//moves check mark
 				checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
+				//changes game difficulty.
+				GameInfo.normal =false;
+				GameInfo.difficult =false;
+				GameInfo.extream =true;
 			}
 		});
 	}
@@ -92,6 +116,19 @@ public class OptionMenuButtons {
 	
 	public Stage getStage() {
 		return this.stage;
+	}
+	
+	/**
+	 * Sets the position of the checked difficulty based on games difficulty:
+	 * @author cgeschwendt
+	 */
+	private void setCheckedPosition() {
+		if(GameInfo.normal)
+			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+		if(GameInfo.difficult)
+			checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+		if(GameInfo.extream)
+			checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
 	}
 	
 }
