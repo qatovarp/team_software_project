@@ -27,7 +27,7 @@ public class HighScoreMenu implements Screen {
 		// sets the mainmenu viewport.
 		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 		
-		background = new Texture("HighScoreMenu/HighScoreBackground.png");
+		background = new Texture("HighScoreMenu/highscorebackground.png");
 		buttons = new HighScoreButtons(this.game);
 	}
 

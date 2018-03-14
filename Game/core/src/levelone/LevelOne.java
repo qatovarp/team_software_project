@@ -30,6 +30,7 @@ import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import Mainmenu.MainMenu;
+import gameover.GameOver;
 import pausemenu.PauseMenu;
 import player.Hearts;
 import player.Player;
@@ -163,6 +164,7 @@ public class LevelOne implements Screen {
 		hearts.updateHearts();
 		game.getBatch().end();
 
+
 	}
 
 /**
@@ -173,11 +175,16 @@ public class LevelOne implements Screen {
 	void offmapCheck() {
 		if(game.getplayer().position().y < 0) {
 			game.getplayer().playerLoseLife();
-			if(game.getplayer().playerDead()) {
-				game.setScreen(new MainMenu(game));
-			}
 			game.getplayer().resetPosition( 128f, 950f);
+			this.playerDied();
 		}		
+	}
+	//procedes to move game as if the player had died.
+	void playerDied() {
+		if(game.getplayer().playerDead()) {
+			game.getScreen().dispose();
+			game.setScreen(new GameOver(game));
+		}
 	}
 		
 	

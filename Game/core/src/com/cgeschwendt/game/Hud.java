@@ -38,7 +38,7 @@ public class Hud {
 	 */
 	public Hud(GameMain game) {
 		this.worldTimer = 50000; //converts to 500 seconds per level
-		this.score = 0;
+		this.score = game.getplayer().getPlayerScore();
 
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
