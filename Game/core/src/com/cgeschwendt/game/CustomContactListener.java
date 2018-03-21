@@ -24,10 +24,12 @@ public class CustomContactListener implements ContactListener {
 			if(faData.equals("player") && fbData.equals("coin")) {
 				contact.getFixtureB().getBody().setUserData("delete");
 				parent.deleteAnObject = true;
+				parent.getPlayer().collectCoin();
 			}
 			else if(fbData.equals("player") && faData.equals("coin")) {
 				contact.getFixtureA().getBody().setUserData("delete");
 				parent.deleteAnObject = true;
+				parent.getPlayer().collectCoin();
 			}
 			else if(faData.equals("player") && fbData.equals("LvlExit")
 				 || fbData.equals("player") && faData.equals("LvlExit")) {
