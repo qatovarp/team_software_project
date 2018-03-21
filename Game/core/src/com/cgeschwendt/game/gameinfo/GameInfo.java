@@ -13,7 +13,8 @@ public static boolean normal = true;
 public static boolean difficult = false;
 public static boolean extream = false;
 
-
+public static enum COLOR {BLUE,GREEN,PINK };
+public static COLOR playerColor = COLOR.BLUE;
 
 
 

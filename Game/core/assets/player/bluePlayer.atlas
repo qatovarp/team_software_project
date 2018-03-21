@@ -1,0 +1,82 @@
+bluePlayer.png
+size: 770, 94
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+p2_walk01
+  rotate: false
+  xy: 0, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk02
+  rotate: false
+  xy: 70, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk03
+  rotate: false
+  xy: 140, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk04
+  rotate: false
+  xy: 210, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk05
+  rotate: false
+  xy: 280, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk06
+  rotate: false
+  xy: 350, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk07
+  rotate: false
+  xy: 420, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk08
+  rotate: false
+  xy: 490, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk09
+  rotate: false
+  xy: 560, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk10
+  rotate: false
+  xy: 630, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
+p2_walk11
+  rotate: false
+  xy: 700, 0
+  size: 70, 94
+  orig: 70, 94
+  offset: 0, 0
+  index: -1
