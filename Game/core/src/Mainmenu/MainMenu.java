@@ -2,6 +2,7 @@ package Mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
+import sound.sound;
+
 public class MainMenu implements Screen {
 	
 	private GameMain game;
@@ -17,7 +20,7 @@ public class MainMenu implements Screen {
 	private Viewport gameViewPort;
 	private Texture background;
 	private MainMenuButtons buttons;
-	
+	private sound music;
 	
 	public MainMenu(GameMain game) {
 		this.game = game;
@@ -29,6 +32,9 @@ public class MainMenu implements Screen {
 		//loads in the buttons and background png.
 		background = new Texture("mainmenu/MainMenuBackground.png");
 		buttons = new MainMenuButtons(game);
+		// music setup
+		this.music = game.getmusic();
+		music.switchSong("music/music1.mp3");
 	}
 	
 	

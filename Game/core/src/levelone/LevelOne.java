@@ -34,12 +34,14 @@ import pausemenu.PauseMenu;
 import player.Hearts;
 import player.Player;
 import player.Player.State;
+import sound.sound;
 
 public class LevelOne implements Screen {
 	private GameMain game;
 	private Hud hud;
 	private OrthographicCamera mainCamera;
 	private Viewport gameViewPort;
+	private sound music;
 
 	 //tiled map variables
 	private TmxMapLoader maploader;
@@ -64,6 +66,10 @@ public class LevelOne implements Screen {
 		
 		this.hud = new Hud(game);
 		hearts= new Hearts(this.game);
+		
+		//music setup
+		this.music = game.getmusic();
+		music.switchSong("music/music2.mp3");
 
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM , GameInfo.HEIGHT/GameInfo.PPM);
@@ -117,8 +123,10 @@ public class LevelOne implements Screen {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT ) &&  game.getplayer().getVerticleState() != State.FALLING) 
 			game.getplayer().left();
 		
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) 
-			game.getplayer().jump();	
+		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) { 
+			game.getplayer().jump();
+			music.playereffect("music/jump1.mp3",false);
+		}
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			game.setScreen(new PauseMenu(game));
