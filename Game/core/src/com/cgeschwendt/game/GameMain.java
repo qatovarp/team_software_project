@@ -18,6 +18,7 @@ import Mainmenu.MainMenu;
 import gameover.GameOver;
 import levelone.LevelOne;
 import player.Player;
+import sound.sound;
 
 
 
@@ -28,18 +29,20 @@ public class GameMain extends Game {
 	// the one player for the game;
 	private Player player = new Player();
 	private Screen prevScreen;
-	
+
 	public int highScore1;
 	public String highScore1Name;
 	public int highScore2;
 	public String highScore2Name;
 	public int highScore3;
 	public String highScore3Name;
-	
-	
+
+	private sound music;
+
 	
 	@Override
 	public void create () {
+		music = new sound();
 		batch = new SpriteBatch();
 		this.loadHighScores();
 		this.setScreen(new LevelOne(this));
@@ -75,6 +78,7 @@ public class GameMain extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		music.dispose();
 	}
 	public SpriteBatch getBatch() {
 		return this.batch;
@@ -89,5 +93,9 @@ public class GameMain extends Game {
 
 	public Screen getPrevScreen() {
 		return this.prevScreen;
+	}
+	
+	public sound getmusic() {
+		return this.music;
 	}
 }
