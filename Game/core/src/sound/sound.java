@@ -43,7 +43,7 @@ public class sound {
 	 * 
 	 */
 	public void switchSong(String path){
-		if(muted) {
+		if(true) {
 			if(music==null) {
 				song=path;
 				music = Gdx.audio.newMusic(Gdx.files.internal(path));
@@ -92,6 +92,14 @@ public class sound {
 		music.setVolume(f);		
 	}
 	
+	public void setmute(Boolean mutted) {
+		muted=mutted;
+		
+	}
+	
+	public Boolean getmute() {
+		return muted;
+	}
 
 	
 	
