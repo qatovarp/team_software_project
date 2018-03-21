@@ -51,16 +51,16 @@ public class OptionMenuButtons {
 	 * @author cgeschwendt
 	 */
 	void createAndLableButtons() {
-		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Back.png"))));
-		normalBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Easy.png"))));
-		difficultBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Medium.png"))));
-		extreamBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Hard.png"))));
-		checkedBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/Check Sign.png"))));
+		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/back.png"))));
+		normalBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/normalBtn.png"))));
+		difficultBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/difficultBtn.png"))));
+		extreamBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/reallyBtn.png"))));
+		checkedBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/checkmark.png"))));
 		
-		backBtn.setPosition(GameInfo.WIDTH/2, 50, Align.center);
-		normalBtn.setPosition(GameInfo.WIDTH/2, GameInfo.HEIGHT/3+50);
-		difficultBtn.setPosition(GameInfo.WIDTH/2, normalBtn.getY() -65);
-		extreamBtn.setPosition(GameInfo.WIDTH/2, difficultBtn.getY() -65);
+		backBtn.setPosition(GameInfo.WIDTH/2, 42, Align.center);
+		normalBtn.setPosition(665, 270);
+		difficultBtn.setPosition(665,170);
+		extreamBtn.setPosition(665,60);
 		
 		this.setCheckedPosition();
 	}
@@ -81,7 +81,7 @@ public class OptionMenuButtons {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				//moves check mark
-			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-11, normalBtn.getY()+19);
 			//changes game difficulty.
 			GameInfo.normal =true;
 			GameInfo.difficult =false;
@@ -93,7 +93,7 @@ public class OptionMenuButtons {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				//moves check mark
-				checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+				checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-11, difficultBtn.getY()+19);
 				//changes game difficulty.
 				GameInfo.normal =false;
 				GameInfo.difficult =true;
@@ -104,7 +104,7 @@ public class OptionMenuButtons {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				//moves check mark
-				checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
+				checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-11, extreamBtn.getY()+19);
 				//changes game difficulty.
 				GameInfo.normal =false;
 				GameInfo.difficult =false;
@@ -124,11 +124,11 @@ public class OptionMenuButtons {
 	 */
 	private void setCheckedPosition() {
 		if(GameInfo.normal)
-			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-15, normalBtn.getY()+10);
+			checkedBtn.setPosition(normalBtn.getX()+normalBtn.getWidth()-checkedBtn.getWidth()-11, normalBtn.getY()+19);
 		if(GameInfo.difficult)
-			checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-15, difficultBtn.getY()+10);
+			checkedBtn.setPosition(difficultBtn.getX()+difficultBtn.getWidth()-checkedBtn.getWidth()-11, difficultBtn.getY()+19);
 		if(GameInfo.extream)
-			checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-15, extreamBtn.getY()+10);
+			checkedBtn.setPosition(extreamBtn.getX()+extreamBtn.getWidth()-checkedBtn.getWidth()-11, extreamBtn.getY()+19);
 	}
 	
 }
