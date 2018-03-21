@@ -21,6 +21,7 @@ public class Player extends Sprite {
 	};
 	private int lives;
 	private State verticleState;
+	private int playerScore=0;
 
 	private Body body;
 	private World world;
@@ -187,5 +188,9 @@ public class Player extends Sprite {
 	 */
 	public State getVerticleState() {
 		return this.verticleState;
+	}
+	
+	public int getPlayerScore() {
+		return this.playerScore;
 	}
 }

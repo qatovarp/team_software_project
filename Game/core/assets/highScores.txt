@@ -1,6 +1,6 @@
-Cameron
-10000
-Rob
-5050
-Josh
-1
+Player 1
+500
+Player 2
+300
+Player 3
+299

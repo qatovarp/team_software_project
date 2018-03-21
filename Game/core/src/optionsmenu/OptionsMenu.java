@@ -26,7 +26,7 @@ public class OptionsMenu implements Screen {
 		// sets the mainmenu viewport.
 		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 
-		background = new Texture("gameoptionsmenu/GameOptionsBackgound.png");
+		background = new Texture("optionsmenu/backgroundoptions.png");
 		buttons = new OptionMenuButtons(game);
 	}
 

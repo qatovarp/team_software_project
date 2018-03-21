@@ -31,14 +31,8 @@ public class HighScoreButtons {
 	private Viewport viewport;
 	
 	private ImageButton backBtn;
-	//----------------------- Score Labels----------------//
+	//----------------------- Score Label-----------------//
 	private Label scoreLabel;
-	private String highScore1;
-	private int highScore1Value;
-	private String highScore2;
-	private int highScore2Value;
-	private String highScore3;
-	private int highScore3Value;
 	//----------------------------------------------------//
 	
 	
@@ -72,24 +66,7 @@ public class HighScoreButtons {
 	 *  @author cgeschwendt
 	 */
 	private void loadInHighScores() {
-		 String fileName = "highScores.txt";
-		 try {
-			FileReader fr = new FileReader(fileName);
-			 BufferedReader bufferedReader = new BufferedReader(fr);
-			this.highScore1 = bufferedReader.readLine();
-			this.highScore1Value = Integer.parseInt(bufferedReader.readLine());
-			this.highScore2 = bufferedReader.readLine();
-			this.highScore2Value = Integer.parseInt(bufferedReader.readLine());
-			this.highScore3 = bufferedReader.readLine();
-			this.highScore3Value = Integer.parseInt(bufferedReader.readLine());
-			fr.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Seek Programers Help. (cgeschwendt)");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("Seek Programers Help. (cgeschwendt)");
-			e.printStackTrace();
-		}
+	
 	}
 
 /**
@@ -97,7 +74,7 @@ public class HighScoreButtons {
  * @author cgeschwendt
  */
 	void createAndLableButtons() {
-		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("HighScoreMenu/Back.png"))));
+		backBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("HighScoreMenu/back.png"))));
 		backBtn.setPosition(GameInfo.WIDTH/2, 50, Align.center);
 		
 		FreeTypeFontGenerator generator= new FreeTypeFontGenerator(Gdx.files.internal(("Fonts/blow.ttf")));
@@ -106,7 +83,7 @@ public class HighScoreButtons {
 	
 		BitmapFont scoreFont = generator.generateFont(parameter);
 		
-		scoreLabel=new Label(highScore1 +" "+ highScore1Value+"\n\n"+ highScore2 + " "+ highScore2Value + "\n\n"+ highScore3 + " "+ highScore3Value, 
+		scoreLabel=new Label(game.highScore1Name +" "+ game.highScore1+"\n\n"+ game.highScore2Name + " "+ game.highScore2 + "\n\n"+ game.highScore3Name + " "+ game.highScore3, 
 				new Label.LabelStyle(scoreFont,Color.BLACK));
 		
 		scoreLabel.setPosition(GameInfo.WIDTH/2, GameInfo.HEIGHT/3);
