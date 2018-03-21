@@ -1,0 +1,195 @@
+package com.team.entities.living.player;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.team.game.GameInfo;
+
+public class Player extends Sprite {
+	//PLayers vertical state.
+	public enum State {
+		FALLING, JUMPING, STANDING
+	};
+	private int lives;
+	public State verticleState;
+	private int playerScore=0;
+
+	private Body body;
+	private World world;
+	
+	public boolean atLvlExit;
+	
+	
+	/**
+	 * Constructs the player into a x,y position on the screen in a given world of entities
+	 * @param world : the world of entities for each level
+	 * @param x : the x position to create the player
+	 * @param y : the y position to create the player
+	 * @author cgeschwendt
+	 */
+	public void playerConstruct(World world, float x, float y) {
+		this.atLvlExit = false;
+		this.world = world;
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(x / GameInfo.PPM,  y / GameInfo.PPM);
+		bdef.type = BodyDef.BodyType.DynamicBody;
+		body = world.createBody(bdef);
+		body.setUserData("player");
+		FixtureDef fdef = new FixtureDef();
+		CircleShape shape = new CircleShape();
+
+		shape.setRadius(33f / GameInfo.PPM);
+		fdef.friction = 1.5f;
+		fdef.shape = shape;
+		body.createFixture(fdef);
+		verticleState = State.STANDING;
+
+		this.setLifeQuantity();
+	}
+
+	/**
+	 * moves the players position to the right
+	 * 
+	 * @author cgeschwendt
+	 */
+	public void right() {
+		if (body.getLinearVelocity().x <= 2)
+			body.applyLinearImpulse(new Vector2(0.9f, 0.0f), body.getWorldCenter(), true);
+	}
+
+	/**
+	 * moves the players position to the left
+	 * 
+	 * @author cgeschwendt
+	 */
+	public void left() {
+		if (body.getLinearVelocity().x >= -2)
+			body.applyLinearImpulse(new Vector2(-0.9f, 0.0f), body.getWorldCenter(), true);
+	}
+
+	/**
+	 * gives the player the jumping operation only if they have not jumped once
+	 * before. ALLOWS FOR ONLY ONE JUMP AT A TIME.
+	 * 
+	 * @author cgeschwendt
+	 */
+	public void jump() {
+		if (verticleState == State.STANDING) {
+			body.applyLinearImpulse(new Vector2(0.0f, 5.8f), body.getWorldCenter(), true);
+			verticleState = State.JUMPING;
+		}
+	}
+
+	/**
+	 * Sets the state of the player to either falling, standing or jumping.
+	 * 
+	 * @author cgeschwendt
+	 */
+	public void setVerticleState() {
+		if (body.getLinearVelocity().y < 0)
+			verticleState = State.FALLING;
+		else if (body.getLinearVelocity().y > 0)
+			verticleState = State.JUMPING;
+		else
+			verticleState = State.STANDING;
+	}
+/**
+ * Return the vector of the players body(body which physics gets applied to)
+ * @return players body Vector 2
+ * @author cgeschwendt
+ */
+	public Vector2 position() {
+		return body.getPosition();
+	}
+
+	/**
+	 * Resets the players position within the given level base on the x and y parameters.
+	 * @param x
+	 * @param y
+	 * @author cgeschwendt
+	 */
+	public void resetPosition(float x, float y) {
+		BodyDef bdef = new BodyDef();
+		bdef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
+		bdef.type = BodyDef.BodyType.DynamicBody;
+		body = world.createBody(bdef);
+		FixtureDef fdef = new FixtureDef();
+		CircleShape shape = new CircleShape();
+
+		shape.setRadius(33f / GameInfo.PPM);
+		fdef.friction = 1.5f;
+		fdef.shape = shape;
+		body.createFixture(fdef);
+		verticleState = State.STANDING;
+	}
+
+	/**
+	 * Sets the life quantity of the player based on the game setting Difficulty;
+	 * @author cgeschwendt
+	 */
+	void setLifeQuantity() {
+		if (GameInfo.normal)
+			this.lives = 6;
+		else if (GameInfo.difficult)
+			this.lives = 4;
+		else if (GameInfo.extream)
+			this.lives = 2;
+	}
+
+	/**
+	 * removes one of the players life
+	 * @author cgeschwendt
+	 */
+	public void playerLoseLife() {
+		this.lives = this.lives - 1;
+	}
+	/**
+	 * @return: the number of lives that the player has
+	 * @author cgeschwendt
+	 */
+	public int getNumLives() {
+		return this.lives;
+	}
+	
+	/**
+	 * @return true if the player has no lives left else false
+	 * @author cgeschwendt
+	 */
+	public boolean playerDead() {
+		if (this.lives > 0)
+			return false;
+		else
+			return true;
+	}
+
+/**
+ * Checks if the player is moving along in a horizontal motion.
+ * @return true or false
+ * @author cgeschwendt
+ */
+	public boolean isXMoving() {
+		if(body.getLinearVelocity().x == 0)
+			return true;
+		else
+		return false;
+	}
+
+	/**
+	 * Gets the verticle state of the player
+	 * @return FALLING. JUMPING, STANDING
+	 * @author cgeschwendt
+	 */
+	public State getVerticleState() {
+		return this.verticleState;
+	}
+	
+	public int getPlayerScore() {
+		return this.playerScore;
+	}
+}
