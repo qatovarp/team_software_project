@@ -31,13 +31,14 @@ public class GameMain extends Game {
 	private Screen prevScreen;
 
 	public int highScore1;
-	public String highScore1Name;
 	public int highScore2;
-	public String highScore2Name;
 	public int highScore3;
+	public String highScore1Name;
+	public String highScore2Name;
 	public String highScore3Name;
 
 	private sound music;
+	private int currentLvlID;
 
 	
 	@Override
@@ -97,5 +98,25 @@ public class GameMain extends Game {
 	
 	public sound getmusic() {
 		return this.music;
+	}
+	
+	public int getCurrentLvlID() {
+		return currentLvlID;
+	}
+	
+	public void loadNextLevel() {
+		currentLvlID += 1;
+		
+		if(currentLvlID < GameInfo.getNumOfLvls() ) {
+			this.getScreen().dispose();
+			this.setScreen(new LevelOne(this));
+		}
+		else {
+			currentLvlID = 0;
+			//change screen to winning! woooo
+			// currently set it to main menu
+			this.getScreen().dispose();
+			this.setScreen(new MainMenu(this));
+		}
 	}
 }

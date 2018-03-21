@@ -28,11 +28,12 @@ public class Player  {
 	private int playerScore=1110;
 	public Texture standing;
 	public Sprite sprite;
-	private boolean faceingRight = true;
+	private boolean faceingRight;
 	
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
-	
+
+	public boolean atLvlExit;
 
 	private Body body;
 	private World world;
@@ -63,10 +64,13 @@ public class Player  {
 	}
 	
 	private void createbody(float x, float y) {
+		this.atLvlExit = false;
+		this.faceingRight = true;
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(x / GameInfo.PPM,  y / GameInfo.PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		body = world.createBody(bdef);
+		body.setUserData("player");
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
 		
