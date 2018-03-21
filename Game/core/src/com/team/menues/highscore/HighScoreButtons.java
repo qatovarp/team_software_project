@@ -1,4 +1,4 @@
-package highscoremenu;
+package com.team.menues.highscore;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,11 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cgeschwendt.game.GameMain;
-import com.cgeschwendt.game.gameinfo.GameInfo;
-import java.io.*;
+import com.team.game.GameInfo;
+import com.team.game.GameMain;
+import com.team.menues.main.MainMenu;
 
-import Mainmenu.MainMenu;
+import java.io.*;
 
 public class HighScoreButtons {
 	

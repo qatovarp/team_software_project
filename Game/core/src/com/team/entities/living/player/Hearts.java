@@ -1,9 +1,9 @@
-package player;
+package com.team.entities.living.player;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.cgeschwendt.game.GameMain;
-import com.cgeschwendt.game.gameinfo.GameInfo;
+import com.team.game.GameInfo;
+import com.team.game.GameMain;
 
 public class Hearts {
 	private GameMain game;

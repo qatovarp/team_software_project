@@ -1,25 +1,16 @@
-package com.cgeschwendt.game;
+package com.team.game;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import Mainmenu.MainMenu;
-import gameover.GameOver;
-import levelone.LevelOne;
-import player.Player;
-
-
+import com.team.entities.living.player.Player;
+import com.team.levels.BaseLevel;
+import com.team.menues.main.MainMenu;
 
 
 public class GameMain extends Game {
@@ -30,19 +21,20 @@ public class GameMain extends Game {
 	private Screen prevScreen;
 	
 	public int highScore1;
-	public String highScore1Name;
 	public int highScore2;
-	public String highScore2Name;
 	public int highScore3;
+	public String highScore1Name;
+	public String highScore2Name;
 	public String highScore3Name;
 	
-	
+	private int currentLvlID;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		this.loadHighScores();
 		this.setScreen(new MainMenu(this));
+		currentLvlID = 0;
 	}
 
 	private void loadHighScores() {
@@ -90,4 +82,25 @@ public class GameMain extends Game {
 	public Screen getPrevScreen() {
 		return this.prevScreen;
 	}
+	
+	public int getCurrentLvlID() {
+		return currentLvlID;
+	}
+	
+	public void loadNextLevel() {
+		currentLvlID += 1;
+		
+		if(currentLvlID < GameInfo.getNumOfLvls() ) {
+			this.getScreen().dispose();
+			this.setScreen(new BaseLevel(this));
+		}
+		else {
+			currentLvlID = 0;
+			//change screen to winning! woooo
+			// currently set it to main menu
+			this.getScreen().dispose();
+			this.setScreen(new MainMenu(this));
+		}
+	}
+	
 }

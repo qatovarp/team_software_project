@@ -1,4 +1,4 @@
-package Mainmenu;
+package com.team.menues.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cgeschwendt.game.GameMain;
-import com.cgeschwendt.game.gameinfo.GameInfo;
+import com.team.game.GameInfo;
+import com.team.game.GameMain;
 
 public class MainMenu implements Screen {
 

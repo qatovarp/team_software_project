@@ -1,18 +1,15 @@
-package player;
+package com.team.entities.living.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.cgeschwendt.game.gameinfo.GameInfo;
+import com.team.game.GameInfo;
 
 public class Player extends Sprite {
 	//PLayers vertical state.
@@ -20,11 +17,13 @@ public class Player extends Sprite {
 		FALLING, JUMPING, STANDING
 	};
 	private int lives;
-	private State verticleState;
+	public State verticleState;
 	private int playerScore=0;
 
 	private Body body;
 	private World world;
+	
+	public boolean atLvlExit;
 	
 	
 	/**
@@ -35,11 +34,13 @@ public class Player extends Sprite {
 	 * @author cgeschwendt
 	 */
 	public void playerConstruct(World world, float x, float y) {
+		this.atLvlExit = false;
 		this.world = world;
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(x / GameInfo.PPM,  y / GameInfo.PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		body = world.createBody(bdef);
+		body.setUserData("player");
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
 
@@ -58,8 +59,8 @@ public class Player extends Sprite {
 	 * @author cgeschwendt
 	 */
 	public void right() {
-		if (body.getLinearVelocity().x <= 2&& !Gdx.input.isKeyPressed(Input.Keys.LEFT))
-			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);
+		if (body.getLinearVelocity().x <= 2)
+			body.applyLinearImpulse(new Vector2(0.9f, 0.0f), body.getWorldCenter(), true);
 	}
 
 	/**
@@ -68,8 +69,8 @@ public class Player extends Sprite {
 	 * @author cgeschwendt
 	 */
 	public void left() {
-		if (body.getLinearVelocity().x >= -2 && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-			body.applyLinearImpulse(new Vector2(-1.6f, -1.9f), body.getWorldCenter(), true);
+		if (body.getLinearVelocity().x >= -2)
+			body.applyLinearImpulse(new Vector2(-0.9f, 0.0f), body.getWorldCenter(), true);
 	}
 
 	/**
@@ -79,11 +80,9 @@ public class Player extends Sprite {
 	 * @author cgeschwendt
 	 */
 	public void jump() {
-		if (verticleState == State.JUMPING || verticleState == State.FALLING) {
-		} else {
-			body.applyLinearImpulse(new Vector2(0, 5.8f), body.getWorldCenter(), true);
-			
-		verticleState = State.JUMPING;
+		if (verticleState == State.STANDING) {
+			body.applyLinearImpulse(new Vector2(0.0f, 5.8f), body.getWorldCenter(), true);
+			verticleState = State.JUMPING;
 		}
 	}
 

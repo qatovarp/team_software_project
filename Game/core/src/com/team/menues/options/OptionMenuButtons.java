@@ -1,4 +1,4 @@
-package optionsmenu;
+package com.team.menues.options;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,10 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cgeschwendt.game.GameMain;
-import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import Mainmenu.MainMenu;
+import com.team.game.GameInfo;
+import com.team.game.GameMain;
+import com.team.menues.main.MainMenu;
 
 public class OptionMenuButtons {
 	private GameMain game;

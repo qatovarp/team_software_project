@@ -1,4 +1,4 @@
-package Mainmenu;
+package com.team.menues.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,15 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cgeschwendt.game.GameMain;
-import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import highscoremenu.HighScoreMenu;
-import levelone.LevelOne;
-import optionsmenu.OptionsMenu;
+import com.team.game.GameInfo;
+import com.team.game.GameMain;
+import com.team.levels.BaseLevel;
+import com.team.menues.highscore.HighScoreMenu;
+import com.team.menues.options.OptionsMenu;
 
 public class MainMenuButtons {
 
@@ -85,7 +83,7 @@ public class MainMenuButtons {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.getScreen().dispose();
-				game.setScreen(new LevelOne(game));
+				game.setScreen(new BaseLevel(game));
 				GameInfo.firstMainMenu =false;
 			}	
 		});

@@ -1,4 +1,4 @@
-package gameover;
+package com.team.menues.gameover;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,10 +15,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cgeschwendt.game.GameMain;
-import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import Mainmenu.MainMenuButtons;
+import com.team.game.GameInfo;
+import com.team.game.GameMain;
+import com.team.menues.main.MainMenuButtons;
 
 public class GameOver implements Screen {
 
