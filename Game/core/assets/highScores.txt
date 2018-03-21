@@ -1,6 +1,6 @@
-Player 1
-500
-Player 2
+null
+1110
+1
 300
-Player 3
-299
+2
+200

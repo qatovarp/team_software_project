@@ -51,6 +51,7 @@ public class LevelOne implements Screen {
 	private Hearts hearts;
 	
 	private Player player ;
+	private float ElapsedTime = 0;
 	 
 	
 	//Box 2D variables
@@ -117,6 +118,7 @@ public class LevelOne implements Screen {
 	
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT ) &&  game.getplayer().getVerticleState() != State.FALLING) 
 			game.getplayer().left();
+	
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) 
 			game.getplayer().jump();	
@@ -153,7 +155,7 @@ public class LevelOne implements Screen {
 		
 	//Renders in the map and objects 
 		maprenderer.render();
-		b2dr.render(world, mainCamera.combined);
+	b2dr.render(world, mainCamera.combined);
 		
 	//draws onto the screen the HUD
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
@@ -163,9 +165,26 @@ public class LevelOne implements Screen {
 		game.getBatch().begin();
 		hearts.updateHearts();
 		game.getBatch().end();
+		
+	//draws the player to the screen
+		game.getBatch().begin();
+		this.drawPlayerAnimation();
+		game.getBatch().end();
 
 
 	}
+
+private void drawPlayerAnimation() {
+	if(!player.isXMoving()) {
+	ElapsedTime += Gdx.graphics.getDeltaTime();
+	game.getBatch().draw(player.getAnimation().getKeyFrame(ElapsedTime, true),player.sprite.getX(),player.sprite.getY());
+	}
+	else
+		player.sprite.draw(game.getBatch());	
+	}
+
+
+
 
 /**
  * Checks if the position of the player has fallen below the map living line

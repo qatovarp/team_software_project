@@ -1,6 +1,7 @@
 package gameover;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
@@ -32,11 +37,16 @@ public class GameOverButtons {
 	private ImageButton quit;
 	private Label Scorelabel;
 	//---------------------------------------//
+
+
+	
+	
 	public GameOverButtons(GameMain game) {
 	 this.game = game;
 		
 		viewport = new FitViewport(GameInfo.WIDTH,GameInfo.HEIGHT,new OrthographicCamera());
 		stage = new Stage(viewport, game.getBatch());
+		
 		Gdx.input.setInputProcessor(stage);
 		
 		this.createAndPositionButtons();
@@ -46,6 +56,7 @@ public class GameOverButtons {
 		stage.addActor(mainMenu);
 		stage.addActor(quit);
 		stage.addActor(Scorelabel);
+		
 		}
 	private void createAndPositionButtons() {
 		this.quit = new ImageButton( new SpriteDrawable(new Sprite(new Texture("gameover/quitV2.png"))));

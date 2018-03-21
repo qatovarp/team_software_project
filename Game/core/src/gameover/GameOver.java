@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
@@ -30,7 +33,10 @@ public class GameOver implements Screen {
 	private GameOverButtons buttons;
 	private boolean NewHighScore = false;
 	private int flashTimer;
-	private int interval;
+	private int interval ;
+	private String newName;
+	
+	
 
 	public GameOver(GameMain game) {
 		this.game = game;
@@ -43,9 +49,27 @@ public class GameOver implements Screen {
 		this.newHighScore = new Texture("gameover/newhighscore.png");
 		// creates game over buttons
 		buttons = new GameOverButtons(game);
-		// sets the new high scores internally
-		this.setNewHighScore(game.getplayer().getPlayerScore());
+		
+		this.madeHighScore(game.getplayer().getPlayerScore());
 		flashTimer=0;
+		//Ask for new high score name
+		if(NewHighScore) {
+			Gdx.input.getTextInput(new TextInputListener() {
+
+				@Override
+				public void input(String text) {
+				
+					
+				}
+				@Override
+				public void canceled() {}
+				
+			}, "NEW HIGHSCORE", "NAME", "");
+			
+			// sets the new high scores internally
+			this.setNewHighScore(game.getplayer().getPlayerScore(),newName);
+		}
+		
 	}
 
 	@Override
@@ -78,8 +102,8 @@ public class GameOver implements Screen {
 	/** sets the new high score values and names if the new high score is in the top 3
 	 * @author cgeschwendt
 	 */
-	void setNewHighScore(int score) {
-		if (score >= game.highScore1) {
+	void setNewHighScore(int score,String name) {
+		if (score > game.highScore1) {
 			// scores
 			game.highScore3 = game.highScore2;
 			game.highScore2 = game.highScore1;
@@ -87,23 +111,20 @@ public class GameOver implements Screen {
 			// names
 			game.highScore3Name = game.highScore2Name;
 			game.highScore2Name = game.highScore1Name;
-			game.highScore1Name = "still change";
+			game.highScore1Name = name;
 
-			NewHighScore = true;
-		} else if (score >= game.highScore2) {
+		} else if (score > game.highScore2) {
 			// scores
 			game.highScore3 = game.highScore2;
 			game.highScore2 = score;
 			// names
 			game.highScore3Name = game.highScore2Name;
-			game.highScore2Name = "still change";
-			NewHighScore = true;
-		} else if (score >= game.highScore3) {
+			game.highScore2Name = name;
+		} else if (score > game.highScore3) {
 			// scores
 			game.highScore3 = score;
 			// names
-			game.highScore3Name = "still change";
-			NewHighScore = true;
+			game.highScore3Name = name;
 		}
 	}
 
@@ -176,5 +197,14 @@ public class GameOver implements Screen {
 		interval--;
 		}
 	}
+
+	void madeHighScore(int score) {
+		if(score > game.highScore3) {
+			this.NewHighScore=true;
+		}
+	}
+
+
+
 
 }

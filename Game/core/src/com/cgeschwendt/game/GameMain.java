@@ -42,7 +42,7 @@ public class GameMain extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		this.loadHighScores();
-		this.setScreen(new MainMenu(this));
+		this.setScreen(new LevelOne(this));
 	}
 
 	private void loadHighScores() {

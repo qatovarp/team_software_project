@@ -2,7 +2,9 @@ package player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,16 +14,25 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-public class Player extends Sprite {
+public class Player  {
+	
 	//PLayers vertical state.
 	public enum State {
 		FALLING, JUMPING, STANDING
 	};
 	private int lives;
 	private State verticleState;
-	private int playerScore=0;
+	private int playerScore=1110;
+	public Texture standing;
+	public Sprite sprite;
+	private boolean faceingRight = true;
+	
+	private TextureAtlas playeratlas;
+	private Animation<TextureRegion> playerAnimation;
+	
 
 	private Body body;
 	private World world;
@@ -35,31 +46,60 @@ public class Player extends Sprite {
 	 * @author cgeschwendt
 	 */
 	public void playerConstruct(World world, float x, float y) {
+		standing = new Texture("player/p1_stand.png");
+		sprite = new Sprite(standing);
+		
+		playeratlas = new TextureAtlas("player/greenPlayer.atlas");
+	
+		
+		
+		
 		this.world = world;
+		createbody(x,y);
+		
+		sprite.setPosition(GameInfo.WIDTH/2 -33,  y / GameInfo.PPM +111);
+
+		this.setLifeQuantity();
+	}
+	
+	private void createbody(float x, float y) {
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(x / GameInfo.PPM,  y / GameInfo.PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		body = world.createBody(bdef);
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
-
+		
 		shape.setRadius(33f / GameInfo.PPM);
 		fdef.friction = 1.5f;
 		fdef.shape = shape;
 		body.createFixture(fdef);
 		verticleState = State.STANDING;
-
-		this.setLifeQuantity();
+		
+		System.out.println(body.getPosition());
 	}
-
+	
+	private void flipAnimation() {
+		Array<TextureAtlas.AtlasRegion> frames = playeratlas.getRegions();
+		for(TextureRegion frame: frames) {
+			frame.flip(true, false);
+		}
+	}
+	
 	/**
 	 * moves the players position to the right
 	 * 
 	 * @author cgeschwendt
 	 */
 	public void right() {
-		if (body.getLinearVelocity().x <= 2&& !Gdx.input.isKeyPressed(Input.Keys.LEFT))
+		if (body.getLinearVelocity().x <= 2&& !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);
+			if(!faceingRight) {
+				sprite.flip(true, false);
+				faceingRight = true;
+				this.flipAnimation();
+			}
+		}
 	}
 
 	/**
@@ -68,8 +108,14 @@ public class Player extends Sprite {
 	 * @author cgeschwendt
 	 */
 	public void left() {
-		if (body.getLinearVelocity().x >= -2 && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+		if (body.getLinearVelocity().x >= -2 && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			body.applyLinearImpulse(new Vector2(-1.6f, -1.9f), body.getWorldCenter(), true);
+			if(faceingRight) { 	
+				sprite.flip(true, false);
+				faceingRight = false;
+				this.flipAnimation();
+			}
+		}
 	}
 
 	/**
@@ -192,5 +238,10 @@ public class Player extends Sprite {
 	
 	public int getPlayerScore() {
 		return this.playerScore;
+	}
+	
+	public Animation<TextureRegion> getAnimation() {
+		playerAnimation = new Animation<TextureRegion>(1f/11f,playeratlas.getRegions());
+		return this.playerAnimation;
 	}
 }
