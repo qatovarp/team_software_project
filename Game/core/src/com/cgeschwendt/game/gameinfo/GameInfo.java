@@ -7,10 +7,13 @@ public static final int PPM = 100;
 public static final String GAMENAME = "COLOR WORLD";
 
 
+public static boolean firstMainMenu = true;
 
 public static boolean normal = true;
 public static boolean difficult = false;
 public static boolean extream = false;
+
+
 
 
 

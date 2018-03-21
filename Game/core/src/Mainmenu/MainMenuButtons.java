@@ -21,8 +21,7 @@ import optionsmenu.OptionsMenu;
 
 public class MainMenuButtons {
 
-	private final int DISTANCE_BETWEEN_BUTTONS = 60;
-	
+
 	private GameMain game;
 	private Stage stage;
 	private Viewport viewport;
@@ -48,6 +47,7 @@ public class MainMenuButtons {
 		this.createAndPositionButtons();
 		this.addAllListners();
 		
+		
 		//adds each button to a stage.
 		stage.addActor(highScoreBtn);
 		stage.addActor(musicBtn);
@@ -57,22 +57,23 @@ public class MainMenuButtons {
 	
 	}
 	
+
 	/**
 	 * Creates the buttons by setting the position and loading in a png to display as the image
 	 * @author cgeschwendt
 	 */
 	void createAndPositionButtons() {
-		playBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Start Game.png"))));
-		highScoreBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Highscore.png"))));
-		optionsBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Options.png"))));
-		quitBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Quit.png"))));
+		playBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/play.png"))));
+		highScoreBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/highscores.png"))));
+		optionsBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/options.png"))));
+		quitBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/quit.png"))));
 		musicBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music On.png"))));
 		
-		playBtn.setPosition(GameInfo.WIDTH/2 - 325, GameInfo.HEIGHT/2);
-		optionsBtn.setPosition(playBtn.getX(), playBtn.getY()-DISTANCE_BETWEEN_BUTTONS);
-		highScoreBtn.setPosition(playBtn.getX(), optionsBtn.getY() - DISTANCE_BETWEEN_BUTTONS);
-		quitBtn.setPosition(playBtn.getX(), highScoreBtn.getY() - DISTANCE_BETWEEN_BUTTONS);
-		musicBtn.setPosition(GameInfo.WIDTH -50 - musicBtn.getWidth(), 50);
+		playBtn.setPosition(120, GameInfo.HEIGHT/2.5f);
+		optionsBtn.setPosition(playBtn.getX()-48, playBtn.getY()-180);
+		highScoreBtn.setPosition(playBtn.getX()-100, playBtn.getY()-120 );
+		quitBtn.setPosition(playBtn.getX(), playBtn.getY()-250);
+		musicBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
 	}
 	
 	/**
@@ -85,6 +86,7 @@ public class MainMenuButtons {
 			public void changed(ChangeEvent event, Actor actor) {
 				game.getScreen().dispose();
 				game.setScreen(new LevelOne(game));
+				GameInfo.firstMainMenu =false;
 			}	
 		});
 		
@@ -93,7 +95,7 @@ public class MainMenuButtons {
 			public void changed(ChangeEvent event, Actor actor) {
 				game.getScreen().dispose();
 				game.setScreen(new HighScoreMenu(game));
-			
+				GameInfo.firstMainMenu =false;
 			}	
 		});
 		optionsBtn.addListener(new ChangeListener() {
@@ -101,6 +103,7 @@ public class MainMenuButtons {
 			public void changed(ChangeEvent event, Actor actor) {
 			game.getScreen().dispose();
 			game.setScreen(new OptionsMenu(game));
+			GameInfo.firstMainMenu =false;
 			}	
 		});
 		quitBtn.addListener(new ChangeListener() {
@@ -112,7 +115,14 @@ public class MainMenuButtons {
 		musicBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-			
+				if(game.getmusic().getmute()) {
+					game.getmusic().setVolume(.0f);
+					game.getmusic().setmute(false);
+				}else {
+					game.getmusic().setVolume(.5f);
+					game.getmusic().setmute(true);
+				}
+					
 			}	
 		});
 	}

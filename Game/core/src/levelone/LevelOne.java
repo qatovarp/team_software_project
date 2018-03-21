@@ -30,16 +30,19 @@ import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import Mainmenu.MainMenu;
+import gameover.GameOver;
 import pausemenu.PauseMenu;
 import player.Hearts;
 import player.Player;
 import player.Player.State;
+import sound.sound;
 
 public class LevelOne implements Screen {
 	private GameMain game;
 	private Hud hud;
 	private OrthographicCamera mainCamera;
 	private Viewport gameViewPort;
+	private sound music;
 
 	 //tiled map variables
 	private TmxMapLoader maploader;
@@ -64,6 +67,10 @@ public class LevelOne implements Screen {
 		
 		this.hud = new Hud(game);
 		hearts= new Hearts(this.game);
+		
+		//music setup
+		this.music = game.getmusic();
+		music.switchSong("music/music2.mp3");
 
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM , GameInfo.HEIGHT/GameInfo.PPM);
@@ -117,8 +124,10 @@ public class LevelOne implements Screen {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT ) &&  game.getplayer().getVerticleState() != State.FALLING) 
 			game.getplayer().left();
 		
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) 
-			game.getplayer().jump();	
+		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) { 
+			game.getplayer().jump();
+			music.playereffect("music/jump1.mp3",false);
+		}
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			game.setScreen(new PauseMenu(game));
@@ -163,6 +172,7 @@ public class LevelOne implements Screen {
 		hearts.updateHearts();
 		game.getBatch().end();
 
+
 	}
 
 /**
@@ -173,11 +183,16 @@ public class LevelOne implements Screen {
 	void offmapCheck() {
 		if(game.getplayer().position().y < 0) {
 			game.getplayer().playerLoseLife();
-			if(game.getplayer().playerDead()) {
-				game.setScreen(new MainMenu(game));
-			}
 			game.getplayer().resetPosition( 128f, 950f);
+			this.playerDied();
 		}		
+	}
+	//procedes to move game as if the player had died.
+	void playerDied() {
+		if(game.getplayer().playerDead()) {
+			game.getScreen().dispose();
+			game.setScreen(new GameOver(game));
+		}
 	}
 		
 	
