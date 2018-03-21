@@ -115,7 +115,14 @@ public class MainMenuButtons {
 		musicBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-			
+				if(game.getmusic().getmute()) {
+					game.getmusic().setVolume(.0f);
+					game.getmusic().setmute(false);
+				}else {
+					game.getmusic().setVolume(.5f);
+					game.getmusic().setmute(true);
+				}
+					
 			}	
 		});
 	}
