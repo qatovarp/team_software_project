@@ -256,4 +256,8 @@ public class Player  {
 	public void collectCoin() {
 		this.playerScore += 50;
 	}
+
+	public void resetScore() {
+		this.playerScore = 0;
+	}
 }
