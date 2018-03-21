@@ -25,18 +25,23 @@ public class Player  {
 	};
 	private int lives;
 	private State verticleState;
-	private int playerScore=1110;
+	private int playerScore;
 	public Texture standing;
 	public Sprite sprite;
-	private boolean faceingRight = true;
+	private boolean faceingRight;
 	
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
-	
+
+	public boolean atLvlExit;
 
 	private Body body;
 	private World world;
 	
+	
+	public Player() {
+		this.playerScore = 0;
+	}
 	
 	/**
 	 * Constructs the player into a x,y position on the screen in a given world of entities
@@ -63,10 +68,13 @@ public class Player  {
 	}
 	
 	private void createbody(float x, float y) {
+		this.atLvlExit = false;
+		this.faceingRight = true;
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(x / GameInfo.PPM,  y / GameInfo.PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		body = world.createBody(bdef);
+		body.setUserData("player");
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
 		
@@ -243,5 +251,13 @@ public class Player  {
 	public Animation<TextureRegion> getAnimation() {
 		playerAnimation = new Animation<TextureRegion>(1f/11f,playeratlas.getRegions());
 		return this.playerAnimation;
+	}
+	
+	public void collectCoin() {
+		this.playerScore += 50;
+	}
+
+	public void resetScore() {
+		this.playerScore = 0;
 	}
 }

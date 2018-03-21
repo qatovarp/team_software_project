@@ -27,6 +27,8 @@ public class Hud {
 	private Label timeWordLabel;
 	private Label currentTimeLabel;
 	private Label levelLabel;
+	
+	private GameMain game;
 
 	
 	/**
@@ -37,6 +39,7 @@ public class Hud {
 	 * @author cgeschwendt
 	 */
 	public Hud(GameMain game) {
+		this.game = game;
 		this.worldTimer = 50000; //converts to 500 seconds per level
 		this.score = game.getplayer().getPlayerScore();
 
@@ -89,6 +92,8 @@ public class Hud {
 	 */
 	public void updateTime() {
 		this.worldTimer = (this.worldTimer - 1);
+		this.score = game.getplayer().getPlayerScore();
+		scoreLabel.setText(String.format("%d", this.score));
 		currentTimeLabel.setText(String.format("%03d", this.worldTimer / 100));
 	}
 
