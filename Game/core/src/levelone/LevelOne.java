@@ -49,7 +49,6 @@ public class LevelOne implements Screen {
 	private OrthographicCamera mainCamera;
 	private Viewport gameViewPort;
 	private sound music;
-	private CustomContactListener cl;
 
 	 //tiled map variables
 	private TmxMapLoader maploader;
@@ -99,8 +98,6 @@ public class LevelOne implements Screen {
 		b2dr = new Box2DDebugRenderer();
 		
 		world = new World(new Vector2(0,-9.8f), true);
-		cl = new CustomContactListener(this);
-		world.setContactListener(cl);
 		World.setVelocityThreshold(0.0f);
 		player.playerConstruct(world,128f,950f );
 		

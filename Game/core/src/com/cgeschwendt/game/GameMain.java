@@ -115,7 +115,6 @@ public class GameMain extends Game {
 			currentLvlID = 0;
 			//change screen to winning! woooo
 			// currently set it to main menu
-			player.resetScore();
 			this.getScreen().dispose();
 			this.setScreen(new MainMenu(this));
 		}

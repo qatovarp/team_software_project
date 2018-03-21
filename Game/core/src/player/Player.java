@@ -26,7 +26,7 @@ public class Player {
 
 	private int lives;
 	private State verticleState;
-<<<<<<< HEAD
+
 	private int playerScore = 1110;
 	public Texture standing;
 	public Sprite sprite;
@@ -37,27 +37,12 @@ public class Player {
 
 	private Body body;
 	private World world;
-
-=======
-	private int playerScore;
-	public Texture standing;
-	public Sprite sprite;
-	private boolean faceingRight;
 	
-	private TextureAtlas playeratlas;
-	private Animation<TextureRegion> playerAnimation;
-
 	public boolean atLvlExit;
 
-	private Body body;
-	private World world;
 	
+
 	
-	public Player() {
-		this.playerScore = 0;
-	}
-	
->>>>>>> 2a2fed57180b5cd16d6019b4b45383d54b27ccc3
 	/**
 	 * Constructs the player into a x,y position on the screen in a given world of
 	 * entities
@@ -275,7 +260,7 @@ public class Player {
 		playerAnimation = new Animation<TextureRegion>(1f / 11f, playeratlas.getRegions());
 		return this.playerAnimation;
 	}
-<<<<<<< HEAD
+
 
 	public void loadPlayerTexture() {
 		if (GameInfo.playerColor == GameInfo.COLOR.BLUE) {
@@ -288,14 +273,12 @@ public class Player {
 			standing = new Texture("player/p1_stand.png");
 			playeratlas = new TextureAtlas("player/greenPlayer.atlas");
 		}
-=======
+		}
+
 	
 	public void collectCoin() {
 		this.playerScore += 50;
 	}
 
-	public void resetScore() {
-		this.playerScore = 0;
->>>>>>> 2a2fed57180b5cd16d6019b4b45383d54b27ccc3
-	}
+	
 }
