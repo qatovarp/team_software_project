@@ -17,6 +17,8 @@ public class GameInfo {
 
 	public static enum COLOR {BLUE,GREEN,PINK };
 	public static COLOR playerColor = COLOR.GREEN;
+	
+	public static boolean sound = true;
 
 	private static String[] levels = {
 			"LevelOne.tmx",

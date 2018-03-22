@@ -2,6 +2,7 @@ package player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -36,7 +37,10 @@ public class Player {
 
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
-
+	
+	private Sound jump;
+	private Sound walking;
+	
 	public Body body;
 	private World world;
 
@@ -57,6 +61,10 @@ public class Player {
 	public void playerConstruct(World world, float x, float y) {
 		this.loadPlayerTexture();
 		sprite = new Sprite(standing);
+		jump = Gdx.audio.newSound(Gdx.files.internal("music/jump_08 .mp3"));	
+		walking = Gdx.audio.newSound(Gdx.files.internal("music/footstep.wav"));
+		
+		
 
 		this.world = world;
 		createbody(x, y);
@@ -100,7 +108,11 @@ public class Player {
 	 */
 	public void right() {
 		if (body.getLinearVelocity().x <= 2 && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);	
+			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);
+			if(GameInfo.sound) {
+				long id2 = walking.play();
+				walking.setVolume(id2, .07f);
+			}
 			if (!faceingRight) {
 				sprite.flip(true, false);
 				faceingRight = true;
@@ -117,6 +129,10 @@ public class Player {
 	public void left() {
 		if (body.getLinearVelocity().x >= -2 && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			body.applyLinearImpulse(new Vector2(-1.6f, -1.9f), body.getWorldCenter(), true);
+			if(GameInfo.sound) {
+				long id2 = walking.play();
+				walking.setVolume(id2, .07f);
+			}
 			if (faceingRight) {
 				sprite.flip(true, false);
 				faceingRight = false;
@@ -136,6 +152,10 @@ public class Player {
 		} else {
 			body.applyLinearImpulse(new Vector2(0, 5.8f), body.getWorldCenter(), true);
 			verticleState = State.JUMPING;
+			if(GameInfo.sound) {
+				long id = jump.play();
+				jump.setVolume(id, .14f);
+			}
 		}
 	}
 

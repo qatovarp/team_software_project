@@ -74,16 +74,13 @@ public class LevelOne implements Screen {
 	public LevelOne(GameMain game) {
 		this.game = game;
 		this.player = game.getplayer();
+		game.setMusic("music/Waltz.mp3");
 
 		this.hud = new Hud(game);
 		this.hud.resetTimer(25000);
 		hearts = new Hearts(this.game);
 
 		deleteAnObject = false;
-
-		// music setup
-		this.music = game.getmusic();
-		music.switchSong("music/music2.mp3");
 
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
@@ -195,7 +192,6 @@ public class LevelOne implements Screen {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			game.getplayer().jump();
-			music.playereffect("music/jump1.mp3", false);
 		}
 		 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			game.setScreen(new PauseMenu(game));
@@ -248,7 +244,7 @@ public class LevelOne implements Screen {
 		
 		// Renders in the map and objects
 		maprenderer.render();
-		b2dr.render(world, mainCamera.combined);
+		//b2dr.render(world, mainCamera.combined);
 
 		// draws onto the screen the HUD
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
@@ -267,9 +263,7 @@ public class LevelOne implements Screen {
 	}
 
 	private void updateCamera() {
-		System.out.println(mainCamera.position.y);
 		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
-		
 	}
 	
 	/**
