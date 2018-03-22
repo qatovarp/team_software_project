@@ -5,15 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 public class OptionsMenu implements Screen {
 	private GameMain game;
 	private OrthographicCamera mainCamera;
-	private Viewport gameViewPort;
 	private Texture background;
 	private OptionMenuButtons buttons;
 
@@ -23,9 +20,6 @@ public class OptionsMenu implements Screen {
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
-		// sets the mainmenu viewport.
-		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
-
 		background = new Texture("optionsmenu/backgroundoptions.png");
 		buttons = new OptionMenuButtons(game);
 	}

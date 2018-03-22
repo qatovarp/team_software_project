@@ -7,44 +7,28 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import Mainmenu.MainMenuButtons;
 
 public class GameOver implements Screen {
 
 	private GameMain game;
 	private OrthographicCamera mainCamera;
-	private Viewport gameViewPort;
+
 	private Texture background;
 	private Texture newHighScore;
 	private GameOverButtons buttons;
 	private boolean NewHighScore = false;
 	private int flashTimer;
 	private int interval ;
-	private String newName;
-	
-	
-
 	public GameOver(final GameMain game) {
 		this.game = game;
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
-		// sets the mainmenu viewport.
-		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 		this.background = new Texture("gameover/gameoverbackground.png");
 		this.newHighScore = new Texture("gameover/newhighscore.png");
 		// creates game over buttons

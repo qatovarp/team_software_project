@@ -3,11 +3,8 @@ package levelone;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -28,13 +25,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-import Mainmenu.MainMenu;
 import gameover.GameOver;
 import pausemenu.PauseMenu;
 import player.Hearts;
@@ -46,7 +40,6 @@ public class LevelOne implements Screen {
 	private GameMain game;
 	private Hud hud;
 	private OrthographicCamera mainCamera;
-	private Viewport gameViewPort;
 
 	// tiled map variables
 	private TmxMapLoader maploader;
@@ -57,6 +50,7 @@ public class LevelOne implements Screen {
 	private Hearts hearts;
 
 	private Player player;
+	//timer for player animation
 	private float ElapsedTime = 0;
 
 	// Box 2D variables
@@ -65,34 +59,34 @@ public class LevelOne implements Screen {
 
 	public boolean deleteAnObject;
 
-	public Player getPlayer() {
-		return player;
-	}
 
 	public LevelOne(GameMain game) {
 		this.game = game;
 		this.player = game.getplayer();
+		
+		//sets the level music
 		game.setMusic("music/Waltz.mp3");
 
+		//sets the level HUD and timer for the level
 		this.hud = new Hud(game);
-		this.hud.resetTimer(25000);
+		this.hud.resetTimer(25000);	//250 seconds
 		hearts = new Hearts(this.game);
 
 		deleteAnObject = false;
 
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
-		// sets the mainmenu viewport.
-		gameViewPort = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
-
+		// loads the map to the screen.
 		maploader = new TmxMapLoader();
 		map = maploader.load("LevelOne.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(map, (1f / GameInfo.PPM));
-
+		
+		//collision line renderer
 		b2dr = new Box2DDebugRenderer();
 
 		world = new World(new Vector2(0, -9.8f), true);
-		World.setVelocityThreshold(0.0f);
+		
+		//creates the player in the world at the position given.
 		player.playerConstruct(world, 128f, 950f);
 		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
 
