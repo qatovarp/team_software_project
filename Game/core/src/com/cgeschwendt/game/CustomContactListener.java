@@ -35,10 +35,6 @@ public class CustomContactListener implements ContactListener {
 				 || fbData.equals("player") && faData.equals("LvlExit")) {
 				parent.getPlayer().atLvlExit = true;
 			}
-			else if(faData.equals("player") && fbData.equals("drown")
-				 || fbData.equals("player") && faData.equals("drown")) {
-					parent.getPlayer().fellIntoLiquid = true;
-			}
 		}
 	}
  

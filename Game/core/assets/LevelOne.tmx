@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="60" height="25" tilewidth="70" tileheight="70" infinite="0" nextobjectid="70">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="60" height="25" tilewidth="70" tileheight="70" infinite="0" nextobjectid="67">
  <tileset firstgid="1" source="blocks.tsx"/>
  <layer name="Tile Layer 1" width="60" height="25">
   <data encoding="csv">
@@ -122,6 +122,5 @@
   <object id="66" name="coin" x="649" y="1247" width="30" height="30">
    <ellipse/>
   </object>
-  <object id="67" name="drown" x="1121" y="1666" width="1889" height="83"/>
  </objectgroup>
 </map>
