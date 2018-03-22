@@ -30,6 +30,8 @@ import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import gameover.GameOver;
+import layers.coin;
+import layers.ground;
 import pausemenu.PauseMenu;
 import player.Hearts;
 import player.Player;
@@ -78,7 +80,7 @@ public class LevelOne implements Screen {
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
 		// loads the map to the screen.
 		maploader = new TmxMapLoader();
-		map = maploader.load("LevelOne.tmx");
+		map = maploader.load("levelOneV2.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(map, (1f / GameInfo.PPM));
 		
 		//collision line renderer
@@ -87,84 +89,31 @@ public class LevelOne implements Screen {
 		world = new World(new Vector2(0, -9.8f), true);
 		
 		//creates the player in the world at the position given.
-		player.playerConstruct(world, 128f, 950f);
+		player.playerConstruct(world, 260f, 1200f);
 		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
 
-		BodyDef bdef;
-		Shape shape = new PolygonShape();
-		FixtureDef fdef;
-		Body body;
-
-		// Load ALL map-objects collision boxes
-		for (int i = 0; i < map.getLayers().getCount(); i++) {
-			if (map.getLayers().get(i).getName().equals("background")) {
-				continue;
-			}
-
-			for (MapObject object : map.getLayers().get(i).getObjects()) {
-				bdef = new BodyDef();
-				fdef = new FixtureDef();
-
-				// Define the shape of the object
-				if (object instanceof RectangleMapObject) {
-					shape = new PolygonShape();
-					Rectangle rect = ((RectangleMapObject) object).getRectangle();
-					bdef.position.set((rect.getX() + rect.getWidth() / 2) / GameInfo.PPM,
-							(rect.getY() + rect.getHeight() / 2) / GameInfo.PPM);
-					((PolygonShape) shape).setAsBox(rect.getWidth() / 2 / GameInfo.PPM,
-							rect.getHeight() / 2 / GameInfo.PPM);
-				} else if (object instanceof PolygonMapObject) {
-					shape = new PolygonShape();
-					Polygon poly = ((PolygonMapObject) object).getPolygon();
-					bdef.position.set((poly.getOriginX()) / GameInfo.PPM, (poly.getOriginY()) / GameInfo.PPM);
-
-					float[] vertices = poly.getTransformedVertices();
-					float[] worldVertices = new float[vertices.length];
-
-					for (int j = 0; j < vertices.length; j++) {
-						worldVertices[j] = vertices[j] / GameInfo.PPM;
-					}
-
-					((PolygonShape) shape).set(worldVertices);
-				} else if (object instanceof EllipseMapObject) {
-					shape = new CircleShape();
-					Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
-					bdef.position.set((ellipse.x + ellipse.width / 2) / GameInfo.PPM,
-							(ellipse.y + ellipse.height / 2) / GameInfo.PPM);
-					((CircleShape) shape).setRadius(ellipse.width / 2 / GameInfo.PPM);
-				}
-
-				fdef.shape = shape;
-				// Set Objects to Static by default.
-				bdef.type = BodyDef.BodyType.StaticBody;
-				body = world.createBody(bdef);
-
-				/* =========== Change object properties based on name ========== */
-				String objName = object.getName();
-
-				if (objName != null) {
-					body.setUserData(objName);
-
-					if (objName.equals("LvlExit")) {
-						fdef.isSensor = true;
-					} else if (objName.equals("coin")) {
-						fdef.isSensor = true;
-					} else if (objName.equals("wall")) {
-						fdef.friction = 0.01f;
-					} else if (objName.equals("slope")) {
-						fdef.friction -= 0.2f;
-					}
-				}
-				/* ============================================================= */
-
-				// Finish creating the object
-				body.createFixture(fdef);
-
-			}
-
-		}
-
-		shape.dispose();
+		//creates the ground		
+		new ground(this.world,map);
+		//creates the coin
+		new coin(this.world,map);
+		
+//				/* =========== Change object properties based on name ========== */
+//				String objName = object.getName();
+//
+//				if (objName != null) {
+//					body.setUserData(objName);
+//
+//					if (objName.equals("LvlExit")) {
+//						fdef.isSensor = true;
+//					} else if (objName.equals("coin")) {
+//						fdef.isSensor = true;
+//					} else if (objName.equals("wall")) {
+//						fdef.friction = 0.01f;
+//					} else if (objName.equals("slope")) {
+//						fdef.friction -= 0.2f;
+//					}
+//				}
+//				/* ============================================================= */
 	}
 
 	/**
@@ -236,7 +185,7 @@ public class LevelOne implements Screen {
 		
 		// Renders in the map and objects
 		maprenderer.render();
-		//b2dr.render(world, mainCamera.combined);
+		b2dr.render(world, mainCamera.combined);
 
 		// draws onto the screen the HUD
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
