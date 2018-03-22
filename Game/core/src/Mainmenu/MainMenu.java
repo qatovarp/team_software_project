@@ -11,8 +11,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-import sound.sound;
-
 public class MainMenu implements Screen {
 
 	private GameMain game;

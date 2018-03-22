@@ -30,7 +30,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cgeschwendt.game.CustomContactListener;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
@@ -41,14 +40,13 @@ import pausemenu.PauseMenu;
 import player.Hearts;
 import player.Player;
 import player.Player.State;
-import sound.sound;
+
 
 public class LevelOne implements Screen {
 	private GameMain game;
 	private Hud hud;
 	private OrthographicCamera mainCamera;
 	private Viewport gameViewPort;
-	private sound music;
 
 	// tiled map variables
 	private TmxMapLoader maploader;

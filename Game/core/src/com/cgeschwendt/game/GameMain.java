@@ -19,10 +19,6 @@ import Mainmenu.MainMenu;
 import gameover.GameOver;
 import levelone.LevelOne;
 import player.Player;
-import sound.sound;
-
-
-
 
 
 public class GameMain extends Game {
