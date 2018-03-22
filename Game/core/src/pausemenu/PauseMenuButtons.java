@@ -29,6 +29,9 @@ public class PauseMenuButtons {
 	private ImageButton optionsBtn;
 	private ImageButton quitToMenuBtn;
 	private ImageButton exitGameBtn;
+	
+	private ImageButton musicBtn;
+	private ImageButton musicOffBtn;
 
 	public PauseMenuButtons(GameMain game) {
 		this.game = game;
@@ -43,6 +46,16 @@ public class PauseMenuButtons {
 		stage.addActor(this.optionsBtn);
 		stage.addActor(this.quitToMenuBtn);
 		stage.addActor(this.exitGameBtn);
+		stage.addActor(musicBtn);
+		stage.addActor(musicOffBtn);
+		
+		//set the appropriate music button
+		if(game.getMusic().isPlaying()) {
+			this.musicOffBtn.setVisible(false);
+		}else {
+			this.musicBtn.setVisible(false);
+		}
+	
 	}
 
 	private void createAndLableButtons() {
@@ -50,12 +63,15 @@ public class PauseMenuButtons {
 		this.optionsBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/Optionsbutton.png"))));
 		this.quitToMenuBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/MainMenuButton.png"))));
 		this.exitGameBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/exitgamebutton.png"))));
-		
+		this.musicBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music On.png"))));
+		this.musicOffBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music Off.png"))));
 		
 		this.resumeBtn.setPosition(GameInfo.WIDTH/2, (GameInfo.HEIGHT/7)*5, Align.center);
 		this.optionsBtn.setPosition(GameInfo.WIDTH/2, resumeBtn.getY() -50, Align.center);
 		this.quitToMenuBtn.setPosition(GameInfo.WIDTH/2, optionsBtn.getY() -50, Align.center);
 		this.exitGameBtn.setPosition(GameInfo.WIDTH/2, quitToMenuBtn.getY()-50, Align.center);
+		this.musicBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
+		this.musicOffBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
 	}
 
 	private void AddListners() {
@@ -88,6 +104,39 @@ public class PauseMenuButtons {
 				Gdx.app.exit();
 			}
 		});
+		musicBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+			if(game.getMusic().isPlaying()) {
+				game.getMusic().pause();
+				switchMusicBtn();
+				GameInfo.sound = false;
+			}
+			}	
+		});
+		musicOffBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+			if(!game.getMusic().isPlaying()) {
+				game.getMusic().play();
+				game.getMusic().setPosition(3);
+				switchMusicBtn();
+				GameInfo.sound = true;
+			}
+			}	
+		});
+	}
+	
+	public void switchMusicBtn() {
+		if(this.musicBtn.isVisible()) {
+			this.musicBtn.setVisible(false);
+			this.musicOffBtn.setVisible(true);
+			this.musicOffBtn.setDisabled(false);
+		}
+		else if(this.musicOffBtn.isVisible()) {
+			this.musicBtn.setVisible(true);
+			this.musicOffBtn.setVisible(false);
+		}
 	}
 	
 	public Stage getStage() {

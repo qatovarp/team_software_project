@@ -29,6 +29,12 @@ public class OptionMenuButtons {
 	private ImageButton extreamBtn;
 	private ImageButton checkedBtn;
 	
+	private ImageButton pinkPlayerBtn;
+	private ImageButton bluePlayerBtn;
+	private ImageButton greenPlayerBtn;
+	private ImageButton checkedBtn2;
+	
+	
 	public OptionMenuButtons(GameMain game) {
 		this.game = game;
 		
@@ -44,6 +50,10 @@ public class OptionMenuButtons {
 		stage.addActor(difficultBtn);
 		stage.addActor(extreamBtn);
 		stage.addActor(checkedBtn);
+		stage.addActor(pinkPlayerBtn);
+		stage.addActor(bluePlayerBtn);
+		stage.addActor(greenPlayerBtn);
+		stage.addActor(checkedBtn2);
 	}
 	
 	/**
@@ -61,6 +71,16 @@ public class OptionMenuButtons {
 		normalBtn.setPosition(665, 270);
 		difficultBtn.setPosition(665,170);
 		extreamBtn.setPosition(665,60);
+		
+		pinkPlayerBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/p3_front.png"))));
+		greenPlayerBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/p1_front.png"))));
+		bluePlayerBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/p2_front.png"))));
+		checkedBtn2 = new ImageButton( new SpriteDrawable(new Sprite(new Texture("optionsmenu/checkmark.png"))));
+		
+		pinkPlayerBtn.setPosition(250, 75);
+		bluePlayerBtn.setPosition(175, 77);
+		greenPlayerBtn.setPosition(100, 75);
+		checkedBtn2.setPosition(95, 85);
 		
 		this.setCheckedPosition();
 	}
@@ -109,6 +129,27 @@ public class OptionMenuButtons {
 				GameInfo.normal =false;
 				GameInfo.difficult =false;
 				GameInfo.extream =true;
+			}
+		});
+		pinkPlayerBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+			GameInfo.playerColor = GameInfo.COLOR.PINK;
+			checkedBtn2.setPosition(245, 85);
+			}
+		});
+		greenPlayerBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				GameInfo.playerColor = GameInfo.COLOR.GREEN;
+				checkedBtn2.setPosition(95, 85);
+			}
+		});
+		bluePlayerBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				GameInfo.playerColor = GameInfo.COLOR.BLUE;
+				checkedBtn2.setPosition(170, 85);
 			}
 		});
 	}

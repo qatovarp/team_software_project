@@ -1,6 +1,7 @@
 package Mainmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -32,13 +33,14 @@ public class MainMenuButtons {
 	private ImageButton optionsBtn;
 	private ImageButton quitBtn;
 	private ImageButton musicBtn;
+	private ImageButton musicOffBtn;
 	//---------------------------------------//
-	
-	
+
 	
 	
 	public MainMenuButtons(GameMain game) {
 		this.game = game;
+		
 		
 		viewport = new FitViewport(GameInfo.WIDTH,GameInfo.HEIGHT,new OrthographicCamera());
 		stage = new Stage(viewport, game.getBatch());
@@ -54,6 +56,14 @@ public class MainMenuButtons {
 		stage.addActor(optionsBtn);
 		stage.addActor(playBtn);
 		stage.addActor(quitBtn);
+		stage.addActor(musicOffBtn);
+		
+		//set the appropreate music button
+		if(game.getMusic().isPlaying()) {
+			this.musicOffBtn.setVisible(false);
+		}else {
+			this.musicBtn.setVisible(false);
+		}
 	
 	}
 	
@@ -68,12 +78,14 @@ public class MainMenuButtons {
 		optionsBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/options.png"))));
 		quitBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/quit.png"))));
 		musicBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music On.png"))));
+		musicOffBtn =new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music Off.png"))));
 		
 		playBtn.setPosition(120, GameInfo.HEIGHT/2.5f);
 		optionsBtn.setPosition(playBtn.getX()-48, playBtn.getY()-180);
 		highScoreBtn.setPosition(playBtn.getX()-100, playBtn.getY()-120 );
 		quitBtn.setPosition(playBtn.getX(), playBtn.getY()-250);
 		musicBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
+		musicOffBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
 	}
 	
 	/**
@@ -115,16 +127,36 @@ public class MainMenuButtons {
 		musicBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				if(game.getmusic().getmute()) {
-					game.getmusic().setVolume(.0f);
-					game.getmusic().setmute(false);
-				}else {
-					game.getmusic().setVolume(.5f);
-					game.getmusic().setmute(true);
-				}
-					
+			if(game.getMusic().isPlaying()) {
+				game.getMusic().pause();
+				switchMusicBtn();
+				GameInfo.sound = false;
+			}
 			}	
 		});
+		musicOffBtn.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+			if(!game.getMusic().isPlaying()) {
+				game.getMusic().play();
+				game.getMusic().setPosition(3);
+				switchMusicBtn();
+				GameInfo.sound = true;
+			}
+			}	
+		});
+	}
+	
+	public void switchMusicBtn() {
+		if(this.musicBtn.isVisible()) {
+			this.musicBtn.setVisible(false);
+			this.musicOffBtn.setVisible(true);
+			this.musicOffBtn.setDisabled(false);
+		}
+		else if(this.musicOffBtn.isVisible()) {
+			this.musicBtn.setVisible(true);
+			this.musicOffBtn.setVisible(false);
+		}
 	}
 	
 	public Stage getStage() {

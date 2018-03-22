@@ -38,7 +38,7 @@ public class GameOver implements Screen {
 	
 	
 
-	public GameOver(GameMain game) {
+	public GameOver(final GameMain game) {
 		this.game = game;
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
@@ -58,16 +58,13 @@ public class GameOver implements Screen {
 
 				@Override
 				public void input(String text) {
-				
-					
+					setNewHighScore(game.getplayer().getPlayerScore(),text);
 				}
 				@Override
 				public void canceled() {}
 				
 			}, "NEW HIGHSCORE", "NAME", "");
-			
-			// sets the new high scores internally
-			this.setNewHighScore(game.getplayer().getPlayerScore(),newName);
+				
 		}
 		
 	}
@@ -156,7 +153,6 @@ public class GameOver implements Screen {
 	public void dispose() {
 		this.saveScores(NewHighScore);
 		NewHighScore = false;
-
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.cgeschwendt.game.gameinfo;
 
 public class GameInfo {
 
+
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 625;
 	public static final int PPM = 100;
@@ -12,6 +13,12 @@ public class GameInfo {
 	public static boolean normal = true;
 	public static boolean difficult = false;
 	public static boolean extream = false;
+	
+
+	public static enum COLOR {BLUE,GREEN,PINK };
+	public static COLOR playerColor = COLOR.GREEN;
+	
+	public static boolean sound = true;
 
 	private static String[] levels = {
 			"LevelOne.tmx",

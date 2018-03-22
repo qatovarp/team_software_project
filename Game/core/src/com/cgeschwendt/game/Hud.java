@@ -40,7 +40,7 @@ public class Hud {
 	 */
 	public Hud(GameMain game) {
 		this.game = game;
-		this.worldTimer = 50000; //converts to 500 seconds per level
+		this.worldTimer = 500; //converts to 500 seconds per level
 		this.score = game.getplayer().getPlayerScore();
 
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
@@ -95,6 +95,12 @@ public class Hud {
 		this.score = game.getplayer().getPlayerScore();
 		scoreLabel.setText(String.format("%d", this.score));
 		currentTimeLabel.setText(String.format("%03d", this.worldTimer / 100));
+	}
+	public int getTime() {
+		return this.worldTimer;
+	}
+	public void resetTimer(int x) {
+		this.worldTimer = x;
 	}
 
 }

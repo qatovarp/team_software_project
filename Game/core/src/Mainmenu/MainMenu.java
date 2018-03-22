@@ -25,7 +25,8 @@ public class MainMenu implements Screen {
 	private Texture of;
 	private Texture Aeson;
 	private int screenTimer;
-  private sound music;
+	
+	private Music music;
 
 	public MainMenu(GameMain game) {
 		this.game = game;
@@ -41,9 +42,7 @@ public class MainMenu implements Screen {
 		Aeson = new Texture("mainmenu/Aeson.png");
 		buttons = new MainMenuButtons(game);
 		screenTimer = 490;
-		// music setup
-		this.music = game.getmusic();
-		music.switchSong("music/music1.mp3");
+		
 	}
 
 	@Override
@@ -127,7 +126,9 @@ public class MainMenu implements Screen {
 			game.getBatch().draw(of, GameInfo.WIDTH / 3 + 125, GameInfo.HEIGHT - 155, 75, 125);
 			game.getBatch().draw(Aeson, GameInfo.WIDTH / 2 - 200, GameInfo.HEIGHT / 2, 400, 250);
 		}
-
 	}
 
+	public Music getMusic() {
+		return this.music;
+	}
 }

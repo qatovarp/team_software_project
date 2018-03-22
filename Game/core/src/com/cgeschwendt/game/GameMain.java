@@ -9,6 +9,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,12 +24,16 @@ import sound.sound;
 
 
 
+
 public class GameMain extends Game {
 	// the one and only SpriteBatch for the game;
 	private SpriteBatch batch;
 	// the one player for the game;
 	private Player player = new Player();
 	private Screen prevScreen;
+	private Music music;
+	
+		
 
 	public int highScore1;
 	public int highScore2;
@@ -37,13 +42,16 @@ public class GameMain extends Game {
 	public String highScore2Name;
 	public String highScore3Name;
 
-	private sound music;
 	private int currentLvlID;
 
 	
 	@Override
 	public void create () {
-		music = new sound();
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/Lost-Jungle.mp3"));	
+		music.setVolume(.2f);
+		music.setLooping(true);
+		music.play();
+	
 		batch = new SpriteBatch();
 		this.loadHighScores();
 		this.setScreen(new MainMenu(this));
@@ -79,7 +87,6 @@ public class GameMain extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		music.dispose();
 	}
 	public SpriteBatch getBatch() {
 		return this.batch;
@@ -95,10 +102,17 @@ public class GameMain extends Game {
 	public Screen getPrevScreen() {
 		return this.prevScreen;
 	}
-	
-	public sound getmusic() {
+	public Music getMusic() {
 		return this.music;
 	}
+	public void setMusic(String name) {
+		music.dispose();
+		music = Gdx.audio.newMusic(Gdx.files.internal(name));	
+		music.play();
+		music.setLooping(true);
+		music.setVolume(.06f);
+	}
+	
 	
 	public int getCurrentLvlID() {
 		return currentLvlID;
@@ -115,7 +129,6 @@ public class GameMain extends Game {
 			currentLvlID = 0;
 			//change screen to winning! woooo
 			// currently set it to main menu
-			player.resetScore();
 			this.getScreen().dispose();
 			this.setScreen(new MainMenu(this));
 		}
