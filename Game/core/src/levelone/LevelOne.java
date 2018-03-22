@@ -8,6 +8,8 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -66,8 +68,11 @@ public class LevelOne implements Screen {
 	private World world;
 	private Box2DDebugRenderer b2dr;
 	
+	public static Texture backgroundTexture;
+    public static Sprite backgroundSprite;
+	
 	public boolean deleteAnObject;
-
+	
 	public Player getPlayer() {
 		return player;
 	}
@@ -78,6 +83,9 @@ public class LevelOne implements Screen {
 		
 		this.hud = new Hud(game);
 		hearts= new Hearts(this.game);
+		backgroundTexture = new Texture("uncolored_castle.png");
+	    backgroundSprite = new Sprite(backgroundTexture);
+	    backgroundSprite.setPosition(0f, -50f);
 		
 		deleteAnObject = false;
 		
@@ -166,6 +174,9 @@ public class LevelOne implements Screen {
 					else if(objName.equals("coin")) {
 						fdef.isSensor = true;
 					}
+					else if(objName.equals("drown")) {
+						fdef.isSensor = true;
+					}
 					else if(objName.equals("wall")) {
 						fdef.friction = 0.01f;
 					}
@@ -241,13 +252,20 @@ public class LevelOne implements Screen {
 	        }
 	        deleteAnObject = false;
 	    }
-		
+
 		handleInput(dt);
 		this.offmapCheck();
 		hud.updateTime();
 		
         world.step(1 / 60f, 6, 2);
-		mainCamera.position.set(game.getplayer().position().x,game.getplayer().position().y+150f/GameInfo.PPM, 0);
+        if((game.getplayer().position().y+150f/GameInfo.PPM) > 3f) {
+    		//player.setPos(950f/ GameInfo.PPM +111);
+        	mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y+150f/GameInfo.PPM, 0);
+        }
+        else {
+    		//player.setPos(this.player.position().y*100-950f);
+        	mainCamera.position.set(game.getplayer().position().x, mainCamera.position.y, 0);
+        }
 		mainCamera.update();
 		maprenderer.setView(mainCamera);
 		
@@ -261,9 +279,13 @@ public class LevelOne implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		game.getBatch().begin();
+        backgroundSprite.draw(game.getBatch());
+		game.getBatch().end();
+		
 	//Renders in the map and objects 
 		maprenderer.render();
-	b2dr.render(world, mainCamera.combined);
+	  b2dr.render(world, mainCamera.combined);
 		
 	//draws onto the screen the HUD
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
@@ -276,20 +298,34 @@ public class LevelOne implements Screen {
 		
 	//draws the player to the screen
 		game.getBatch().begin();
-		this.drawPlayerAnimation();
+    	if(player.fellIntoLiquid == false) {
+    		if((game.getplayer().position().y+150f/GameInfo.PPM) > 3f) {
+    			this.drawPlayerAnimation(player.sprite.getY());
+    		}
+    		else {
+    			this.drawPlayerAnimation((player.position().y*GameInfo.PPM)-20f);
+    		}
+    	}
+    	// draw nothing if player fell in. Gives a vanishing appearance
 		game.getBatch().end();
 
 
 	}
 
-private void drawPlayerAnimation() {
+private void drawPlayerAnimation(float posY) {
 	if(!player.isXMoving()) {
-	ElapsedTime += Gdx.graphics.getDeltaTime();
-	game.getBatch().draw(player.getAnimation().getKeyFrame(ElapsedTime, true),player.sprite.getX(),player.sprite.getY());
+		ElapsedTime += Gdx.graphics.getDeltaTime();
+		game.getBatch().draw(player.getAnimation().getKeyFrame(ElapsedTime, true),player.sprite.getX(), posY);
 	}
-	else
-		player.sprite.draw(game.getBatch());	
+	else {
+		//game.getBatch().draw(player.standing, player.sprite.getX(), posY);
+		float oldPosX = player.sprite.getX();
+		float oldPosY = player.sprite.getY();
+		player.sprite.setPosition(player.sprite.getX(), posY);
+		player.sprite.draw(game.getBatch());
+		player.sprite.setPosition(oldPosX, oldPosY);
 	}
+}
 
 
 
@@ -300,7 +336,7 @@ private void drawPlayerAnimation() {
  * @author cgeschwendt	
  */
 	void offmapCheck() {
-		if(game.getplayer().position().y < 0) {
+		if(game.getplayer().position().y < -5) {
 			game.getplayer().playerLoseLife();
 			game.getplayer().resetPosition( 128f, 950f);
 			this.playerDied();

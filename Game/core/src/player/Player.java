@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -35,12 +36,14 @@ public class Player  {
 
 	public boolean atLvlExit;
 
-	private Body body;
+	public Body body;
 	private World world;
 	
+	public boolean fellIntoLiquid;
 	
 	public Player() {
 		this.playerScore = 0;
+		fellIntoLiquid = false;
 	}
 	
 	/**
@@ -61,11 +64,11 @@ public class Player  {
 		
 		this.world = world;
 		createbody(x,y);
-		
 		sprite.setPosition(GameInfo.WIDTH/2 -33,  y / GameInfo.PPM +111);
 
 		this.setLifeQuantity();
 	}
+	
 	
 	private void createbody(float x, float y) {
 		this.atLvlExit = false;
@@ -84,7 +87,7 @@ public class Player  {
 		body.createFixture(fdef);
 		verticleState = State.STANDING;
 		
-		System.out.println(body.getPosition());
+		//System.out.println(body.getPosition());
 	}
 	
 	private void flipAnimation() {
@@ -170,18 +173,13 @@ public class Player  {
 	 * @author cgeschwendt
 	 */
 	public void resetPosition(float x, float y) {
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
-		bdef.type = BodyDef.BodyType.DynamicBody;
-		body = world.createBody(bdef);
-		FixtureDef fdef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-
-		shape.setRadius(33f / GameInfo.PPM);
-		fdef.friction = 1.5f;
-		fdef.shape = shape;
-		body.createFixture(fdef);
-		verticleState = State.STANDING;
+		if(!faceingRight) {
+			sprite.flip(true, false);
+			faceingRight = true;
+			this.flipAnimation();
+		}
+		this.fellIntoLiquid = false;
+		this.createbody(x, y);
 	}
 
 	/**
