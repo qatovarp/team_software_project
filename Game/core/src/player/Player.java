@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -37,12 +38,23 @@ public class Player {
 
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
+
+	public boolean atLvlExit;
+	
+	public boolean fellIntoLiquid;
+	
+	public Player() {
+		this.playerScore = 0;
+		fellIntoLiquid = false;
+	}
+
 	
 	private Sound jump;
 	private Sound walking;
 	
 	public Body body;
 	private World world;
+
 
 	
 
@@ -67,6 +79,11 @@ public class Player {
 		
 
 		this.world = world;
+		createbody(x,y);
+		sprite.setPosition(GameInfo.WIDTH/2 -33,  y / GameInfo.PPM +111);
+
+
+		this.world = world;
 		createbody(x, y);
 		sprite.setPosition(GameInfo.WIDTH / 2 - 33, y / GameInfo.PPM + 111);
 		this.setLifeQuantity();
@@ -87,6 +104,7 @@ public class Player {
 		fdef.shape = shape;
 		body.createFixture(fdef);
 		verticleState = State.STANDING;
+
 	}
 
 	/**
@@ -192,7 +210,7 @@ public class Player {
 	 * @author cgeschwendt
 	 */
 	public void resetPosition(float x, float y) {
-		verticleState = State.STANDING;
+  verticleState = State.STANDING;
 		body.setTransform(x / GameInfo.PPM, y / GameInfo.PPM, 0);
 	}
 

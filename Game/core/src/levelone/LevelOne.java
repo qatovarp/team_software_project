@@ -8,6 +8,8 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -64,9 +66,12 @@ public class LevelOne implements Screen {
 	// Box 2D variables
 	private World world;
 	private Box2DDebugRenderer b2dr;
+  
+  public static Sprite backgroundSprite;
+	
 
 	public boolean deleteAnObject;
-
+	
 	public Player getPlayer() {
 		return player;
 	}
@@ -157,7 +162,12 @@ public class LevelOne implements Screen {
 						fdef.isSensor = true;
 					} else if (objName.equals("coin")) {
 						fdef.isSensor = true;
-					} else if (objName.equals("wall")) {
+					}
+					else if(objName.equals("drown")) {
+						fdef.isSensor = true;
+					}
+					else if(objName.equals("wall")) {
+
 						fdef.friction = 0.01f;
 					} else if (objName.equals("slope")) {
 						fdef.friction -= 0.2f;
@@ -207,18 +217,22 @@ public class LevelOne implements Screen {
 	 */
 	public void update(float dt) {
 
-		if (deleteAnObject == true) {
-			Array<Body> bodies = new Array<Body>();
-			world.getBodies(bodies);
-			for (int i = 0; i < bodies.size; i++) {
-				if (!world.isLocked()) {
-					if (bodies.get(i).getUserData() != null && bodies.get(i).getUserData().equals("delete")) {
-						world.destroyBody(bodies.get(i));
-					}
-				}
-			}
-			deleteAnObject = false;
-		}
+		
+		if(deleteAnObject == true)
+	    {
+	        Array<Body> bodies = new Array<Body>();
+	        world.getBodies(bodies);
+	        for(int i = 0; i < bodies.size; i++)
+	        {
+	            if(!world.isLocked()) {
+	            	if(bodies.get(i).getUserData() != null && bodies.get(i).getUserData().equals("delete")) {
+	            		world.destroyBody(bodies.get(i));
+	            	}
+	            }
+	        }
+	        deleteAnObject = false;
+	    }
+
 
 		handleInput(dt);
 		this.offmapCheck();
@@ -229,6 +243,16 @@ public class LevelOne implements Screen {
 		
 		this.updateCamera();
 		
+        world.step(1 / 60f, 6, 2);
+        if((game.getplayer().position().y+150f/GameInfo.PPM) > 3f) {
+    		//player.setPos(950f/ GameInfo.PPM +111);
+        	mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y+150f/GameInfo.PPM, 0);
+        }
+        else {
+    		//player.setPos(this.player.position().y*100-950f);
+        	mainCamera.position.set(game.getplayer().position().x, mainCamera.position.y, 0);
+        }
+
 		mainCamera.update();
 		maprenderer.setView(mainCamera);
 
@@ -242,11 +266,17 @@ public class LevelOne implements Screen {
 		Gdx.gl.glClearColor( .2f,.3f,.8f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		// Renders in the map and objects
-		maprenderer.render();
-		//b2dr.render(world, mainCamera.combined);
 
-		// draws onto the screen the HUD
+		game.getBatch().begin();
+        backgroundSprite.draw(game.getBatch());
+		game.getBatch().end();
+		
+	//Renders in the map and objects 
+		maprenderer.render();
+	  b2dr.render(world, mainCamera.combined);
+		
+	//draws onto the screen the HUD
+
 		game.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
 
@@ -257,30 +287,35 @@ public class LevelOne implements Screen {
 
 		// draws the player to the screen
 		game.getBatch().begin();
-		this.drawPlayerAnimation();
+    	if(player.fellIntoLiquid == false) {
+    		if((game.getplayer().position().y+150f/GameInfo.PPM) > 3f) {
+    			this.drawPlayerAnimation(player.sprite.getY());
+    		}
+    		else {
+    			this.drawPlayerAnimation((player.position().y*GameInfo.PPM)-20f);
+    		}
+    	}
+    	// draw nothing if player fell in. Gives a vanishing appearance
 		game.getBatch().end();
 	
 	}
 
-	private void updateCamera() {
-		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
+
+private void drawPlayerAnimation(float posY) {
+	if(!player.isXMoving()) {
+		ElapsedTime += Gdx.graphics.getDeltaTime();
+		game.getBatch().draw(player.getAnimation().getKeyFrame(ElapsedTime, true),player.sprite.getX(), posY);
 	}
-	
-	/**
-	 * draws the desired player animation 
-	 * Based on running jumping and standing
-	 * @author cgeschwendt
-	 */
-	private void drawPlayerAnimation() {
-		if (player.isJumping()) {
-			game.getBatch().draw(player.getjumpIMG(), player.sprite.getX(),player.sprite.getY());
-		} else if (!player.isXMoving()) {
-			ElapsedTime += Gdx.graphics.getDeltaTime();
-			game.getBatch().draw(player.getAnimation().getKeyFrame(ElapsedTime, true),player.sprite.getX(),
-					player.sprite.getY());
-		} else
-			player.sprite.draw(game.getBatch());
+	else {
+		//game.getBatch().draw(player.standing, player.sprite.getX(), posY);
+		float oldPosX = player.sprite.getX();
+		float oldPosY = player.sprite.getY();
+		player.sprite.setPosition(player.sprite.getX(), posY);
+		player.sprite.draw(game.getBatch());
+		player.sprite.setPosition(oldPosX, oldPosY);
+
 	}
+}
 
 	/**
 	 * Checks if the position of the player has fallen below the map living line
