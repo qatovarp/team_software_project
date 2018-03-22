@@ -46,7 +46,7 @@ public class GameMain extends Game {
 		music = new sound();
 		batch = new SpriteBatch();
 		this.loadHighScores();
-		this.setScreen(new MainMenu(this));
+		this.setScreen(new LevelOne(this));
 	}
 
 	private void loadHighScores() {

@@ -27,22 +27,21 @@ public class Player {
 	private int lives;
 	private State verticleState;
 
-	private int playerScore = 1110;
-	public Texture standing;
+	private int playerScore = 10000;
+	private Texture standing;
+	private Texture jumpingL;
+	private Texture jumpingR;
 	public Sprite sprite;
 	private boolean faceingRight = true;
 
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
 
-	private Body body;
+	public Body body;
 	private World world;
-	
-	public boolean atLvlExit;
 
 	
 
-	
 	/**
 	 * Constructs the player into a x,y position on the screen in a given world of
 	 * entities
@@ -62,12 +61,10 @@ public class Player {
 		this.world = world;
 		createbody(x, y);
 		sprite.setPosition(GameInfo.WIDTH / 2 - 33, y / GameInfo.PPM + 111);
-
 		this.setLifeQuantity();
 	}
 
 	private void createbody(float x, float y) {
-		this.atLvlExit = false;
 		this.faceingRight = true;
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
@@ -82,10 +79,13 @@ public class Player {
 		fdef.shape = shape;
 		body.createFixture(fdef);
 		verticleState = State.STANDING;
-
-		System.out.println(body.getPosition());
 	}
 
+	/**
+	 * Flips the animation frames to switch the walking direction
+	 * 
+	 * @author cgeschwendt
+	 */
 	private void flipAnimation() {
 		Array<TextureAtlas.AtlasRegion> frames = playeratlas.getRegions();
 		for (TextureRegion frame : frames) {
@@ -100,7 +100,7 @@ public class Player {
 	 */
 	public void right() {
 		if (body.getLinearVelocity().x <= 2 && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);
+			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);	
 			if (!faceingRight) {
 				sprite.flip(true, false);
 				faceingRight = true;
@@ -135,7 +135,6 @@ public class Player {
 		if (verticleState == State.JUMPING || verticleState == State.FALLING) {
 		} else {
 			body.applyLinearImpulse(new Vector2(0, 5.8f), body.getWorldCenter(), true);
-
 			verticleState = State.JUMPING;
 		}
 	}
@@ -173,22 +172,13 @@ public class Player {
 	 * @author cgeschwendt
 	 */
 	public void resetPosition(float x, float y) {
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
-		bdef.type = BodyDef.BodyType.DynamicBody;
-		body = world.createBody(bdef);
-		FixtureDef fdef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-
-		shape.setRadius(33f / GameInfo.PPM);
-		fdef.friction = 1.5f;
-		fdef.shape = shape;
-		body.createFixture(fdef);
 		verticleState = State.STANDING;
+		body.setTransform(x / GameInfo.PPM, y / GameInfo.PPM, 0);
 	}
 
 	/**
 	 * Sets the life quantity of the player based on the game setting Difficulty;
+	 * normal : 6 difficult : 4 extream: 2
 	 * 
 	 * @author cgeschwendt
 	 */
@@ -256,29 +246,66 @@ public class Player {
 		return this.playerScore;
 	}
 
+	/**
+	 * Fetches and returns the payers walk animation
+	 * 
+	 * @author cgeschwendt
+	 * @return Animation<TextureRegion>
+	 */
 	public Animation<TextureRegion> getAnimation() {
-		playerAnimation = new Animation<TextureRegion>(1f / 11f, playeratlas.getRegions());
+		playerAnimation = new Animation<TextureRegion>(1f / 22f, playeratlas.getRegions());
 		return this.playerAnimation;
 	}
 
-
+	/**
+	 * Loads the players color based on the settings window GREEN,PINK,BLUE
+	 * 
+	 * @author cgeschwendt
+	 */
 	public void loadPlayerTexture() {
 		if (GameInfo.playerColor == GameInfo.COLOR.BLUE) {
-			standing = new Texture("player/p1_stand.png");
-			playeratlas = new TextureAtlas("player/greenPlayer.atlas");
+			standing = new Texture("player/p2_stand.png");
+			jumpingL = new Texture("player/p2_jump.png");
+			jumpingR = new Texture("player/p2_jump2.png");
+			playeratlas = new TextureAtlas("player/bluePlayer.atlas");
 		} else if (GameInfo.playerColor == GameInfo.COLOR.GREEN) {
 			standing = new Texture("player/p1_stand.png");
+			jumpingL = new Texture("player/p1_jump.png");
+			jumpingR = new Texture("player/p1_jump2.png");
 			playeratlas = new TextureAtlas("player/greenPlayer.atlas");
 		} else {
-			standing = new Texture("player/p1_stand.png");
-			playeratlas = new TextureAtlas("player/greenPlayer.atlas");
+			standing = new Texture("player/p3_stand.png");
+			jumpingL = new Texture("player/p3_jump.png");
+			jumpingR = new Texture("player/p3_jump2.png");
+			playeratlas = new TextureAtlas("player/pinkPlayer.atlas");
 		}
-		}
+	}
 
-	
+	/**
+	 * States if the player is jumping
+	 */
+	public boolean isJumping() {
+		if (body.getLinearVelocity().y > 0)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Fetches the jumping player animation.
+	 * 
+	 * @author cgeschwendt
+	 * @return Texture
+	 */
+	public Texture getjumpIMG() {
+		if (this.faceingRight)
+			return this.jumpingL;
+		else
+			return this.jumpingR;
+	}
+
 	public void collectCoin() {
 		this.playerScore += 50;
 	}
 
-	
 }
