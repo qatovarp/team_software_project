@@ -1,6 +1,6 @@
-Cameron
-10000
-Name
-10000
-Created Coins!
-550
+First
+0
+Second
+0
+Third
+0
