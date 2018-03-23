@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -59,6 +60,10 @@ public class Player {
 		elapsedTime = 0;
 		hearts = new Hearts(game);
 		this.setLifeQuantity();
+	}
+	
+	public void playerConstruct(World world, MapObject playerSpawner) {
+		playerConstruct(world, playerSpawner.getProperties().get("x", float.class), playerSpawner.getProperties().get("y", float.class));
 	}
 
 	/**

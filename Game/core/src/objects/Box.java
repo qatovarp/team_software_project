@@ -1,28 +1,26 @@
 package objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import levelone.GenericLevel;
 
 
 public class Box extends Item {
-
-	public Texture texture;
 	
-    public Box(GenericLevel screen, float x, float y) {
-        super(screen, x, y);
-		texture = new Texture("objects/boxAlt.png");
-		this.setRegion(this.texture);
+    public Box(World world, MapObject object) {
+        super(world, object);
+		this.setTexture(new Texture("objects/boxAlt.png"));
+		this.setRegion(this.getTexture());
     }
 
     @Override
     public void defineItem() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set((getX()+getWidth()/2f)/ GameInfo.PPM, (getY()+getHeight()/2f)/ GameInfo.PPM);
+        bdef.position.set((getX() / GameInfo.PPM) + (getWidth() / 2f), (getY() / GameInfo.PPM) + (getHeight() / 2f));
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
         body.setUserData(this);
