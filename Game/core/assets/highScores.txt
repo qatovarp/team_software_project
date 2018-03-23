@@ -2,5 +2,5 @@ Cameron
 10000
 Name
 10000
-rob
-10000
+Created Coins!
+550

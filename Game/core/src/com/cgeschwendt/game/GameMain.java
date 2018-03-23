@@ -9,11 +9,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import Mainmenu.MainMenu;
+import gameover.GameOver;
+import levelone.GenericLevel;
 import levelone.LevelOne;
+import player.Hearts;
 import player.Player;
 
 
@@ -21,11 +26,10 @@ public class GameMain extends Game {
 	// the one and only SpriteBatch for the game;
 	private SpriteBatch batch;
 	// the one player for the game;
-	private Player player = new Player();
+	private Player player;
 	private Screen prevScreen;
 	private Music music;
-	
-		
+	private Sprite backgroundSprite;		
 
 	public int highScore1;
 	public int highScore2;
@@ -35,7 +39,6 @@ public class GameMain extends Game {
 	public String highScore3Name;
 
 	private int currentLvlID;
-
 	
 	@Override
 	public void create () {
@@ -47,6 +50,8 @@ public class GameMain extends Game {
 		batch = new SpriteBatch();
 		this.loadHighScores();
 		this.setScreen(new MainMenu(this));
+		currentLvlID = 0;
+		player = new Player(this);
 	}
 
 	private void loadHighScores() {
@@ -94,9 +99,12 @@ public class GameMain extends Game {
 	public Screen getPrevScreen() {
 		return this.prevScreen;
 	}
+
+	/* ==================== Music ==================== */
 	public Music getMusic() {
 		return this.music;
 	}
+	
 	public void setMusic(String name) {
 		music.dispose();
 		music = Gdx.audio.newMusic(Gdx.files.internal(name));	
@@ -105,6 +113,23 @@ public class GameMain extends Game {
 		music.setVolume(.06f);
 	}
 	
+	public void setMusic() {
+		this.setMusic(GameInfo.getMusicFileName(currentLvlID));
+	}
+	
+	public void konami() {
+		if(GameInfo.konami) {
+			setMusic(GameInfo.getMusicFileName(-1));
+		}
+		else {
+			music.dispose();
+			music = Gdx.audio.newMusic(Gdx.files.internal("music/Lost-Jungle.mp3"));	
+			music.setVolume(.2f);
+			music.setLooping(true);
+			music.play();
+		}
+	}
+	/* =============================================== */
 	
 	public int getCurrentLvlID() {
 		return currentLvlID;
@@ -115,14 +140,32 @@ public class GameMain extends Game {
 		
 		if(currentLvlID < GameInfo.getNumOfLvls() ) {
 			this.getScreen().dispose();
-			this.setScreen(new LevelOne(this));
+			this.setScreen(new GenericLevel(this));
 		}
 		else {
 			currentLvlID = 0;
 			//change screen to winning! woooo
-			// currently set it to main menu
+			// currently set it to gameover
 			this.getScreen().dispose();
-			this.setScreen(new MainMenu(this));
+			this.setScreen(new GameOver(this));
 		}
 	}
+	
+	/* ================= Background ================== */
+	public void setBackground() {
+		backgroundSprite = new Sprite(new Texture(GameInfo.getBgFileName(currentLvlID)));
+		backgroundSprite.setY(backgroundSprite.getY()-70f);
+	}
+	
+	public void renderBackground() {
+		batch.begin();
+		this.backgroundSprite.draw(batch);
+		batch.end();
+	}
+	/* =============================================== */
+	
+	public void newGameSettings() {
+		player = new Player(this);
+	}
+
 }

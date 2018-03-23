@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 public class Player {
@@ -27,12 +29,12 @@ public class Player {
 	private int lives;
 	private State verticleState;
 
-	private int playerScore = 10000;
+	private int playerScore;
 	private Texture standing;
 	private Texture jumpingL;
 	private Texture jumpingR;
 	public Sprite sprite;
-	private boolean faceingRight = true;
+	private boolean faceingRight;
 
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
@@ -43,7 +45,21 @@ public class Player {
 	public Body body;
 	private World world;
 
+	public boolean fellIntoLiquid;
+	public boolean atLvlExit;
 	
+	private float elapsedTime;
+	public Hearts hearts;
+	
+	public Player(GameMain game) {
+		playerScore = 0;
+		faceingRight = true;
+		fellIntoLiquid = false;
+		atLvlExit = false;
+		elapsedTime = 0;
+		hearts = new Hearts(game);
+		this.setLifeQuantity();
+	}
 
 	/**
 	 * Constructs the player into a x,y position on the screen in a given world of
@@ -62,13 +78,34 @@ public class Player {
 		sprite = new Sprite(standing);
 		jump = Gdx.audio.newSound(Gdx.files.internal("music/jump_08 .mp3"));	
 		walking = Gdx.audio.newSound(Gdx.files.internal("music/footstep.wav"));
-		
-		
 
 		this.world = world;
 		createbody(x, y);
 		sprite.setPosition(GameInfo.WIDTH / 2 - 33, y / GameInfo.PPM + 111);
-		this.setLifeQuantity();
+		sprite.setSize(sprite.getWidth()/GameInfo.PPM, sprite.getHeight()/GameInfo.PPM);
+	}
+	
+	public void renderPlayer(SpriteBatch batch) {
+
+    	if(fellIntoLiquid == false) {
+    		batch.begin();
+    		if (isJumping()) {
+    			batch.draw(getjumpIMG(), sprite.getX(), sprite.getY(), getjumpIMG().getWidth()/GameInfo.PPM, getjumpIMG().getHeight()/GameInfo.PPM);
+    		} 
+    		else if(!isXMoving()) {
+    			elapsedTime += Gdx.graphics.getDeltaTime();
+    			batch.draw(getAnimation().getKeyFrame(elapsedTime, true),sprite.getX(), sprite.getY(), getAnimation().getKeyFrame(elapsedTime, true).getRegionWidth()/GameInfo.PPM, getAnimation().getKeyFrame(elapsedTime, true).getRegionHeight()/GameInfo.PPM);
+    		}
+    		else {
+    			sprite.draw(batch);
+    		}
+    		batch.end();
+    	}
+    	// draw nothing if player fell in. Gives a vanishing appearance
+	}
+	
+	public void update() {
+		sprite.setPosition(position().x - sprite.getWidth()/2f, position().y - 0.48f);
 	}
 
 	private void createbody(float x, float y) {
@@ -77,14 +114,13 @@ public class Player {
 		bdef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		body = world.createBody(bdef);
-		body.setUserData("player");
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
 
 		shape.setRadius(33f / GameInfo.PPM);
 		fdef.friction = 1.5f;
 		fdef.shape = shape;
-		body.createFixture(fdef);
+		body.createFixture(fdef).setUserData("player");
 		verticleState = State.STANDING;
 	}
 
