@@ -1,6 +1,7 @@
 package Mainmenu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +9,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
+
+import pausemenu.PauseMenu;
+import player.Player.State;
 
 public class MainMenu implements Screen {
 
@@ -22,10 +26,13 @@ public class MainMenu implements Screen {
 	private Texture Aeson;
 	private int screenTimer;
 	
+	private int konami;
+	
 	private Music music;
 
 	public MainMenu(GameMain game) {
 		this.game = game;
+		konami = 0;
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
@@ -47,6 +54,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
+		checkKonami();
 		// clears screen and starts redraw.
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,6 +79,44 @@ public class MainMenu implements Screen {
 		// Counts the timer down each render
 		if (screenTimer != 0)
 			screenTimer = screenTimer - 1;
+	}
+	
+	public void checkKonami() {
+		
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			if(konami == 0 || konami == 1) konami ++;
+			else konami = 0;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+			if(konami == 2 || konami == 3) konami ++;
+			else konami = 0;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+			if(konami == 4 || konami == 6) konami ++;
+			else konami = 0;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			if(konami == 5 || konami == 7) konami ++;
+			else konami = 0;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+			if(konami == 8) konami ++;
+			else konami = 0;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+			if(konami == 9) konami ++;
+			else konami = 0;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)){
+			konami = 0;
+		}
+
+		if(konami == 10) {
+			GameInfo.konami = !GameInfo.konami;
+			game.konami();
+			konami = 0;
+		}
+		 
 	}
 
 	@Override
