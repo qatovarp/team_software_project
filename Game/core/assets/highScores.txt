@@ -2,5 +2,5 @@ Cameron
 10000
 Name
 10000
-player1
-102
+Created Coins!
+550

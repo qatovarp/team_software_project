@@ -2,6 +2,7 @@ package player;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
@@ -39,67 +40,70 @@ public class Hearts {
 	 */
 	public void updateHearts() {
 		int lives = game.getplayer().getNumLives();
+		SpriteBatch batch = game.getBatch();
+		batch.begin();
 		if (GameInfo.normal) {
 			switch (lives) {
 			case 6:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 5:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(halfHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(halfHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 4:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 3:
-				game.getBatch().draw(halfHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(halfHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 2:
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 1:
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(halfHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(halfHeart, GameInfo.WIDTH / 2 - 60f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 + 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			}
 		} else if (GameInfo.difficult) {
 			switch (lives) {
 			case 4:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 3:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(halfHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(halfHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 2:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 1:
-				game.getBatch().draw(halfHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
-				game.getBatch().draw(emptyHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(halfHeart, GameInfo.WIDTH / 2 - 40f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(emptyHeart, GameInfo.WIDTH / 2 , GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			}
 		} else if (GameInfo.extream) {
 			switch (lives) {
 			case 2:
-				game.getBatch().draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(fullHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			case 1:
-				game.getBatch().draw(halfHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
+				batch.draw(halfHeart, GameInfo.WIDTH / 2 - 20f, GameInfo.HEIGHT - 90, 40f, 40f);
 				break;
 			}	
 		}
+		batch.end();
 	}
 }

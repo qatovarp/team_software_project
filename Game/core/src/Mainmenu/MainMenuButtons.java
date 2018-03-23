@@ -15,6 +15,7 @@ import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import highscoremenu.HighScoreMenu;
+import levelone.GenericLevel;
 import levelone.LevelOne;
 import optionsmenu.OptionsMenu;
 
@@ -95,7 +96,8 @@ public class MainMenuButtons {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				game.getScreen().dispose();
-				game.setScreen(new LevelOne(game));
+				game.newGameSettings();
+				game.setScreen(new GenericLevel(game));
 				GameInfo.firstMainMenu =false;
 			}	
 		});
