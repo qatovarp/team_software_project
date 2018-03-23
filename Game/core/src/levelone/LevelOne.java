@@ -232,7 +232,8 @@ public class LevelOne implements Screen {
 	void offmapCheck() {
 		if(mainCamera.position.y < 3) {
 			game.getplayer().playerLoseLife();
-			game.getplayer().resetPosition(128f, 950f);
+			game.getplayer().playerLoseLife();
+			game.getplayer().resetPosition(260f, 1200f);
 			this.playerDied();
 		}
 	}
