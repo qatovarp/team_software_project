@@ -1,22 +1,20 @@
 package objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.cgeschwendt.game.gameinfo.GameInfo;
-
-import levelone.GenericLevel;
 
 
 public class Coin extends Item {
-
-	public Texture goldCoin;
 	
-    public Coin(GenericLevel screen, float x, float y) {
-        super(screen, x, y);
-		goldCoin = new Texture("objects/coinGold.png");
-		this.setRegion(this.goldCoin);
+    public Coin(World world, MapObject object) {
+        super(world, object);
+		this.setTexture(new Texture("objects/coinGold.png"));
+		this.setRegion(this.getTexture());
     }
 
     @Override

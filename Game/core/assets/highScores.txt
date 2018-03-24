@@ -1,6 +1,7 @@
-kafsdf
-350
-Player1
-100
-Cameron
-100
+First
+0
+Second
+0
+Third
+0
+

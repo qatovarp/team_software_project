@@ -4,8 +4,10 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import objects.Item;
 
 import levelone.GenericLevel;
+
 
  
 public class CustomContactListener implements ContactListener {
@@ -23,21 +25,19 @@ public class CustomContactListener implements ContactListener {
 		
 		if(faData != null && fbData != null) {
 			if(faData.equals("player") && fbData.equals("coin")) {
-				contact.getFixtureB().setUserData("delete");
-				parent.deleteAnObject = true;
+				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
 				parent.getPlayer().collectCoin();
 			}
 			else if(fbData.equals("player") && faData.equals("coin")) {
-				contact.getFixtureA().setUserData("delete");
-				parent.deleteAnObject = true;
+				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
 				parent.getPlayer().collectCoin();
 			}
-			else if(faData.equals("player") && fbData.equals("LvlExit")
-				 || fbData.equals("player") && faData.equals("LvlExit")) {
+			else if(faData.equals("player") && fbData.equals("exit")
+				 || fbData.equals("player") && faData.equals("exit")) {
 				parent.getPlayer().atLvlExit = true;
 			}
-			else if(faData.equals("player") && fbData.equals("drown")
-				 || fbData.equals("player") && faData.equals("drown")) {
+			else if(faData.equals("player") && fbData.equals("water")
+				 || fbData.equals("player") && faData.equals("water")) {
 					parent.getPlayer().fellIntoLiquid = true;
 			}
 		}
