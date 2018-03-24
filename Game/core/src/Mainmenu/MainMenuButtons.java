@@ -16,7 +16,7 @@ import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import highscoremenu.HighScoreMenu;
 import levelone.GenericLevel;
-import levelone.LevelOne;
+
 import optionsmenu.OptionsMenu;
 
 public class MainMenuButtons {

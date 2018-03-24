@@ -18,61 +18,29 @@ public class GameInfo {
 	public static enum COLOR {BLUE,GREEN,PINK };
 	public static COLOR playerColor = COLOR.GREEN;
 	
+	
+	public static boolean GREENKEY = false;
+	
+	
 	public static boolean sound = true;
-	public static boolean konami = false;
 
-	private static String[] levels = {
+	public static int levelNum = 0;
+
+	final public static String[] levels = {
 			"TiledLevels/Demo.tmx",
 			"TiledLevels/LevelOne.tmx"
 	};
 	
-	private static String[] backgrounds = {
+	final public static String[] backgrounds = {
+			"backgrounds/uncolored_castle.png",
 			"backgrounds/uncolored_castle.png"
 	};
 	
-	private static String[] music = {
+	final public static String[] music = {
 			"music/Lost-Jungle.mp3",
 			"music/Waltz.mp3"
 	};
 	
-	private static String[] konamiMusic = {
-			"music/music1.mp3",
-			"music/music2.mp3"
-	};
+	final public static String MAINMENUMUSIC = "music/Lost-Jungle.mp3";
 
-	public static String getLvlFileName(int i) {
-		return levels[i];
-	}
-	
-	public static String getBgFileName(int currentLevelID) {
-		switch (currentLevelID) {
-		//case 0:
-			//return backgrounds[0];
-		default:
-			return backgrounds[0];
-		}
-	}
-	
-	public static String getMusicFileName(int currentLevelID) {
-		int i;
-		
-		switch (currentLevelID) {
-		case -1: // main menu
-			i = 0;
-			break;
-		default:
-			i = 1;
-		}
-
-		if(konami) {
-			return konamiMusic[i];
-		}
-		else {
-			return music[i];
-		}
-	}
-	
-	public static int getNumOfLvls() {
-		return levels.length;
-	}
 }
