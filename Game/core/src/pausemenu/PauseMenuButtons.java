@@ -93,6 +93,10 @@ public class PauseMenuButtons {
 			public void changed(ChangeEvent event, Actor actor) {
 				game.getScreen().dispose();
 				game.setScreen(new MainMenu(game));
+				GameInfo.levelNum =0;
+				game.setMusic("Lost-Jungle.mp3");
+				if(!GameInfo.sound)
+					game.getMusic().pause();
 			}
 		});
 		this.exitGameBtn.addListener(new ChangeListener() {

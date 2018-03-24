@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import levelone.GenericLevel;
-import levelone.LevelOne;
+
  
 public class CustomContactListener implements ContactListener {
  

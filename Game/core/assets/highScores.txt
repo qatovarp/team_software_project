@@ -1,6 +1,6 @@
+kafsdf
+350
+Player1
+100
 Cameron
-10000
-Name
-10000
-Created Coins!
-550
+100

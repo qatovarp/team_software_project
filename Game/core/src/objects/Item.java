@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import levelone.GenericLevel;
-import levelone.LevelOne;
 
 public abstract class Item extends Sprite {
     protected GenericLevel screen;

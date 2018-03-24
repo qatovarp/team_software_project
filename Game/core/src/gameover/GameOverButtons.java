@@ -73,6 +73,10 @@ public class GameOverButtons {
 				GameInfo.firstMainMenu = false;
 				game.getScreen().dispose();
 				game.setScreen(new MainMenu(game));
+				
+				game.setMusic("Lost-Jungle.mp3");
+				if(!GameInfo.sound)
+					game.getMusic().pause();
 			}	
 		});
 		

@@ -54,7 +54,6 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
-		checkKonami();
 		// clears screen and starts redraw.
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -81,43 +80,6 @@ public class MainMenu implements Screen {
 			screenTimer = screenTimer - 1;
 	}
 	
-	public void checkKonami() {
-		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			if(konami == 0 || konami == 1) konami ++;
-			else konami = 0;
-		}
-		else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-			if(konami == 2 || konami == 3) konami ++;
-			else konami = 0;
-		}
-		else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-			if(konami == 4 || konami == 6) konami ++;
-			else konami = 0;
-		}
-		else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-			if(konami == 5 || konami == 7) konami ++;
-			else konami = 0;
-		}
-		else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-			if(konami == 8) konami ++;
-			else konami = 0;
-		}
-		else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-			if(konami == 9) konami ++;
-			else konami = 0;
-		}
-		else if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)){
-			konami = 0;
-		}
-
-		if(konami == 10) {
-			GameInfo.konami = !GameInfo.konami;
-			game.konami();
-			konami = 0;
-		}
-		 
-	}
 
 	@Override
 	public void resize(int width, int height) {

@@ -17,7 +17,6 @@ import com.cgeschwendt.game.gameinfo.GameInfo;
 import Mainmenu.MainMenu;
 import gameover.GameOver;
 import levelone.GenericLevel;
-import levelone.LevelOne;
 import player.Hearts;
 import player.Player;
 
@@ -107,38 +106,20 @@ public class GameMain extends Game {
 	
 	public void setMusic(String name) {
 		music.dispose();
-		music = Gdx.audio.newMusic(Gdx.files.internal(name));	
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/"+name));	
 		music.play();
 		music.setLooping(true);
 		music.setVolume(.06f);
 	}
 	
-	public void setMusic() {
-		this.setMusic(GameInfo.getMusicFileName(currentLvlID));
-	}
-	
-	public void konami() {
-		if(GameInfo.konami) {
-			setMusic(GameInfo.getMusicFileName(-1));
-		}
-		else {
-			music.dispose();
-			music = Gdx.audio.newMusic(Gdx.files.internal("music/Lost-Jungle.mp3"));	
-			music.setVolume(.2f);
-			music.setLooping(true);
-			music.play();
-		}
-	}
 	/* =============================================== */
 	
-	public int getCurrentLvlID() {
-		return currentLvlID;
-	}
+
 	
 	public void loadNextLevel() {
-		currentLvlID += 1;
+		GameInfo.levelNum += 1;
 		
-		if(currentLvlID < GameInfo.getNumOfLvls() ) {
+		if(currentLvlID < GameInfo.levels.length ) {
 			this.getScreen().dispose();
 			this.setScreen(new GenericLevel(this));
 		}
@@ -153,7 +134,7 @@ public class GameMain extends Game {
 	
 	/* ================= Background ================== */
 	public void setBackground() {
-		backgroundSprite = new Sprite(new Texture(GameInfo.getBgFileName(currentLvlID)));
+		backgroundSprite = new Sprite(new Texture(GameInfo.backgrounds[GameInfo.levelNum])) ;
 		backgroundSprite.setY(backgroundSprite.getY()-70f);
 	}
 	

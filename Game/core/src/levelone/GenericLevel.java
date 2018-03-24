@@ -73,14 +73,18 @@ public class GenericLevel implements Screen {
 		hud.resetTimer(25000);
 		
 		game.setBackground();
-		game.setMusic();
+		//Sets the levels music
+		//CHANGE to GameInfo ARRAY.levelID
+		game.setMusic("Waltz.mp3");
+		if(!GameInfo.sound)
+			game.getMusic().pause();
 
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
 		
 		// loads the map to the screen.
 		maploader = new TmxMapLoader();
-		map = maploader.load(GameInfo.getLvlFileName(game.getCurrentLvlID()));
+		map = maploader.load(GameInfo.levels[GameInfo.levelNum]);
 		maprenderer = new OrthogonalTiledMapRenderer(map, (1f / GameInfo.PPM));
 
 		//collision renderer
@@ -96,6 +100,152 @@ public class GenericLevel implements Screen {
 		player.playerConstruct(world, playerSpawner.getProperties().get("x", float.class), playerSpawner.getProperties().get("y", float.class));
 		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
 
+		this.createEntities();
+	}
+
+	public World getWorld() {
+		return this.world;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public void spawnPlayer() {
+		player.fellIntoLiquid = false;
+		player.resetPosition(playerSpawner.getProperties().get("x", float.class), playerSpawner.getProperties().get("y", float.class));
+	}
+	
+	public void handleInput(float dt) {
+		game.getplayer().setVerticleState();
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT ) && game.getplayer().getVerticleState() != State.FALLING ) {
+			game.getplayer().right();
+		}
+	
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT ) &&  game.getplayer().getVerticleState() != State.FALLING) {
+			game.getplayer().left();
+		}
+	
+		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) {
+			if(player.atLvlExit == true) {
+				player.atLvlExit = false;
+				this.game.loadNextLevel();
+			}
+			else {
+				game.getplayer().jump();
+			}
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			game.setScreen(new PauseMenu(game));
+		}
+	}
+	
+	public void update(float dt) {
+		
+		handleInput(dt);
+		handleObjectDeletion();
+		this.offmapCheck();
+		hud.updateTime();
+		
+        world.step(1 / 60f, 6, 2);
+
+		Array<Body> bodies = new Array<Body>();
+		world.getBodies(bodies);
+		for(Body body : bodies) {
+			if(body.getUserData() instanceof Item) {
+				((Item)body.getUserData()).update(dt);
+			}
+		}
+		player.update();
+		updateCamera();	
+	}
+	
+	public void updateCamera() {
+		if(player.fellIntoLiquid) {
+        	mainCamera.position.set(mainCamera.position.x, mainCamera.position.y, 0);
+		}
+		else if(game.getplayer().position().y > 3f) {
+        	mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y+150f/GameInfo.PPM, 0);
+        }
+        else {
+        	mainCamera.position.set(game.getplayer().position().x, mainCamera.position.y, 0);
+        }
+		mainCamera.update();
+		maprenderer.setView(mainCamera);
+	}
+	
+	public void handleObjectDeletion() {
+		if(deleteAnObject == true)
+	    {
+	        Array<Fixture> fixtures = new Array<Fixture>();
+	        world.getFixtures(fixtures);
+	        for(int i = 0; i < fixtures.size; i++)
+	        {
+	            if(!world.isLocked()) {
+	            	if(fixtures.get(i).getUserData() != null && fixtures.get(i).getUserData().equals("delete")) {
+	            		world.destroyBody(fixtures.get(i).getBody());
+	            	}
+	            }
+	        }
+	        deleteAnObject = false;
+	    }
+	}
+	
+	@Override
+	public void render(float delta) {
+		update(delta);
+		SpriteBatch batch = game.getBatch();
+	//clears and redraws the screen
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		game.renderBackground();
+		
+		//Draw the map
+		maprenderer.render();
+		// Draw the Collision boxes (DUBUG)
+	    //b2dr.render(world, mainCamera.combined);
+
+	    batch.setProjectionMatrix(mainCamera.combined);
+		
+	    batch.begin();
+		Array<Body> bodies = new Array<Body>();
+		world.getBodies(bodies);
+		for(Body body : bodies) {
+			if(body.getUserData() instanceof Item) {
+				((Item)body.getUserData()).draw(batch);
+			}
+		}
+		batch.end();
+
+		// Draw the player
+		player.renderPlayer(batch);
+		
+		//draws onto the screen the HUD
+		batch.setProjectionMatrix(hud.stage.getCamera().combined);
+		hud.stage.draw();	
+		player.hearts.updateHearts();
+
+	}
+
+	private void offmapCheck() {
+		if(game.getplayer().position().y < -5) {
+			game.getplayer().playerLoseLife();
+			game.getplayer().playerLoseLife();
+			this.spawnPlayer();
+			this.playerDied();
+		}		
+	}
+	//procedes to move game as if the player had died.
+	private void playerDied() {
+		if(game.getplayer().playerDead()) {
+			game.getScreen().dispose();
+			game.setScreen(new GameOver(game));
+		}
+	}
+	
+	private void createEntities() {
 		BodyDef bdef;
 		Shape shape = new PolygonShape();
 		FixtureDef fdef;
@@ -204,149 +354,6 @@ public class GenericLevel implements Screen {
 		}
 		
 		shape.dispose();
-	}
-
-	public World getWorld() {
-		return this.world;
-	}
-	
-	public Player getPlayer() {
-		return this.player;
-	}
-	
-	public void spawnPlayer() {
-		player.fellIntoLiquid = false;
-		player.resetPosition(playerSpawner.getProperties().get("x", float.class), playerSpawner.getProperties().get("y", float.class));
-	}
-	
-	public void handleInput(float dt) {
-		game.getplayer().setVerticleState();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT ) && game.getplayer().getVerticleState() != State.FALLING ) {
-			game.getplayer().right();
-		}
-	
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT ) &&  game.getplayer().getVerticleState() != State.FALLING) {
-			game.getplayer().left();
-		}
-	
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP )) {
-			if(player.atLvlExit == true) {
-				player.atLvlExit = false;
-				this.game.loadNextLevel();
-			}
-			else {
-				game.getplayer().jump();
-			}
-		}
-		
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			game.setScreen(new PauseMenu(game));
-		}
-	}
-	
-	public void update(float dt) {
-		
-		handleInput(dt);
-		handleObjectDeletion();
-		this.offmapCheck();
-		hud.updateTime();
-		
-        world.step(1 / 60f, 6, 2);
-
-		Array<Body> bodies = new Array<Body>();
-		world.getBodies(bodies);
-		for(Body body : bodies) {
-			if(body.getUserData() instanceof Item) {
-				((Item)body.getUserData()).update(dt);
-			}
-		}
-
-		player.update();
-		updateCamera();
-		
-	}
-	
-	public void updateCamera() {
-		if(player.fellIntoLiquid) {
-        	mainCamera.position.set(mainCamera.position.x, mainCamera.position.y, 0);
-		}
-		else if(game.getplayer().position().y > 3f) {
-        	mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y+150f/GameInfo.PPM, 0);
-        }
-        else {
-        	mainCamera.position.set(game.getplayer().position().x, mainCamera.position.y, 0);
-        }
-		mainCamera.update();
-		maprenderer.setView(mainCamera);
-	}
-	
-	public void handleObjectDeletion() {
-		if(deleteAnObject == true)
-	    {
-	        Array<Fixture> fixtures = new Array<Fixture>();
-	        world.getFixtures(fixtures);
-	        for(int i = 0; i < fixtures.size; i++)
-	        {
-	            if(!world.isLocked()) {
-	            	if(fixtures.get(i).getUserData() != null && fixtures.get(i).getUserData().equals("delete")) {
-	            		world.destroyBody(fixtures.get(i).getBody());
-	            	}
-	            }
-	        }
-	        deleteAnObject = false;
-	    }
-	}
-	
-	@Override
-	public void render(float delta) {
-		update(delta);
-		SpriteBatch batch = game.getBatch();
-	//clears and redraws the screen
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		game.renderBackground();
-		
-		//Draw the map
-		maprenderer.render();
-		// Draw the Collision boxes (DUBUG)
-	    //b2dr.render(world, mainCamera.combined);
-
-	    batch.setProjectionMatrix(mainCamera.combined);
-		
-	    batch.begin();
-		Array<Body> bodies = new Array<Body>();
-		world.getBodies(bodies);
-		for(Body body : bodies) {
-			if(body.getUserData() instanceof Item) {
-				((Item)body.getUserData()).draw(batch);
-			}
-		}
-		batch.end();
-
-		// Draw the player
-		player.renderPlayer(batch);
-		
-		//draws onto the screen the HUD
-		batch.setProjectionMatrix(hud.stage.getCamera().combined);
-		hud.stage.draw();	
-		player.hearts.updateHearts();
-
-	}
-
-	private void offmapCheck() {
-		if(game.getplayer().position().y < -5) {
-			game.getplayer().playerLoseLife();
-			this.spawnPlayer();
-			this.playerDied();
-		}		
-	}
-	//procedes to move game as if the player had died.
-	private void playerDied() {
-		if(game.getplayer().playerDead()) {
-			game.getScreen().dispose();
-			game.setScreen(new GameOver(game));
-		}
 	}
 		
 	@Override
