@@ -26,11 +26,11 @@ public class CustomContactListener implements ContactListener {
 		if(faData != null && fbData != null) {
 			if(faData.equals("player") && fbData.equals("coin")) {
 				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
-				parent.getPlayer().collectCoin();
+				parent.getPlayer().setPlayerScore(50);
 			}
 			else if(fbData.equals("player") && faData.equals("coin")) {
 				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
-				parent.getPlayer().collectCoin();
+				parent.getPlayer().setPlayerScore(50);
 			}
 			else if(faData.equals("player") && fbData.equals("exit")
 				 || fbData.equals("player") && faData.equals("exit")) {

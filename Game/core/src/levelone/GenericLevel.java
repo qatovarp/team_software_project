@@ -98,9 +98,27 @@ public class GenericLevel implements Screen {
 			String objName = object.getName();
 
 			/*====================== Create Objects =======================*/
+			
 			if(objName != null) {				
 				if(objName.equals("coin")) {
-					new Coin(world, object);
+					continue;
+				}
+				else if(objName.equals("button")) {
+					continue;
+				}
+				else if(objName.equals("spike")) {
+					continue;
+				}
+				else if(objName.equals("flag")) {
+					continue;
+				}
+				else if(objName.equals("diamond")) {
+					continue;
+				}
+				else if(objName.equals("spring")) {
+					continue;
+				}
+				else if(objName.equals("key")) {
 					continue;
 				}
 				else if(objName.equals("player")) {
@@ -108,10 +126,13 @@ public class GenericLevel implements Screen {
 					continue;
 				}
 				else if(objName.equals("box")) {
-					new Box(world, object);
 					continue;
 				}
+				
+		
+				
 			}
+		
 			/*=============================================================*/
 			
 			bdef = new BodyDef();

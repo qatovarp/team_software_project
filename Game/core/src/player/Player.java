@@ -364,8 +364,8 @@ public class Player {
 			return this.jumpingR;
 	}
 
-	public void collectCoin() {
-		this.playerScore += 50;
+	public void setPlayerScore(int points) {
+		this.playerScore  += points;	
 	}
 
 }
