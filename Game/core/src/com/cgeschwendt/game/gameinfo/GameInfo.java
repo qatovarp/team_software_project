@@ -18,6 +18,11 @@ public class GameInfo {
 	public static enum COLOR {BLUE,GREEN,PINK };
 	public static COLOR playerColor = COLOR.GREEN;
 	
+	public static boolean HASGREENKEY = false;
+	public static boolean HASBLUEKEY = false;
+	public static boolean HASORANGEKEY = false;
+	public static boolean HASYELLOWKEY = false;
+	
 	
 	public static boolean GREENKEY = false;
 	
@@ -27,8 +32,9 @@ public class GameInfo {
 	public static int levelNum = 0;
 
 	final public static String[] levels = {
-			"TiledLevels/Demo.tmx",
-			"TiledLevels/LevelOne.tmx"
+			"TiledLevels/levelTwo.tmx",
+		//	"TiledLevels/Demo.tmx",
+		//	"TiledLevels/LevelOne.tmx"
 	};
 	
 	final public static String[] backgrounds = {
