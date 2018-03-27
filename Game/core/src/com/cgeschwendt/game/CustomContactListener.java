@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import objects.Item;
-
+import player.Player;
 import levelone.GenericLevel;
 
 
@@ -21,97 +21,125 @@ public class CustomContactListener implements ContactListener {
 	public CustomContactListener(GenericLevel parent) {
 		this.parent = parent;
 	}
- 
-	@Override
-	public void beginContact(Contact contact) {
-		Object faData = contact.getFixtureA().getUserData();
-		Object fbData = contact.getFixtureB().getUserData();
-		
-		if(faData != null && fbData != null) {
-			if(faData.equals("player") && fbData.equals("gold coin")) {
-				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
-				parent.getPlayer().setPlayerScore(250);
-			}
-			else if(fbData.equals("player") && faData.equals("gold coin")) {
-				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
-				parent.getPlayer().setPlayerScore(250);
-			}
-			else if(faData.equals("player") && fbData.equals("silver coin")) {
-				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
-				parent.getPlayer().setPlayerScore(100);
-			}
-			else if(fbData.equals("player") && faData.equals("silver coin")) {
-				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
-				parent.getPlayer().setPlayerScore(100);
-			}
-			else if(faData.equals("player") && fbData.equals("bronze coin")) {
-				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
-				parent.getPlayer().setPlayerScore(25);
-			}
-			else if(fbData.equals("player") && faData.equals("bronze coin")) {
-				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
-				parent.getPlayer().setPlayerScore(25);
-			}
-			
-			
-			else if(faData.equals("player") && fbData.equals("blue key")) {
-				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
-				GameInfo.HASBLUEKEY = true;
-			}
-			else if(fbData.equals("player") && faData.equals("blue key")) {
-				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
-				GameInfo.HASBLUEKEY = true;
-			}
-			else if(faData.equals("player") && fbData.equals("green key")) {
-				((Item)contact.getFixtureB().getBody().getUserData()).destroy();
-				GameInfo.HASGREENKEY = true;
-			}
-			else if(fbData.equals("player") && faData.equals("green key")) {
-				((Item)contact.getFixtureA().getBody().getUserData()).destroy();
-				GameInfo.HASGREENKEY = true;
-			}
-			
-			else if(faData.equals("player") && fbData.equals("green lock") && GameInfo.HASGREENKEY) {
-				Array<Fixture> fixture = new Array<Fixture>();
-				parent.world.getFixtures(fixture);
-				for(Fixture fix: fixture) {
-					if(fix.getUserData().equals("green lock"))
-						((Item)fix.getBody().getUserData()).destroy();
-			}
-			}
-			else if(fbData.equals("player") && faData.equals("green lock") && GameInfo.HASGREENKEY) {
-				Array<Fixture> fixture = new Array<Fixture>();
-				parent.world.getFixtures(fixture);
-				for(Fixture fix: fixture) {
-					if(fix.getUserData().equals("green lock"))
-						((Item)fix.getBody().getUserData()).destroy();
-				
-			}
-			}
-			
-			
-			else if(faData.equals("player") && fbData.equals("exit")
-				 || fbData.equals("player") && faData.equals("exit")) {
-				parent.getPlayer().atLvlExit = true;
-			}
-			else if(faData.equals("player") && fbData.equals("water")
-				 || fbData.equals("player") && faData.equals("water")) {
-					parent.getPlayer().fellIntoLiquid = true;
-			}
+	
+	/**
+	 * Check if a contact is between two specific objects
+	 * 
+	 * @param contact - the contact
+	 * @param a - the name of the first object (assigned in Tiled)
+	 * @param b - the name of the second object (assigned in Tiled)
+	 * @return true if the contact is between the named objects
+	 */
+	private boolean contactBetween(Contact contact, String a, String b) {
+		if(contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)
+		|| contact.getFixtureA().getUserData().equals(b) && contact.getFixtureB().getUserData().equals(a)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Get the Item Obj from a contact.
+	 * 
+	 * THIS ASSUMES THE OTHER CONTACT IS THE PLAYER
+	 * AND THAT THIS IS AN ITEM.
+	 * 
+	 * @param contact - the contact
+	 * @return the item from a contact bewteen an item and the player
+	 */
+	private Item getItem(Contact contact) {
+		if(contact.getFixtureA().getUserData().equals("player")) {
+			return ((Item)contact.getFixtureB().getBody().getUserData());
+		}
+		else {
+			return ((Item)contact.getFixtureA().getBody().getUserData());
+		}
+	}
+	
+	/**
+	 * Check if user data exist to prevent null errors
+	 * 
+	 * @param contact - contact
+	 * @return true if user data exist for BOTH fixtures
+	 */
+	private boolean dataExist(Contact contact) {
+		if(contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Destroys all Items with fixture user data set as objName
+	 * 
+	 * @param objName - name of the item to destroy
+	 */
+	private void destroyAll(String objName) {
+		Array<Fixture> fixture = new Array<Fixture>();
+		parent.world.getFixtures(fixture);
+		for(Fixture fix: fixture) {
+			if(fix.getUserData().equals(objName))
+				((Item)fix.getBody().getUserData()).destroy();
 		}
 	}
  
 	@Override
-	public void endContact(Contact contact) {
-		Object faData = contact.getFixtureA().getUserData();
-		Object fbData = contact.getFixtureB().getUserData();
+	public void beginContact(Contact contact) {
 		
-		if(faData != null && fbData != null) {
-			if(faData.equals("player") && fbData.equals("LvlExit")
-			|| fbData.equals("player") && faData.equals("LvlExit")) {
-				parent.getPlayer().atLvlExit = false;
-			}
-		}	
+		if(!dataExist(contact)) {
+			return;
+		}
+
+		Player player = parent.getPlayer();
+		
+		if(contactBetween(contact, "player", "gold coin")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(250);
+		}
+		else if(contactBetween(contact, "player", "silver coin")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(100);
+		}
+		else if(contactBetween(contact, "player", "bronze coin")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(25);
+		}
+		else if(contactBetween(contact, "player", "blue key")) {
+			getItem(contact).destroy();
+			GameInfo.HASBLUEKEY = true;
+		}
+		else if(contactBetween(contact, "player", "green key")) {
+			getItem(contact).destroy();
+			GameInfo.HASGREENKEY = true;
+		}
+		else if(contactBetween(contact, "player", "green lock") && GameInfo.HASGREENKEY) {
+			destroyAll("green lock");
+		}
+		else if(contactBetween(contact, "player", "exit")) {
+			parent.getPlayer().atLvlExit = true;
+		}
+		else if(contactBetween(contact, "player", "water")) {
+			parent.getPlayer().fellIntoLiquid = true;
+		}
+		
+	}
+ 
+	@Override
+	public void endContact(Contact contact) {
+		
+		if(!dataExist(contact)) {
+			return;
+		}
+
+		Player player = parent.getPlayer();
+		
+		if(contactBetween(contact, "player", "LvlExit")) {
+			player.atLvlExit = false;
+		}
 	}
  
 	@Override
