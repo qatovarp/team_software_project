@@ -53,6 +53,7 @@ public class GenericLevel implements Screen {
 	public World world;
 	private Box2DDebugRenderer b2dr;
 	private MapObject playerSpawner;
+	private boolean respawnPlayer;
 
 	public GenericLevel(GameMain game) {
 		this.game = game;
@@ -62,6 +63,7 @@ public class GenericLevel implements Screen {
 
 		hud.resetTimer(25000);
 
+		respawnPlayer = false;
 		game.setBackground();
 		// Sets the levels music
 		// CHANGE to GameInfo ARRAY.levelID
@@ -196,15 +198,15 @@ public class GenericLevel implements Screen {
 
 	public void handleInput(float dt) {
 		game.getplayer().setVerticleState();
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && game.getplayer().getVerticleState() != State.FALLING) {
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && game.getplayer().getVerticleState() != State.FALLING && !player.fellIntoLiquid) {
 			game.getplayer().right();
 		}
 
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && game.getplayer().getVerticleState() != State.FALLING) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && game.getplayer().getVerticleState() != State.FALLING && !player.fellIntoLiquid) {
 			game.getplayer().left();
 		}
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && !player.fellIntoLiquid) {
 			if (player.atLvlExit == true) {
 				player.atLvlExit = false;
 				this.game.loadNextLevel();
@@ -233,6 +235,11 @@ public class GenericLevel implements Screen {
 			if (body.getUserData() instanceof Item) {
 				((Item) body.getUserData()).update(dt);
 			}
+		}
+		
+		if(this.respawnPlayer && !world.isLocked()) {
+			player.resetPosition(playerSpawner.getProperties().get("x", float.class), playerSpawner.getProperties().get("y", float.class));
+			respawnPlayer = false;
 		}
 		player.update();
 		updateCamera();
@@ -296,6 +303,15 @@ public class GenericLevel implements Screen {
 			player.resetPosition(playerSpawner.getProperties().get("x", float.class),
 					playerSpawner.getProperties().get("y", float.class));
 
+			this.playerDied();
+		}
+	}
+	
+	public void inWaterCheck() {
+		if (player.fellIntoLiquid) {
+			player.playerLoseLife();
+			player.fellIntoLiquid = false;
+			this.respawnPlayer = true;
 			this.playerDied();
 		}
 	}

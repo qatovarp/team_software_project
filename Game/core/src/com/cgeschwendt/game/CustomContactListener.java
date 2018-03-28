@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import objects.Item;
@@ -124,6 +126,12 @@ public class CustomContactListener implements ContactListener {
 		}
 		else if(contactBetween(contact, "player", "water")) {
 			parent.getPlayer().fellIntoLiquid = true;
+			Timer.schedule(new Task(){
+				@Override
+				public void run() {
+					parent.inWaterCheck();
+				}
+			}, 0.7f);
 		}
 		
 	}
