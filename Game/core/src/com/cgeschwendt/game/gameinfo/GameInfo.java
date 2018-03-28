@@ -23,6 +23,11 @@ public class GameInfo {
 	public static boolean HASORANGEKEY = false;
 	public static boolean HASYELLOWKEY = false;
 	
+	public static boolean HASGREENGEM = false;
+	public static boolean HASBLUEGEM = false;
+	public static boolean HASORANGEGEM = false;
+	public static boolean HASYELLOWGEM = false;
+	
 	
 	public static boolean GREENKEY = false;
 	
@@ -30,10 +35,11 @@ public class GameInfo {
 	public static boolean sound = true;
 
 	public static int levelNum = 0;
+	public  static boolean atLvlExit = false;
 
 	final public static String[] levels = {
 			"TiledLevels/levelTwo.tmx",
-		//	"TiledLevels/Demo.tmx",
+			"TiledLevels/levelThree.tmx",
 		//	"TiledLevels/LevelOne.tmx"
 	};
 	

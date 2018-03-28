@@ -28,16 +28,25 @@ import com.cgeschwendt.game.Hud;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import gameover.GameOver;
+import objects.BlueDiamond;
 import objects.BlueKey;
+import objects.BlueLock;
 import objects.Box;
 import objects.BronzeCoin;
+import objects.ExitDoor;
 import objects.GoldCoin;
+import objects.GreenDiamond;
 import objects.GreenKey;
 import objects.GreenLock;
 import objects.Item;
+import objects.OrangeDiamond;
 import objects.OrangeKey;
+import objects.OrangeLock;
 import objects.SilverCoin;
+import objects.YellowDiamond;
 import objects.YellowKey;
+import objects.YellowLock;
+import objects.spike;
 import pausemenu.PauseMenu;
 import player.Player;
 import player.Player.State;
@@ -89,6 +98,7 @@ public class GenericLevel implements Screen {
 		// creates the player in the world
 		playerSpawner = map.getLayers().get("objectsAndHitboxes").getObjects().get("player");
 		player.playerConstruct(world, playerSpawner);
+		this.resetCollectable();
 		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
 
 		this.loadMapObjects();
@@ -118,10 +128,19 @@ public class GenericLevel implements Screen {
 				} else if (objName.equals("button")) {
 					continue;
 				} else if (objName.equals("spike")) {
+					new spike(world, object);
 					continue;
 				} else if (objName.equals("flag")) {
 					continue;
 				} else if (objName.equals("diamond")) {
+					if (object.getProperties().get("type").equals("yellow"))
+						new YellowDiamond(world, object);
+					if (object.getProperties().get("type").equals("green"))
+						new GreenDiamond(world, object);
+					if (object.getProperties().get("type").equals("orange"))
+						new OrangeDiamond(world, object);
+					if (object.getProperties().get("type").equals("blue"))
+						new BlueDiamond(world, object);
 					continue;
 				} else if (objName.equals("spring")) {
 					continue;
@@ -142,6 +161,16 @@ public class GenericLevel implements Screen {
 				} else if (objName.equals("keyBlock")) {
 					if(object.getProperties().get("type").equals("green"))
 						new GreenLock(world, object);
+					if(object.getProperties().get("type").equals("blue"))
+						new BlueLock(world, object);
+					if(object.getProperties().get("type").equals("orange"))
+						new OrangeLock(world, object);
+					if(object.getProperties().get("type").equals("yellow"))
+						new YellowLock(world, object);
+					continue;
+				}
+				else if (objName.equals("exit")) {
+					new ExitDoor(world, object);
 					continue;
 				}
 
@@ -179,7 +208,7 @@ public class GenericLevel implements Screen {
 			/* =========== Change "Room" properties based on name ========== */
 
 			if (objName != null) {
-				if (objName.equals("exit") || objName.equals("water")) {
+				if (objName.equals("water")) {
 					fdef.isSensor = true;
 				} else if (objName.equals("wall")) {
 					fdef.friction = 0.1f;
@@ -205,8 +234,8 @@ public class GenericLevel implements Screen {
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			if (player.atLvlExit == true) {
-				player.atLvlExit = false;
+			if (GameInfo.atLvlExit == true) {
+				GameInfo.atLvlExit = false;
 				this.game.loadNextLevel();
 			} else {
 				game.getplayer().jump();
@@ -219,6 +248,7 @@ public class GenericLevel implements Screen {
 	}
 
 	public void update(float dt) {
+		this.playerDied();
 
 		handleInput(dt);
 		this.offmapCheck();
@@ -308,6 +338,18 @@ public class GenericLevel implements Screen {
 		}
 	}
 
+
+	private void resetCollectable() {
+		GameInfo.HASBLUEKEY = false;
+		GameInfo.HASGREENKEY = false;
+		GameInfo.HASYELLOWKEY = false;
+		GameInfo.HASORANGEKEY = false;
+		GameInfo.HASBLUEGEM = false;
+		GameInfo.HASGREENGEM = false;
+		GameInfo.HASYELLOWGEM = false;
+		GameInfo.HASORANGEGEM = false;
+		
+	}
 	@Override
 	public void resize(int width, int height) {
 	}

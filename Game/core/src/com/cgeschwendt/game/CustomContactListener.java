@@ -116,16 +116,66 @@ public class CustomContactListener implements ContactListener {
 			getItem(contact).destroy();
 			GameInfo.HASGREENKEY = true;
 		}
+		else if(contactBetween(contact, "player", "orange key")) {
+			getItem(contact).destroy();
+			GameInfo.HASORANGEKEY = true;
+		}
+		else if(contactBetween(contact, "player", "yellow key")) {
+			getItem(contact).destroy();
+			GameInfo.HASYELLOWKEY = true;
+		}
 		else if(contactBetween(contact, "player", "green lock") && GameInfo.HASGREENKEY) {
-			destroyAll("green lock");
+			//destroyAll("green lock");
+			getItem(contact).destroy();
 		}
-		else if(contactBetween(contact, "player", "exit")) {
-			parent.getPlayer().atLvlExit = true;
+		else if(contactBetween(contact, "player", "blue lock") && GameInfo.HASBLUEKEY) {
+			//destroyAll("blue lock");
+			getItem(contact).destroy();
 		}
+		else if(contactBetween(contact, "player", "yellow lock") && GameInfo.HASYELLOWKEY) {
+			//destroyAll("yellow lock");
+			getItem(contact).destroy();
+		}
+		else if(contactBetween(contact, "player", "orange lock") && GameInfo.HASORANGEKEY) {
+			//destroyAll("orange lock");
+			  getItem(contact).destroy();
+		}
+		
 		else if(contactBetween(contact, "player", "water")) {
 			parent.getPlayer().fellIntoLiquid = true;
 		}
 		
+		else if(contactBetween(contact, "player", "exit")) {
+			GameInfo.atLvlExit = true;
+			if(		GameInfo.HASBLUEGEM  && GameInfo.HASGREENGEM  && GameInfo.HASYELLOWGEM && GameInfo.HASORANGEGEM ) {
+				player.setPlayerScore(5000);
+			}
+		 }
+	
+		else if(contactBetween(contact,"player","spike")) {
+			player.playerLoseLife();
+			player.spikeHurt();
+		}
+		else if(contactBetween(contact, "player", "blue diamond")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASBLUEGEM = true;
+		}
+		else if(contactBetween(contact, "player", "green diamond")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASGREENGEM = true;
+		}
+		else if(contactBetween(contact, "player", "orange diamond")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASORANGEGEM = true;
+		}
+		else if(contactBetween(contact, "player", "yellow diamond")) {
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASBLUEGEM = true;
+		}
 	}
  
 	@Override
@@ -137,8 +187,11 @@ public class CustomContactListener implements ContactListener {
 
 		Player player = parent.getPlayer();
 		
-		if(contactBetween(contact, "player", "LvlExit")) {
-			player.atLvlExit = false;
+		if(contactBetween(contact, "player", "exit")) {
+			GameInfo.atLvlExit = false;
+		}
+		else if(contactBetween(contact,"player","spike")) {
+		
 		}
 	}
  
