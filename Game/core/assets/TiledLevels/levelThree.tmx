@@ -100,31 +100,25 @@
   <object id="93" name="player" x="35" y="945">
    <point/>
   </object>
-  <object id="94" name="diamond" x="1120" y="954">
+  <object id="94" name="diamond" x="1087" y="954">
    <properties>
     <property name="type" value="green"/>
    </properties>
    <point/>
   </object>
-  <object id="106" x="1190" y="910">
-   <point/>
-  </object>
-  <object id="107" x="1260" y="910">
-   <point/>
-  </object>
-  <object id="108" name="diamond" x="1330" y="910">
+  <object id="108" name="diamond" x="1339" y="910">
    <properties>
     <property name="type" value="yellow"/>
    </properties>
    <point/>
   </object>
-  <object id="109" name="diamond" x="1190" y="910">
+  <object id="109" name="diamond" x="1190" y="887">
    <properties>
     <property name="type" value="orange"/>
    </properties>
    <point/>
   </object>
-  <object id="110" name="diamond" x="1260" y="910">
+  <object id="110" name="diamond" x="1260" y="933">
    <properties>
     <property name="type" value="blue"/>
    </properties>

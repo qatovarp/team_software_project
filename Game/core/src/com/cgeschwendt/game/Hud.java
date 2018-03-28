@@ -63,7 +63,8 @@ public class Hud {
 		scoreWordLabel = new Label("score", new Label.LabelStyle(Font, Color.WHITE));
 		timeWordLabel = new Label("time", new Label.LabelStyle(Font, Color.WHITE));
 		currentTimeLabel = new Label(String.format("%03d", this.worldTimer), new Label.LabelStyle(Font, Color.WHITE));
-		levelLabel = new Label("level "+ GameInfo.levelNum + 1, new Label.LabelStyle(Font3, Color.WHITE));
+		int level = GameInfo.levelNum + 1;
+		levelLabel = new Label("level "+ level, new Label.LabelStyle(Font3, Color.WHITE));
 	
 		timeWordLabel.setPosition(GameInfo.WIDTH / 7, GameInfo.HEIGHT - 24, Align.center);
 		currentTimeLabel.setPosition(GameInfo.WIDTH / 7+ 10, GameInfo.HEIGHT - 70, Align.center);

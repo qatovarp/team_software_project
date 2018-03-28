@@ -38,6 +38,7 @@ public class GameInfo {
 	public  static boolean atLvlExit = false;
 
 	final public static String[] levels = {
+			"TiledLevels/levelFour.tmx",
 			"TiledLevels/levelTwo.tmx",
 			"TiledLevels/levelThree.tmx",
 		//	"TiledLevels/LevelOne.tmx"
@@ -45,12 +46,14 @@ public class GameInfo {
 	
 	final public static String[] backgrounds = {
 			"backgrounds/uncolored_castle.png",
+			"backgrounds/uncolored_castle.png",
 			"backgrounds/uncolored_castle.png"
 	};
 	
 	final public static String[] music = {
-			"music/Lost-Jungle.mp3",
-			"music/Waltz.mp3"
+			"Lost-Jungle.mp3",
+			"Waltz.mp3",
+			"Waltz.mp3"
 	};
 	
 	final public static String MAINMENUMUSIC = "music/Lost-Jungle.mp3";

@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2018.02.14" orientation="orthogonal" renderorder="right-down" width="60" height="25" tilewidth="70" tileheight="70" infinite="0" nextobjectid="211">
+ <tileset firstgid="1" source="resources/blocks.tsx"/>
+ <tileset firstgid="197" source="resources/objects.tsx"/>
+ <layer name="Tile Layer 2" width="60" height="25">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,210,0,212,0,230,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,233,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,0,0,0,0,0,0,0,0,0,0,242,0,212,209,212,209,212,230,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,209,116,0,0,0,0,0,0,0,0,116,0,0,0,0,209,209,116,0,0,0,0,209,0,116,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,77,77,77,77,77,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,158,
+0,0,0,0,0,0,0,0,0,0,0,0,76,76,76,76,76,76,76,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,173,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,158,0,0,0,169,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,158,0,0,0,0,0,0,0,0,0,173,0,0,0,169,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,158,0,0,0,0,173,0,0,0,158,0,0,158,0,0,169,0,0,0,169,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,39,0,0,0,0,0,0,0,0,0,0,0,0,116,173,0,0,0,209,169,0,209,116,173,209,0,173,116,209,169,0,114,0,169,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+110,39,39,39,39,39,39,39,39,110,39,39,39,39,39,110,39,39,39,39,39,39,39,39,39,39,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+110,39,39,39,39,39,39,39,39,110,39,39,39,39,39,110,39,39,39,39,39,39,39,39,39,39,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+110,39,39,39,39,39,39,39,39,110,39,39,39,39,39,110,39,39,39,39,39,39,39,39,39,39,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="delete layar" width="60" height="25">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+81,0,0,0,0,0,0,0,0,80,0,0,0,0,0,82,0,0,0,0,0,83,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+81,0,0,0,0,0,0,0,0,80,0,0,0,0,0,82,0,0,0,0,0,83,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+81,0,0,0,0,0,0,0,0,80,0,0,0,0,0,82,0,0,0,0,0,83,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 1" width="60" height="25">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,243,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,244,0,0,0,0,0,0,243,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,229,0,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,66,66,66,66,66,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,243,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,66,66,67,211,0,0,0,0,243,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,243,244,229,0,0,0,211,0,0,0,0,60,66,66,67,0,0,59,0,59,0,59,0,59,0,60,66,66,66,66,66,66,66,66,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,66,67,0,0,0,60,66,66,67,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,174,0,0,0,0,0,0,0,0,0,0,243,244,0,0,0,0,0,0,0,211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+157,169,0,49,0,0,0,0,233,0,0,0,0,0,0,0,0,0,0,0,233,60,66,0,0,0,0,0,243,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+173,169,65,63,78,78,0,0,242,0,212,0,0,0,210,0,0,0,0,0,242,0,0,0,0,0,0,0,0,0,0,229,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+73,73,73,73,73,73,73,73,73,73,73,73,77,77,60,66,67,77,77,73,73,73,73,73,73,0,0,73,73,73,73,73,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+53,53,53,53,53,53,53,53,53,53,53,53,76,76,76,76,76,76,76,53,53,53,53,53,53,0,0,53,53,53,53,53,70,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+53,53,53,53,53,53,53,53,53,53,53,53,76,76,76,76,76,76,76,53,53,53,53,53,53,0,0,53,53,53,53,53,53,70,71,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+53,53,53,53,53,53,53,53,53,53,53,53,76,76,76,76,76,76,76,53,53,53,53,53,53,0,0,53,53,53,53,53,53,53,70,71,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+53,53,53,53,53,53,53,53,53,53,53,53,76,76,76,76,76,76,76,53,53,53,53,53,53,0,0,53,53,53,53,53,53,53,53,70,71,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,0,0,53,53,53,53,53,53,53,53,53,70,71,229,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,0,0,53,53,53,53,53,53,53,53,53,53,70,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,
+0,0,0,0,0,0,0,135,0,0,135,0,0,135,0,0,135,0,0,135,0,0,135,0,0,135,0,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,
+0,0,210,0,0,0,210,0,0,0,0,0,210,0,0,0,0,0,0,0,210,0,0,210,210,0,0,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,
+53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53
+</data>
+ </layer>
+ <objectgroup name="objectsAndHitboxes">
+  <object id="77" name="player" x="245" y="945">
+   <point/>
+  </object>
+  <object id="78" name="exit" x="4060" y="1289" width="70" height="110"/>
+  <object id="80" name="exit" x="1680" y="1570" width="70" height="110"/>
+  <object id="81" name="exit" x="1260" y="1570" width="70" height="110"/>
+  <object id="82" name="exit" x="840" y="1570" width="70" height="110"/>
+  <object id="83" name="exit" x="140" y="1570" width="70" height="110"/>
+  <object id="84" name="key" x="1087.09" y="943.184">
+   <properties>
+    <property name="type" value="blue"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="86" name="key" x="3468.67" y="605.114">
+   <properties>
+    <property name="type" value="green"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="88" name="coin" x="593.71" y="929.611">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="89" name="coin" x="664.313" y="933.89">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="90" name="coin" x="520.967" y="930.68">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="91" name="coin" x="911.425" y="869.705">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="92" name="coin" x="1289.05" y="676.08">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="93" name="coin" x="1362.86" y="673.941">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="94" name="coin" x="1715.88" y="671.801">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="95" name="coin" x="1994.01" y="542.362">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="96" name="coin" x="2201.54" y="596.919">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="97" name="coin" x="2488.89" y="600">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="98" name="coin" x="3187.88" y="458.586">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="99" name="coin" x="3252.53" y="458.586">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="100" name="coin" x="3325.25" y="456.566">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="101" name="coin" x="3397.98" y="458.586">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="102" name="coin" x="3460.61" y="456.566">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="103" name="coin" x="3042.42" y="1153.54">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="104" name="coin" x="2973.74" y="1224.24">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="105" name="coin" x="2624.24" y="600">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="106" name="coin" x="2901.01" y="1288.89">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="107" name="coin" x="2836.36" y="1357.58">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="108" name="coin" x="2765.66" y="597.98">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="109" name="coin" x="2907.07" y="608.081">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="110" name="coin" x="1929.29" y="945.455">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="111" name="coin" x="2068.69" y="945.455">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="112" name="coin" x="2208.08" y="943.434">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="113" name="coin" x="1569.7" y="941.414">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="114" name="coin" x="1496.97" y="939.394">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="115" name="coin" x="1822.22" y="858.586">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="116" name="coin" x="1262.63" y="862.626">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="117" name="coin" x="248.346" y="1587.29">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="118" name="coin" x="385" y="1662.5">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="119" name="coin" x="312.883" y="1584.02">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="120" name="coin" x="313.7" y="1511.31">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="122" name="coin" x="245.078" y="1509.68">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="123" name="coin" x="379.054" y="1510.5">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="124" name="coin" x="453.394" y="1508.86">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="125" name="coin" x="520.382" y="1513.77">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="126" name="coin" x="599.624" y="1512.95">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="127" name="coin" x="596.357" y="1581.57">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="128" name="coin" x="524.63" y="1583.31">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="129" name="coin" x="313.7" y="1655.09">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="130" name="coin" x="249.163" y="1659.18">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="131" name="coin" x="521.199" y="1654.28">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="133" name="coin" x="451.76" y="1653.46">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="134" name="coin" x="596.357" y="1654.28">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="137" name="wall" x="0" y="980" width="840" height="490"/>
+  <object id="138" name="wall" x="1330" y="980" width="420" height="490"/>
+  <object id="139" name="wall" x="840" y="1330" width="490" height="140"/>
+  <object id="140" name="wall" x="980" y="980" width="210" height="41"/>
+  <object id="143" name="wall" x="1890" y="980" width="350" height="770"/>
+  <object id="144" name="wall" x="0" y="1680" width="1890" height="70"/>
+  <object id="145" name="wall" x="0" y="1470" width="70" height="210"/>
+  <object id="148" name="wall" x="2240" y="1400" width="1960" height="350"/>
+  <object id="149" name="wall" x="4141" y="980" width="56" height="420"/>
+  <object id="150" name="wall" x="2240" y="980">
+   <polygon points="0,0 420,420 0,420"/>
+  </object>
+  <object id="151" name="wall" x="2870" y="1330">
+   <polygon points="0,0 70,0 70,-70 140,-70 140,-140 210,-140 210,70 0,70"/>
+  </object>
+  <object id="152" name="wall" x="70" y="770" width="70" height="210"/>
+  <object id="153" name="wall" x="1260" y="700" width="210" height="35"/>
+  <object id="154" name="wall" x="1470" y="840" width="140" height="35"/>
+  <object id="155" name="wall" x="1680" y="700" width="280" height="35"/>
+  <object id="156" name="wall" x="1820" y="560" width="280" height="35"/>
+  <object id="157" name="wall" x="2030" y="630" width="280" height="35"/>
+  <object id="158" name="wall" x="2450" y="630" width="70" height="35"/>
+  <object id="159" name="wall" x="2590" y="630" width="70" height="35"/>
+  <object id="161" name="wall" x="2730" y="630" width="70" height="35"/>
+  <object id="162" name="wall" x="2870" y="630" width="70" height="35"/>
+  <object id="163" name="wall" x="3010" y="630" width="630" height="35"/>
+  <object id="164" name="wall" x="3150" y="490" width="350" height="35"/>
+  <object id="165" name="keyBlock" x="630" y="1610" width="70" height="70">
+   <properties>
+    <property name="type" value="green"/>
+   </properties>
+  </object>
+  <object id="166" name="keyBlock" x="630" y="1540" width="70" height="70">
+   <properties>
+    <property name="type" value="green"/>
+   </properties>
+  </object>
+  <object id="167" name="keyBlock" x="630" y="1470" width="70" height="70">
+   <properties>
+    <property name="type" value="green"/>
+   </properties>
+  </object>
+  <object id="168" name="keyBlock" x="1050" y="1610" width="70" height="70">
+   <properties>
+    <property name="type" value="yellow"/>
+   </properties>
+  </object>
+  <object id="169" name="keyBlock" x="1050" y="1540" width="70" height="70">
+   <properties>
+    <property name="type" value="yellow"/>
+   </properties>
+  </object>
+  <object id="170" name="keyBlock" x="1050" y="1470" width="70" height="70">
+   <properties>
+    <property name="type" value="yellow"/>
+   </properties>
+  </object>
+  <object id="171" name="keyBlock" x="1470" y="1610" width="70" height="70">
+   <properties>
+    <property name="type" value="blue"/>
+   </properties>
+  </object>
+  <object id="172" name="keyBlock" x="1470" y="1540" width="70" height="70">
+   <properties>
+    <property name="type" value="blue"/>
+   </properties>
+  </object>
+  <object id="173" name="keyBlock" x="1470" y="1470" width="70" height="70">
+   <properties>
+    <property name="type" value="blue"/>
+   </properties>
+  </object>
+  <object id="174" name="coin" x="735" y="1522.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="175" name="coin" x="875" y="1522.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="176" name="coin" x="945" y="1522.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="177" name="coin" x="805" y="1522.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="178" name="coin" x="1015" y="1522.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="179" name="coin" x="1015" y="1592.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="181" name="coin" x="945" y="1592.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="182" name="coin" x="735" y="1662.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="183" name="coin" x="735" y="1592.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="184" name="coin" x="1015" y="1662.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="185" name="coin" x="805" y="1662.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="186" name="coin" x="945" y="1662.5">
+   <properties>
+    <property name="type" value="silver"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="187" name="coin" x="1365" y="1522.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="188" name="coin" x="1155" y="1522.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="189" name="coin" x="1295" y="1522.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="190" name="coin" x="1225" y="1522.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="191" name="coin" x="1229.62" y="1582.95">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="192" name="coin" x="1435" y="1522.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="193" name="coin" x="1365" y="1592.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="194" name="coin" x="1435" y="1592.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="195" name="coin" x="1225" y="1662.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="196" name="coin" x="1155" y="1662.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="197" name="coin" x="1435" y="1662.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="198" name="coin" x="1365" y="1662.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="199" name="coin" x="1155" y="1592.5">
+   <properties>
+    <property name="type" value="bronze"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="200" name="diamond" x="3115" y="595">
+   <properties>
+    <property name="type" value="yellow"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="204" name="diamond" x="1855" y="1575">
+   <properties>
+    <property name="type" value="green"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="205" name="diamond" x="805" y="1592.5">
+   <properties>
+    <property name="type" value="blue"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="206" name="diamond" x="385" y="1592.5">
+   <properties>
+    <property name="type" value="orange"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="207" name="coin" x="455" y="1592.5">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="208" name="coin" x="2010.08" y="867.34">
+   <properties>
+    <property name="type" value="gold"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="209" name="key" x="1925" y="542.5">
+   <properties>
+    <property name="type" value="yellow"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="210" name="key" x="3325" y="595">
+   <properties>
+    <property name="type" value="green"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+</map>

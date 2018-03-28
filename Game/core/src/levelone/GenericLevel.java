@@ -3,6 +3,7 @@ package levelone;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -43,6 +44,7 @@ import objects.OrangeDiamond;
 import objects.OrangeKey;
 import objects.OrangeLock;
 import objects.SilverCoin;
+import objects.Spring;
 import objects.YellowDiamond;
 import objects.YellowKey;
 import objects.YellowLock;
@@ -68,13 +70,11 @@ public class GenericLevel implements Screen {
 
 		this.player = game.getplayer();
 		this.hud = new Hud(game);
-
-		hud.resetTimer(25000);
-
+		
 		game.setBackground();
 		// Sets the levels music
 		// CHANGE to GameInfo ARRAY.levelID
-		game.setMusic("Waltz.mp3");
+		game.setMusic(GameInfo.music[GameInfo.levelNum]);
 		if (!GameInfo.sound)
 			game.getMusic().pause();
 
@@ -143,6 +143,7 @@ public class GenericLevel implements Screen {
 						new BlueDiamond(world, object);
 					continue;
 				} else if (objName.equals("spring")) {
+					new Spring(world, object);
 					continue;
 				} else if (objName.equals("key")) {
 					if (object.getProperties().get("type").equals("yellow"))
@@ -236,7 +237,20 @@ public class GenericLevel implements Screen {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			if (GameInfo.atLvlExit == true) {
 				GameInfo.atLvlExit = false;
-				this.game.loadNextLevel();
+				if(	GameInfo.HASBLUEGEM  && GameInfo.HASGREENGEM  && GameInfo.HASYELLOWGEM && GameInfo.HASORANGEGEM ) {
+					player.setPlayerScore(10000);
+				}
+				if(GameInfo.sound) {
+					Sound s = Gdx.audio.newSound(Gdx.files.internal("music/door.mp3"));	
+					long id2 = s.play();
+					s.setVolume(id2, .07f);
+				}
+				GameInfo.levelNum = GameInfo.levelNum++;
+				if(GameInfo.levelNum == GameInfo.levels.length -1)
+					
+					game.setScreen( new GameOver(game));
+				else	
+					this.game.loadNextLevel();
 			} else {
 				game.getplayer().jump();
 			}
@@ -249,6 +263,7 @@ public class GenericLevel implements Screen {
 
 	public void update(float dt) {
 		this.playerDied();
+		this.timerCheck();
 
 		handleInput(dt);
 		this.offmapCheck();
@@ -267,6 +282,7 @@ public class GenericLevel implements Screen {
 		player.update();
 		updateCamera();
 	}
+
 
 	@Override
 	public void render(float delta) {
@@ -322,6 +338,7 @@ public class GenericLevel implements Screen {
 	private void offmapCheck() {
 		if (game.getplayer().position().y < -5) {
 			game.getplayer().playerLoseLife();
+			game.getplayer().playerLoseLife();
 			player.fellIntoLiquid = false;
 			player.resetPosition(playerSpawner.getProperties().get("x", float.class),
 					playerSpawner.getProperties().get("y", float.class));
@@ -350,6 +367,17 @@ public class GenericLevel implements Screen {
 		GameInfo.HASORANGEGEM = false;
 		
 	}
+	
+	private void timerCheck() {
+	if(hud.getTime() == 0) {
+		player.resetPosition(playerSpawner.getProperties().get("x", float.class),
+				playerSpawner.getProperties().get("y", float.class));
+		hud.resetTimer(25000);
+		game.getplayer().playerLoseLife();
+		game.getplayer().playerLoseLife();
+	}
+		
+	}
 	@Override
 	public void resize(int width, int height) {
 	}
@@ -372,6 +400,7 @@ public class GenericLevel implements Screen {
 
 	@Override
 	public void dispose() {
+		
 	}
 
 }
