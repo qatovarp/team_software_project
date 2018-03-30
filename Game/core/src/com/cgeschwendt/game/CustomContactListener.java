@@ -197,6 +197,7 @@ public class CustomContactListener implements ContactListener {
 
 		else if(contactBetween(contact, "player", "spring")) {
 			this.getItem(contact).setTexture(new Texture("objects/springBoardUp.png"));
+			player.springJump();
 		}
 
 		else if(contactBetween(contact, "player_head_left", "wall")) {

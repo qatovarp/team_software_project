@@ -282,6 +282,10 @@ public class Player {
 		}
 	}
 	
+	public void springJump() {
+		body.applyLinearImpulse(new Vector2(0, 5.5f), body.getWorldCenter(), true);
+	}
+	
 	public void spikeHurt(){
 		body.applyLinearImpulse(new Vector2(0, 6.5f), body.getWorldCenter(), true);
 	}
