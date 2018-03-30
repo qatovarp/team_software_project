@@ -303,7 +303,7 @@ public class GenericLevel implements Screen {
 
 		game.renderBackground();
 		maprenderer.render();
-		//b2dr.render(world, mainCamera.combined);
+		b2dr.render(world, mainCamera.combined);
 
 		batch.setProjectionMatrix(mainCamera.combined);
 

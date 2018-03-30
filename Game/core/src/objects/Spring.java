@@ -12,7 +12,7 @@ public class Spring extends Item {
 
 	 public Spring(World world, MapObject object) {
 	        super(world, object);
-			this.setTexture(new Texture("objects/springboardUp.png"));
+			this.setTexture(new Texture("objects/springboardDown.png"));
 			this.setRegion(this.getTexture());
 			setBounds(getX(), getY(), 70 / GameInfo.PPM, 70 / GameInfo.PPM);
 	    }

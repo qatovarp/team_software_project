@@ -2,6 +2,7 @@ package com.cgeschwendt.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -195,6 +196,7 @@ public class CustomContactListener implements ContactListener {
 			GameInfo.HASYELLOWGEM = true;
 		}
 		else if(contactBetween(contact, "player", "spring")) {
+			this.getItem(contact).setTexture(new Texture("objects/springBoardUp.png"));
 			parent.getPlayer().spikeHurt();
 			
 		}
@@ -214,6 +216,9 @@ public class CustomContactListener implements ContactListener {
 		}
 		else if(contactBetween(contact,"player","spike")) {
 		
+		}
+		else if(contactBetween(contact, "player", "spring")) {
+					this.getItem(contact).setTexture(new Texture("objects/springBoardDown.png"));		
 		}
 	}
  
