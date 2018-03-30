@@ -50,7 +50,6 @@ public class Player {
 	private World world;
 
 	public boolean fellIntoLiquid;
-	public boolean atLvlExit;
 	
 	private float elapsedTime;
 	public Hearts hearts;
@@ -64,7 +63,6 @@ public class Player {
 		playerScore = 0;
 		faceingRight = true;
 		fellIntoLiquid = false;
-		atLvlExit = false;
 		elapsedTime = 0;
 		hearts = new Hearts(game);
 		hittingWallLeft = false;
@@ -283,6 +281,10 @@ public class Player {
 			}
 		}
 	}
+	
+	public void spikeHurt(){
+		body.applyLinearImpulse(new Vector2(0, 6.5f), body.getWorldCenter(), true);
+	}
 
 	/**
 	 * Sets the state of the player to either falling, standing or jumping.
@@ -453,7 +455,7 @@ public class Player {
 	}
 
 	public void setPlayerScore(int points) {
-		this.playerScore  += points;	
+		this.playerScore  = this.playerScore + points;	
 	}
 
 }
