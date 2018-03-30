@@ -1,5 +1,7 @@
 package com.cgeschwendt.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -99,31 +101,57 @@ public class CustomContactListener implements ContactListener {
 		Player player = parent.getPlayer();
 		
 		if(contactBetween(contact, "player", "gold coin")) {
+			this.playSound("collectcoin.wav");
 			getItem(contact).destroy();
 			player.setPlayerScore(250);
 		}
 		else if(contactBetween(contact, "player", "silver coin")) {
+			this.playSound("collectcoin.wav");
 			getItem(contact).destroy();
 			player.setPlayerScore(100);
 		}
 		else if(contactBetween(contact, "player", "bronze coin")) {
+			this.playSound("collectcoin.wav");
 			getItem(contact).destroy();
 			player.setPlayerScore(25);
 		}
 		else if(contactBetween(contact, "player", "blue key")) {
+			this.playSound("collectkey.wav");
 			getItem(contact).destroy();
 			GameInfo.HASBLUEKEY = true;
 		}
 		else if(contactBetween(contact, "player", "green key")) {
+			this.playSound("collectkey.wav");
 			getItem(contact).destroy();
 			GameInfo.HASGREENKEY = true;
 		}
+		else if(contactBetween(contact, "player", "orange key")) {
+			this.playSound("collectkey.wav");
+			getItem(contact).destroy();
+			GameInfo.HASORANGEKEY = true;
+		}
+		else if(contactBetween(contact, "player", "yellow key")) {
+			this.playSound("collectkey.wav");
+			getItem(contact).destroy();
+			GameInfo.HASYELLOWKEY = true;
+		}
 		else if(contactBetween(contact, "player", "green lock") && GameInfo.HASGREENKEY) {
-			destroyAll("green lock");
+			//destroyAll("green lock");
+			getItem(contact).destroy();
 		}
-		else if(contactBetween(contact, "player", "exit")) {
-			parent.getPlayer().atLvlExit = true;
+		else if(contactBetween(contact, "player", "blue lock") && GameInfo.HASBLUEKEY) {
+			//destroyAll("blue lock");
+			getItem(contact).destroy();
 		}
+		else if(contactBetween(contact, "player", "yellow lock") && GameInfo.HASYELLOWKEY) {
+			//destroyAll("yellow lock");
+			getItem(contact).destroy();
+		}
+		else if(contactBetween(contact, "player", "orange lock") && GameInfo.HASORANGEKEY) {
+			//destroyAll("orange lock");
+			  getItem(contact).destroy();
+		}
+		
 		else if(contactBetween(contact, "player", "water")) {
 			parent.getPlayer().fellIntoLiquid = true;
 			Timer.schedule(new Task(){
@@ -134,6 +162,42 @@ public class CustomContactListener implements ContactListener {
 			}, 0.7f);
 		}
 		
+		else if(contactBetween(contact, "player", "exit")) {
+			GameInfo.atLvlExit = true;
+		 }
+	
+		else if(contactBetween(contact,"player","spike")) {
+			player.playerLoseLife();
+			player.spikeHurt();
+		}
+		else if(contactBetween(contact, "player", "blue diamond")) {
+			this.playSound("collect diamond.wav");
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASBLUEGEM = true;
+		}
+		else if(contactBetween(contact, "player", "green diamond")) {
+			this.playSound("collect diamond.wav");
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASGREENGEM = true;
+		}
+		else if(contactBetween(contact, "player", "orange diamond")) {
+			this.playSound("collect diamond.wav");
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASORANGEGEM = true;
+		}
+		else if(contactBetween(contact, "player", "yellow diamond")) {
+			this.playSound("collect diamond.wav");
+			getItem(contact).destroy();
+			player.setPlayerScore(2500);
+			GameInfo.HASYELLOWGEM = true;
+		}
+		else if(contactBetween(contact, "player", "spring")) {
+			parent.getPlayer().spikeHurt();
+			
+		}
 	}
  
 	@Override
@@ -145,8 +209,11 @@ public class CustomContactListener implements ContactListener {
 
 		Player player = parent.getPlayer();
 		
-		if(contactBetween(contact, "player", "LvlExit")) {
-			player.atLvlExit = false;
+		if(contactBetween(contact, "player", "exit")) {
+			GameInfo.atLvlExit = false;
+		}
+		else if(contactBetween(contact,"player","spike")) {
+		
 		}
 	}
  
@@ -156,6 +223,14 @@ public class CustomContactListener implements ContactListener {
  
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {		
+	}
+	
+	private void playSound(String s) {
+		if(GameInfo.sound) {
+			Sound coin =Gdx.audio.newSound(Gdx.files.internal("music/"+s));	
+			long id2 = coin.play();
+			coin.setVolume(id2, .07f);
+		}
 	}
  
 }

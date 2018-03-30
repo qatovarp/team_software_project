@@ -47,7 +47,7 @@ public class Player {
 	private World world;
 
 	public boolean fellIntoLiquid;
-	public boolean atLvlExit;
+	
 	
 	private float elapsedTime;
 	public Hearts hearts;
@@ -56,7 +56,7 @@ public class Player {
 		playerScore = 0;
 		faceingRight = true;
 		fellIntoLiquid = false;
-		atLvlExit = false;
+		GameInfo.atLvlExit = false;
 		elapsedTime = 0;
 		hearts = new Hearts(game);
 		this.setLifeQuantity();
@@ -340,7 +340,17 @@ public class Player {
 			playeratlas = new TextureAtlas("player/pinkPlayer.atlas");
 		}
 	}
-
+	
+	
+	public void spikeHurt() {
+	if(this.faceingRight) {
+		body.applyLinearImpulse(new Vector2(-1f, 10f), body.getWorldCenter(), true);
+	}
+	else {
+		body.applyLinearImpulse(new Vector2(1, 10f), body.getWorldCenter(), true);
+	}
+	}
+		
 	/**
 	 * States if the player is jumping
 	 */

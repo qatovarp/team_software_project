@@ -23,6 +23,11 @@ public class GameInfo {
 	public static boolean HASORANGEKEY = false;
 	public static boolean HASYELLOWKEY = false;
 	
+	public static boolean HASGREENGEM = false;
+	public static boolean HASBLUEGEM = false;
+	public static boolean HASORANGEGEM = false;
+	public static boolean HASYELLOWGEM = false;
+	
 	
 	public static boolean GREENKEY = false;
 	
@@ -30,21 +35,25 @@ public class GameInfo {
 	public static boolean sound = true;
 
 	public static int levelNum = 0;
+	public  static boolean atLvlExit = false;
 
 	final public static String[] levels = {
+			"TiledLevels/levelFour.tmx",
 			"TiledLevels/levelTwo.tmx",
-		//	"TiledLevels/Demo.tmx",
+			"TiledLevels/levelThree.tmx",
 		//	"TiledLevels/LevelOne.tmx"
 	};
 	
 	final public static String[] backgrounds = {
 			"backgrounds/uncolored_castle.png",
+			"backgrounds/uncolored_castle.png",
 			"backgrounds/uncolored_castle.png"
 	};
 	
 	final public static String[] music = {
-			"music/Lost-Jungle.mp3",
-			"music/Waltz.mp3"
+			"Lost-Jungle.mp3",
+			"Waltz.mp3",
+			"Waltz.mp3"
 	};
 	
 	final public static String MAINMENUMUSIC = "music/Lost-Jungle.mp3";

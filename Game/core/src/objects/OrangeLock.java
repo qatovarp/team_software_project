@@ -8,20 +8,19 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-
-public class Box extends Item {
-	
-    public Box(World world, MapObject object) {
-        super(world, object);
-		this.setTexture(new Texture("objects/boxAlt.png"));
+public class OrangeLock extends Item{
+	public OrangeLock(World world, MapObject object) {
+		super(world, object);
+			this.setTexture(new Texture("objects/lock_orange.png"));	
+			
 		this.setRegion(this.getTexture());
-    }
+	}
 
-    @Override
-    public void defineItem() {
+	@Override
+	public void defineItem() {
         BodyDef bdef = new BodyDef();
         bdef.position.set((getX() / GameInfo.PPM) + (getWidth() / 2f), (getY() / GameInfo.PPM) + (getHeight() / 2f));
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
         body.setUserData(this);
         FixtureDef fdef = new FixtureDef();
@@ -29,9 +28,8 @@ public class Box extends Item {
 		shape.setAsBox(this.getWidth()/2.0f, this.getHeight()/2.0f);
         
         fdef.shape = shape;
-        body.createFixture(fdef).setUserData("box");
+        body.createFixture(fdef).setUserData("orange lock");
 		shape.dispose();
-		
     }
 
     @Override
@@ -39,4 +37,8 @@ public class Box extends Item {
         super.update(dt);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
     }
+	
+	
+	
+	
 }
