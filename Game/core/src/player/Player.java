@@ -15,8 +15,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
@@ -47,18 +50,27 @@ public class Player {
 	private World world;
 
 	public boolean fellIntoLiquid;
-	
+	public boolean atLvlExit;
 	
 	private float elapsedTime;
 	public Hearts hearts;
+	
+	public boolean hittingWallLeft;
+	public boolean hittingWallRight;
+	public boolean headHitWall;
+	public boolean playWalkingSounds;
 	
 	public Player(GameMain game) {
 		playerScore = 0;
 		faceingRight = true;
 		fellIntoLiquid = false;
-		GameInfo.atLvlExit = false;
+		atLvlExit = false;
 		elapsedTime = 0;
 		hearts = new Hearts(game);
+		hittingWallLeft = false;
+		hittingWallRight = false;
+		headHitWall = false;
+		playWalkingSounds = true;
 		this.setLifeQuantity();
 	}
 	
@@ -85,9 +97,9 @@ public class Player {
 		walking = Gdx.audio.newSound(Gdx.files.internal("music/footstep.wav"));
 
 		this.world = world;
-		createbody(x, y);
 		sprite.setPosition(GameInfo.WIDTH / 2 - 33, y / GameInfo.PPM + 111);
 		sprite.setSize(sprite.getWidth()/GameInfo.PPM, sprite.getHeight()/GameInfo.PPM);
+		createbody(x, y);
 	}
 	
 	public void renderPlayer(SpriteBatch batch) {
@@ -110,23 +122,80 @@ public class Player {
 	}
 	
 	public void update() {
-		sprite.setPosition(position().x - sprite.getWidth()/2f, position().y - 0.48f);
+		sprite.setPosition(position().x - sprite.getWidth()/2f, position().y - sprite.getHeight()/2f/* - 0.48f*/);
 	}
 
 	private void createbody(float x, float y) {
 		this.faceingRight = true;
-		BodyDef bdef = new BodyDef();
+		verticleState = State.STANDING;
+		
+        BodyDef bdef = new BodyDef();
 		bdef.position.set(x / GameInfo.PPM, y / GameInfo.PPM);
-		bdef.type = BodyDef.BodyType.DynamicBody;
-		body = world.createBody(bdef);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bdef);
+        body.setUserData(this);
+		
+        createHeadRight();
+        createHeadLeft();
+        createSideRight();
+        createSideLeft();
+        createFeet();
+
+	}
+	
+	private void createFeet() {
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+		shape.setAsBox(0.2935f, 0.001f, new Vector2(0f, -0.6491f), 0f);
+		//shape.setAsBox(0.293f, 0.001f, new Vector2(0f, -0.6491f), 0f);
+		fdef.friction = 1.5f;
+        
+        fdef.shape = shape;
+		body.createFixture(fdef).setUserData("player_feet");
+	}
+	
+	private void createHeadRight() {
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
-
-		shape.setRadius(33f / GameInfo.PPM);
-		fdef.friction = 1.5f;
+		shape.setRadius(32f / GameInfo.PPM);
+		shape.setPosition(new Vector2(0.01f, 0.2f));
+		fdef.friction = 0f;
 		fdef.shape = shape;
-		body.createFixture(fdef).setUserData("player");
-		verticleState = State.STANDING;
+		body.createFixture(fdef).setUserData("player_head_right");
+	}
+	
+	private void createHeadLeft() {
+		FixtureDef fdef = new FixtureDef();
+		CircleShape shape = new CircleShape();
+		shape.setRadius(32f / GameInfo.PPM);
+		shape.setPosition(new Vector2(-0.01f, 0.2f));
+		fdef.friction = 0f;
+		fdef.shape = shape;
+		body.createFixture(fdef).setUserData("player_head_left");
+	}
+	
+	private void createSideRight() {
+		FixtureDef fdef = new FixtureDef();
+		//CircleShape shape = new CircleShape();
+        PolygonShape shape = new PolygonShape();
+		shape.setAsBox(0.1f, 0.4f, new Vector2(0.2f, -0.245f), 0f);
+		//shape.setRadius(25f / GameInfo.PPM);
+		//shape.setPosition(new Vector2(0f, -0.2f));
+		fdef.friction = 0f;
+		fdef.shape = shape;
+		body.createFixture(fdef).setUserData("player_right");
+	}
+	
+	private void createSideLeft() {
+		FixtureDef fdef = new FixtureDef();
+		//CircleShape shape = new CircleShape();
+        PolygonShape shape = new PolygonShape();
+		shape.setAsBox(0.1f, 0.4f, new Vector2(-0.2f, -0.245f), 0f);
+		//shape.setRadius(25f / GameInfo.PPM);
+		//shape.setPosition(new Vector2(0f, -0.2f));
+		fdef.friction = 0f;
+		fdef.shape = shape;
+		body.createFixture(fdef).setUserData("player_left");
 	}
 
 	/**
@@ -140,6 +209,16 @@ public class Player {
 			frame.flip(true, false);
 		}
 	}
+	
+	private void checkWalkingSonds() {
+		this.playWalkingSounds = false;
+		Timer.schedule(new Task(){
+			@Override
+			public void run() {
+				playWalkingSounds = true;
+			}
+		}, 0.1f);
+	}
 
 	/**
 	 * moves the players position to the right
@@ -147,16 +226,19 @@ public class Player {
 	 * @author cgeschwendt
 	 */
 	public void right() {
-		if (body.getLinearVelocity().x <= 2 && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			body.applyLinearImpulse(new Vector2(1.6f, -1.9f), body.getWorldCenter(), true);
-			if(GameInfo.sound) {
-				long id2 = walking.play();
-				walking.setVolume(id2, .07f);
-			}
-			if (!faceingRight) {
-				sprite.flip(true, false);
-				faceingRight = true;
-				this.flipAnimation();
+		if(!hittingWallRight) {
+			if (body.getLinearVelocity().x <= 2 && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				body.applyLinearImpulse(new Vector2(1.3f, 0f), body.getWorldCenter(), true);
+				if(GameInfo.sound && !this.headHitWall && this.verticleState == State.STANDING && playWalkingSounds) {
+					long id2 = walking.play();
+					walking.setVolume(id2, .07f);
+				}
+				if (!faceingRight) {
+					checkWalkingSonds();
+					sprite.flip(true, false);
+					faceingRight = true;
+					this.flipAnimation();
+				}
 			}
 		}
 	}
@@ -167,16 +249,19 @@ public class Player {
 	 * @author cgeschwendt
 	 */
 	public void left() {
-		if (body.getLinearVelocity().x >= -2 && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			body.applyLinearImpulse(new Vector2(-1.6f, -1.9f), body.getWorldCenter(), true);
-			if(GameInfo.sound) {
-				long id2 = walking.play();
-				walking.setVolume(id2, .07f);
-			}
-			if (faceingRight) {
-				sprite.flip(true, false);
-				faceingRight = false;
-				this.flipAnimation();
+		if(!hittingWallLeft) {
+			if (body.getLinearVelocity().x >= -2 && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				body.applyLinearImpulse(new Vector2(-1.3f, 0f), body.getWorldCenter(), true);
+				if(GameInfo.sound && !this.headHitWall && this.verticleState == State.STANDING && playWalkingSounds) {
+					long id2 = walking.play();
+					walking.setVolume(id2, .07f);
+				}
+				if (faceingRight) {
+					checkWalkingSonds();
+					sprite.flip(true, false);
+					faceingRight = false;
+					this.flipAnimation();
+				}
 			}
 		}
 	}
@@ -190,7 +275,7 @@ public class Player {
 	public void jump() {
 		if (verticleState == State.JUMPING || verticleState == State.FALLING) {
 		} else {
-			body.applyLinearImpulse(new Vector2(0, 5.8f), body.getWorldCenter(), true);
+			body.applyLinearImpulse(new Vector2(0, 6.5f), body.getWorldCenter(), true);
 			verticleState = State.JUMPING;
 			if(GameInfo.sound) {
 				long id = jump.play();
@@ -234,6 +319,9 @@ public class Player {
 	public void resetPosition(float x, float y) {
 		verticleState = State.STANDING;
 		body.setTransform(x / GameInfo.PPM, y / GameInfo.PPM, 0);
+		//Jumpstart gravity
+		body.applyLinearImpulse(new Vector2(0f, -0.01f), body.getWorldCenter(), true);
+		
 	}
 
 	/**
@@ -340,17 +428,7 @@ public class Player {
 			playeratlas = new TextureAtlas("player/pinkPlayer.atlas");
 		}
 	}
-	
-	
-	public void spikeHurt() {
-	if(this.faceingRight) {
-		body.applyLinearImpulse(new Vector2(-1f, 10f), body.getWorldCenter(), true);
-	}
-	else {
-		body.applyLinearImpulse(new Vector2(1, 10f), body.getWorldCenter(), true);
-	}
-	}
-		
+
 	/**
 	 * States if the player is jumping
 	 */
