@@ -91,6 +91,17 @@ public class PauseMenuButtons {
 		this.quitToMenuBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
+				
+				GameInfo.HASGREENKEY = false;
+				GameInfo.HASBLUEKEY = false;
+				GameInfo.HASORANGEKEY = false;
+				GameInfo.HASYELLOWKEY = false;
+
+				GameInfo.HASGREENGEM = false;
+				GameInfo.HASBLUEGEM = false;
+				GameInfo.HASORANGEGEM = false;
+				GameInfo.HASYELLOWGEM = false;
+				
 				game.getScreen().dispose();
 				game.setScreen(new MainMenu(game));
 				GameInfo.levelNum =0;
