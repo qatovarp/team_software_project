@@ -3,6 +3,7 @@ package levelone;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -129,7 +130,7 @@ public class GenericLevel implements Screen {
 					continue;
 				} else if (objName.equals("button")) {
 					continue;
-				} else if (objName.equals("spike")) { 
+				} else if (objName.equals("spike")) {
 					new spike(world, object);
 					continue;
 				} else if (objName.equals("flag")) {
@@ -162,17 +163,16 @@ public class GenericLevel implements Screen {
 					// don't draw the player spawner
 					continue;
 				} else if (objName.equals("keyBlock")) {
-					if(object.getProperties().get("type").equals("green"))
+					if (object.getProperties().get("type").equals("green"))
 						new GreenLock(world, object);
-					if(object.getProperties().get("type").equals("yellow"))
+					if (object.getProperties().get("type").equals("yellow"))
 						new YellowLock(world, object);
-					if(object.getProperties().get("type").equals("blue"))
+					if (object.getProperties().get("type").equals("blue"))
 						new BlueLock(world, object);
-					if(object.getProperties().get("type").equals("orange"))
-						new OrangeLock(world, object);		
+					if (object.getProperties().get("type").equals("orange"))
+						new OrangeLock(world, object);
 					continue;
-				}
-				else if (objName.equals("exit")) {
+				} else if (objName.equals("exit")) {
 					new ExitDoor(world, object);
 					continue;
 				}
@@ -239,13 +239,18 @@ public class GenericLevel implements Screen {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && !player.fellIntoLiquid) {
 			if (GameInfo.atLvlExit == true) {
 				GameInfo.atLvlExit = false;
-				
+
 				this.checkGemBonus();
 				this.resetCollectables();
-				if(GameInfo.levelNum == GameInfo.levels.length -1) {
+				Sound X = Gdx.audio.newSound(Gdx.files.internal("music/door.mp3"));
+				if (GameInfo.sound) {
+					long id = X.play();
+					X.setVolume(id, .14f);
+				}
+				if (GameInfo.levelNum == GameInfo.levels.length - 1) {
 					game.setScreen(new GameOver(game));
-				}else {
-				this.game.loadNextLevel();
+				} else {
+					this.game.loadNextLevel();
 				}
 			} else {
 				game.getplayer().jump();
@@ -273,9 +278,10 @@ public class GenericLevel implements Screen {
 				((Item) body.getUserData()).update(dt);
 			}
 		}
-		
-		if(this.respawnPlayer && !world.isLocked()) {
-			player.resetPosition(playerSpawner.getProperties().get("x", float.class), playerSpawner.getProperties().get("y", float.class));
+
+		if (this.respawnPlayer && !world.isLocked()) {
+			player.resetPosition(playerSpawner.getProperties().get("x", float.class),
+					playerSpawner.getProperties().get("y", float.class));
 			respawnPlayer = false;
 		}
 		player.update();
@@ -343,7 +349,7 @@ public class GenericLevel implements Screen {
 			this.playerDied();
 		}
 	}
-	
+
 	public void inWaterCheck() {
 		if (player.fellIntoLiquid) {
 			player.playerLoseLife();
@@ -360,21 +366,22 @@ public class GenericLevel implements Screen {
 			game.setScreen(new GameOver(game));
 		}
 	}
+
 	private void resetCollectables() {
 		GameInfo.HASGREENKEY = false;
 		GameInfo.HASBLUEKEY = false;
 		GameInfo.HASORANGEKEY = false;
 		GameInfo.HASYELLOWKEY = false;
-		
+
 		GameInfo.HASGREENGEM = false;
 		GameInfo.HASBLUEGEM = false;
 		GameInfo.HASORANGEGEM = false;
 		GameInfo.HASYELLOWGEM = false;
 	}
-	
+
 	private void checkGemBonus() {
-		if(GameInfo.HASBLUEGEM && GameInfo.HASGREENGEM && GameInfo.HASORANGEGEM && GameInfo.HASYELLOWGEM) {
-		game.getplayer().setPlayerScore(10000);
+		if (GameInfo.HASBLUEGEM && GameInfo.HASGREENGEM && GameInfo.HASORANGEGEM && GameInfo.HASYELLOWGEM) {
+			game.getplayer().setPlayerScore(10000);
 		}
 	}
 

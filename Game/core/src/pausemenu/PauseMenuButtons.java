@@ -57,10 +57,10 @@ public class PauseMenuButtons {
 	}
 
 	private void createAndLableButtons() {
-		this.resumeBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/ResumeButton.png"))));
-		this.optionsBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/Optionsbutton.png"))));
-		this.quitToMenuBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/MainMenuButton.png"))));
-		this.exitGameBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/exitgamebutton.png"))));
+		this.resumeBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/resumeBtn.png"))));
+		this.optionsBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/optionsBtn.png"))));
+		this.quitToMenuBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/mainmenuBtn.png"))));
+		this.exitGameBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("pausemenu/exitBtn.png"))));
 		this.musicBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music On.png"))));
 		this.musicOffBtn = new ImageButton( new SpriteDrawable(new Sprite(new Texture("mainmenu/Music Off.png"))));
 		

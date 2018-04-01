@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
@@ -11,7 +12,7 @@ public class PauseMenu implements Screen {
 	private GameMain game;
 	private OrthographicCamera mainCamera;
 	private PauseMenuButtons buttons;
-
+	private Texture background;
 	
 	public PauseMenu(GameMain game) {
 		this.game = game;
@@ -21,7 +22,7 @@ public class PauseMenu implements Screen {
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
 		// TODO: set pause background path.
-	//	background = new Texture("");
+		background = new Texture("pausemenu/pauseMenubackground.png");
 		buttons = new PauseMenuButtons(game);
 
 	}
@@ -39,7 +40,7 @@ public class PauseMenu implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.getBatch().begin();
-	//	game.getBatch().draw(background, 0, 0);
+		game.getBatch().draw(background, 0, 0);
 		game.getBatch().end();
 
 		game.getBatch().setProjectionMatrix(buttons.getStage().getCamera().combined);
