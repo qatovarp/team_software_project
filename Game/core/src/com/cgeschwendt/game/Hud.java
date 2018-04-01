@@ -68,10 +68,10 @@ public class Hud {
 		levelLabel = new Label("level "+ level, new Label.LabelStyle(Font3, Color.WHITE));
 	
 		timeWordLabel.setPosition(GameInfo.WIDTH / 7, GameInfo.HEIGHT - 24, Align.center);
-		currentTimeLabel.setPosition(GameInfo.WIDTH / 7+ 10, GameInfo.HEIGHT - 70, Align.center);
+		currentTimeLabel.setPosition(GameInfo.WIDTH / 7- 3, GameInfo.HEIGHT - 70, Align.center);
 
 		scoreWordLabel.setPosition((GameInfo.WIDTH / 7) * 6, GameInfo.HEIGHT - 20, Align.center);
-		scoreLabel.setPosition((GameInfo.WIDTH / 7) * 6 , GameInfo.HEIGHT - 70, Align.center);
+		scoreLabel.setPosition((GameInfo.WIDTH / 7) * 6 + 20 , GameInfo.HEIGHT - 70, Align.center);
 
 		levelLabel.setPosition((GameInfo.WIDTH / 2), GameInfo.HEIGHT - 25, Align.center);
 
