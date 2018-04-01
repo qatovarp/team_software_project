@@ -186,6 +186,10 @@ public class CustomContactListener implements ContactListener {
 			GameInfo.HASBLUEGEM = true;
 			this.playSound("collect diamond.wav");
 		}
+		else if(contactBetween(contact, "player", "yellow flag")) {
+			
+		
+		}
 		else if(contactBetween(contact, "player", "exit")) {
 			GameInfo.atLvlExit = true;
 		} 

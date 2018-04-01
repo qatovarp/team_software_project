@@ -3,6 +3,7 @@ package com.cgeschwendt.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -93,6 +94,7 @@ public class Hud {
 		this.score = game.getplayer().getPlayerScore();
 		scoreLabel.setText(String.format("%d", this.score));
 		currentTimeLabel.setText(String.format("%03d", this.worldTimer / 100));
+		
 	}
 	public int getTime() {
 		return this.worldTimer;
@@ -101,4 +103,5 @@ public class Hud {
 		this.worldTimer = x;
 	}
 
+	
 }

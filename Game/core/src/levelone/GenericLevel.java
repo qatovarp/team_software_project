@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -46,6 +47,7 @@ import objects.OrangeLock;
 import objects.SilverCoin;
 import objects.Spring;
 import objects.YellowDiamond;
+import objects.YellowFlag;
 import objects.YellowKey;
 import objects.YellowLock;
 import objects.spike;
@@ -78,7 +80,7 @@ public class GenericLevel implements Screen {
 		game.setBackground();
 		// Sets the levels music
 		// CHANGE to GameInfo ARRAY.levelID
-		game.setMusic("Waltz.mp3");
+		game.setMusic(GameInfo.music[GameInfo.levelNum]);
 		if (!GameInfo.sound)
 			game.getMusic().pause();
 
@@ -134,6 +136,14 @@ public class GenericLevel implements Screen {
 					new spike(world, object);
 					continue;
 				} else if (objName.equals("flag")) {
+					if (object.getProperties().get("type").equals("yellow"))
+						new YellowFlag(world, object);
+					if (object.getProperties().get("type").equals("green"))
+						
+					if (object.getProperties().get("type").equals("orange"))
+					
+					if (object.getProperties().get("type").equals("blue"))
+						
 					continue;
 				} else if (objName.equals("diamond")) {
 					if (object.getProperties().get("type").equals("yellow"))
@@ -318,6 +328,7 @@ public class GenericLevel implements Screen {
 		batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
 		hud.stage.draw();
+		this.drawKeys();
 		player.hearts.updateHearts();
 
 	}
@@ -377,6 +388,22 @@ public class GenericLevel implements Screen {
 		GameInfo.HASBLUEGEM = false;
 		GameInfo.HASORANGEGEM = false;
 		GameInfo.HASYELLOWGEM = false;
+	}
+	public void drawKeys() {
+		game.getBatch().begin();
+		if(GameInfo.HASGREENKEY) {	
+		game.getBatch().draw(new Texture("objects/keyGreen.png"),230,570,45,45);	
+		}
+		if(GameInfo.HASYELLOWKEY) {
+			game.getBatch().draw(new Texture("objects/keyYellow.png"),280,570,45,45);		
+		}
+		if(GameInfo.HASORANGEKEY) {
+			game.getBatch().draw(new Texture("objects/keyOrange.png"),330,570,45,45);
+		}
+		if(GameInfo.HASBLUEKEY) {
+			game.getBatch().draw(new Texture("objects/keyBlue.png"),380,570,45,45);
+		}
+		game.getBatch().end();
 	}
 
 	private void checkGemBonus() {
