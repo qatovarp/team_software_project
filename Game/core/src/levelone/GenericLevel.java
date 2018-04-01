@@ -67,6 +67,7 @@ public class GenericLevel implements Screen {
 	private Box2DDebugRenderer b2dr;
 	private MapObject playerSpawner;
 	private boolean respawnPlayer;
+	private boolean moved = false; 
 
 	public GenericLevel(GameMain game) {
 		this.game = game;
@@ -259,6 +260,15 @@ public class GenericLevel implements Screen {
 				}
 				if (GameInfo.levelNum == GameInfo.levels.length - 1) {
 					game.setScreen(new GameOver(game));
+					
+					//gives player score bonus based on difficulty:
+					if(GameInfo.difficult)
+						this.player.setPlayerScore(50000);
+					if(GameInfo.extream)
+						this.player.setPlayerScore(200000);
+					if(GameInfo.normal)
+						this.player.setPlayerScore(25000);
+					
 				} else {
 					this.game.loadNextLevel();
 				}
@@ -270,7 +280,9 @@ public class GenericLevel implements Screen {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			game.setScreen(new PauseMenu(game));
 		}
+		
 	}
+	
 
 	public void update(float dt) {
 
