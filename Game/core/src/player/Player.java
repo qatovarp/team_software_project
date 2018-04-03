@@ -38,7 +38,7 @@ public class Player {
 	private Texture jumpingL;
 	private Texture jumpingR;
 	public Sprite sprite;
-	private boolean faceingRight;
+	public boolean faceingRight;
 
 	private TextureAtlas playeratlas;
 	private Animation<TextureRegion> playerAnimation;
@@ -101,7 +101,6 @@ public class Player {
 	}
 	
 	public void renderPlayer(SpriteBatch batch) {
-
     	if(fellIntoLiquid == false) {
     		batch.begin();
     		if (isJumping()) {
@@ -264,6 +263,9 @@ public class Player {
 		}
 	}
 
+	public void pushPlayer(float x) {
+		body.applyLinearImpulse(new Vector2(x, 0f), body.getWorldCenter(), true);
+	}
 	/**
 	 * gives the player the jumping operation only if they have not jumped once
 	 * before. ALLOWS FOR ONLY ONE JUMP AT A TIME.

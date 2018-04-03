@@ -187,15 +187,26 @@ public class CustomContactListener implements ContactListener {
 			this.playSound("collect diamond.wav");
 		}
 		else if(contactBetween(contact, "player", "yellow flag")) {
-			
-		
+			this.getItem(contact).setTexture(new Texture("objects/flagYellow.png"));
+			parent.setPlayerSpanner(parent.getPlayer().position().x *GameInfo.PPM , parent.getPlayer().position().y *GameInfo.PPM );
+		}
+		else if(contactBetween(contact, "player", "blue flag")) {
+			this.getItem(contact).setTexture(new Texture("objects/flagBlue.png"));
+			parent.setPlayerSpanner(parent.getPlayer().position().x *GameInfo.PPM , parent.getPlayer().position().y *GameInfo.PPM );
+		}
+		else if(contactBetween(contact, "player", "orange flag")) {
+			this.getItem(contact).setTexture(new Texture("objects/flagOrange.png"));
+			parent.setPlayerSpanner(parent.getPlayer().position().x *GameInfo.PPM , parent.getPlayer().position().y *GameInfo.PPM );
+		}
+		else if(contactBetween(contact, "player", "green flag")) {
+			this.getItem(contact).setTexture(new Texture("objects/flagGreen.png"));
+			parent.setPlayerSpanner(parent.getPlayer().position().x *GameInfo.PPM , parent.getPlayer().position().y *GameInfo.PPM );
 		}
 		else if(contactBetween(contact, "player", "exit")) {
 			GameInfo.atLvlExit = true;
 		} 
 		else if(contactBetween(contact, "player", "spike")) {
 			parent.getPlayer().spikeHurt();
-			parent.getPlayer().playerLoseLife();
 		} 
 		else if(contactBetween(contact, "player", "water")) {
 			parent.getPlayer().fellIntoLiquid = true;
@@ -219,6 +230,15 @@ public class CustomContactListener implements ContactListener {
 		else if(contactBetween(contact, "player_head_left", "wall")) {
 			player.headHitWall = true;
 			player.hittingWallLeft = true;
+		}
+		else if(contactBetween(contact, "player", "red enemy")) {
+					this.parent.getPlayer().playerLoseLife();
+					if(player.faceingRight) {
+						parent.getPlayer().pushPlayer(-15.5f);
+
+					}else {
+						parent.getPlayer().pushPlayer(15.5f);
+					}
 		}
 		
 	}
@@ -257,6 +277,8 @@ public class CustomContactListener implements ContactListener {
 		else if(contactBetween(contact, "player", "spring")) {
 			this.getItem(contact).setTexture(new Texture("objects/springBoardDown.png"));		
 		}
+		else if(contactBetween(contact, "player", "spike")) {
+			parent.getPlayer().playerLoseLife();} 
 	}
 	
 	private void playSound (String s) {

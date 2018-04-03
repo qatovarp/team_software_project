@@ -31,6 +31,7 @@ import com.cgeschwendt.game.gameinfo.GameInfo;
 
 import gameover.GameOver;
 import objects.BlueDiamond;
+import objects.BlueFlag;
 import objects.BlueKey;
 import objects.BlueLock;
 import objects.Box;
@@ -38,10 +39,12 @@ import objects.BronzeCoin;
 import objects.ExitDoor;
 import objects.GoldCoin;
 import objects.GreenDiamond;
+import objects.GreenFlag;
 import objects.GreenKey;
 import objects.GreenLock;
 import objects.Item;
 import objects.OrangeDiamond;
+import objects.OrangeFlag;
 import objects.OrangeKey;
 import objects.OrangeLock;
 import objects.SilverCoin;
@@ -140,11 +143,11 @@ public class GenericLevel implements Screen {
 					if (object.getProperties().get("type").equals("yellow"))
 						new YellowFlag(world, object);
 					if (object.getProperties().get("type").equals("green"))
-						
+						new GreenFlag(world,object);
 					if (object.getProperties().get("type").equals("orange"))
-					
+						new OrangeFlag(world,object);
 					if (object.getProperties().get("type").equals("blue"))
-						
+						new BlueFlag(world,object);
 					continue;
 				} else if (objName.equals("diamond")) {
 					if (object.getProperties().get("type").equals("yellow"))
@@ -228,8 +231,11 @@ public class GenericLevel implements Screen {
 					fdef.friction = 0.3f;
 				} else if (objName.equals("slope")) {
 					fdef.friction -= 0.2f;
+				} else if (objName.equals("red enemy")) {
+					
 				}
 			}
+			
 			/* ============================================================= */
 
 			body.createFixture(fdef).setUserData(objName);
@@ -287,7 +293,6 @@ public class GenericLevel implements Screen {
 	public void update(float dt) {
 
 		handleInput(dt);
-		this.offmapCheck();
 		hud.updateTime();
 
 		world.step(1 / 60f, 6, 2);
@@ -307,11 +312,14 @@ public class GenericLevel implements Screen {
 			respawnPlayer = false;
 		}
 		player.update();
+		this.playerDied();
 		updateCamera();
 	}
 
+	
+
 	@Override
-	public void render(float delta) {
+	public void render(float delta) {	
 		update(delta);
 		SpriteBatch batch = game.getBatch();
 		// clears and redraws the screen
@@ -360,17 +368,6 @@ public class GenericLevel implements Screen {
 		}
 		mainCamera.update();
 		maprenderer.setView(mainCamera);
-	}
-
-	private void offmapCheck() {
-		if (game.getplayer().position().y < -5) {
-			game.getplayer().playerLoseLife();
-			player.fellIntoLiquid = false;
-			player.resetPosition(playerSpawner.getProperties().get("x", float.class),
-					playerSpawner.getProperties().get("y", float.class));
-
-			this.playerDied();
-		}
 	}
 
 	public void inWaterCheck() {
@@ -422,6 +419,11 @@ public class GenericLevel implements Screen {
 		if (GameInfo.HASBLUEGEM && GameInfo.HASGREENGEM && GameInfo.HASORANGEGEM && GameInfo.HASYELLOWGEM) {
 			game.getplayer().setPlayerScore(10000);
 		}
+	}
+	
+	public void setPlayerSpanner(float x, float y) {
+		this.playerSpawner.getProperties().put("x", x);
+		this.playerSpawner.getProperties().put("y", y);
 	}
 
 	@Override

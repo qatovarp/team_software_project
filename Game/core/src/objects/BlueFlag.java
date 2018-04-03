@@ -8,11 +8,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
-public class YellowFlag extends Item{
-
-	public YellowFlag(World world, MapObject object) {
+public class BlueFlag extends Item{
+	public BlueFlag(World world, MapObject object) {
 		super(world, object);
-		this.setTexture(new Texture("objects/flagYellowHanging.png"));			
+		this.setTexture(new Texture("objects/flagBlueHanging.png"));			
 		this.setRegion(this.getTexture());
 	}
 
@@ -28,7 +27,7 @@ public class YellowFlag extends Item{
 		shape.setRadius(17f / GameInfo.PPM);
 		fdef.shape = shape;
 		fdef.isSensor = true;
-		body.createFixture(fdef).setUserData("yellow flag");
+		body.createFixture(fdef).setUserData("blue flag");
 		shape.dispose();
 	}
 
@@ -39,4 +38,5 @@ public class YellowFlag extends Item{
 	}
 	
 	
+
 }
