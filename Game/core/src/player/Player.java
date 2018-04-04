@@ -470,10 +470,6 @@ public class Player {
 	 * States if the player is jumping
 	 */
 	public boolean isJumping() {
-		/*if (body.getLinearVelocity().y > 0)
-			return true;
-		else
-			return false;*/
 		return (verticleState == State.JUMPING);
 	}
 
