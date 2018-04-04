@@ -89,6 +89,9 @@ public class Player {
 	 * @author cgeschwendt
 	 */
 	public void playerConstruct(World world, float x, float y) {
+		headHitWall = false;
+		hittingWallLeft = false;
+		hittingWallRight = false;
 		this.loadPlayerTexture();
 		sprite = new Sprite(standing);
 		jump = Gdx.audio.newSound(Gdx.files.internal("music/jump_08 .mp3"));	
@@ -120,6 +123,7 @@ public class Player {
 	
 	public void update() {
 		sprite.setPosition(position().x - sprite.getWidth()/2f, position().y - sprite.getHeight()/2f/* - 0.48f*/);
+		checkSlopes();
 	}
 
 	private void createbody(float x, float y) {
@@ -286,10 +290,12 @@ public class Player {
 	
 	public void springJump() {
 		body.applyLinearImpulse(new Vector2(0, 5.5f), body.getWorldCenter(), true);
+		verticleState = State.JUMPING;
 	}
 	
 	public void spikeHurt(){
 		body.applyLinearImpulse(new Vector2(0, 6.5f), body.getWorldCenter(), true);
+		verticleState = State.JUMPING;
 	}
 
 	/**
@@ -299,11 +305,34 @@ public class Player {
 	 */
 	public void setVerticleState() {
 		if (body.getLinearVelocity().y < 0)
+		{
 			verticleState = State.FALLING;
-		else if (body.getLinearVelocity().y > 0)
-			verticleState = State.JUMPING;
-		else
+		}
+		else if (body.getLinearVelocity().y > 0) {
+			if(verticleState != State.JUMPING) {
+				verticleState = State.STANDING;
+			}
+		}
+		else {
 			verticleState = State.STANDING;
+		}
+	}
+	
+	private void checkSlopes() {
+		if(verticleState == State.FALLING) {
+			if(body.getLinearVelocity().x > 0 && !faceingRight && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				checkWalkingSonds();
+				sprite.flip(true, false);
+				faceingRight = true;
+				this.flipAnimation();
+			}
+			else if(body.getLinearVelocity().x < 0 && faceingRight && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				checkWalkingSonds();
+				sprite.flip(true, false);
+				faceingRight = false;
+				this.flipAnimation();
+			}
+		}
 	}
 
 	/**
@@ -441,10 +470,11 @@ public class Player {
 	 * States if the player is jumping
 	 */
 	public boolean isJumping() {
-		if (body.getLinearVelocity().y > 0)
+		/*if (body.getLinearVelocity().y > 0)
 			return true;
 		else
-			return false;
+			return false;*/
+		return (verticleState == State.JUMPING);
 	}
 
 	/**
