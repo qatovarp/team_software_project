@@ -354,6 +354,7 @@ public class GenericLevel implements Screen {
 
 		hud.stage.draw();
 		this.drawKeys();
+		this.drawDiamonds();
 		player.hearts.updateHearts();
 
 	}
@@ -425,6 +426,22 @@ public class GenericLevel implements Screen {
 		}
 		if(GameInfo.HASBLUEKEY) {
 			game.getBatch().draw(new Texture("objects/keyBlue.png"),380,570,45,45);
+		}
+		game.getBatch().end();
+	}
+	public void drawDiamonds() {
+		game.getBatch().begin();
+		if(GameInfo.HASGREENGEM) {	
+		game.getBatch().draw(new Texture("objects/gemGreen.png"),224,535,55,55);	
+		}
+		if(GameInfo.HASYELLOWGEM) {
+			game.getBatch().draw(new Texture("objects/gemYellow.png"),274,535,55,55);		
+		}
+		if(GameInfo.HASORANGEGEM) {
+			game.getBatch().draw(new Texture("objects/gemOrange.png"),324,535,55,55);
+		}
+		if(GameInfo.HASBLUEGEM) {
+			game.getBatch().draw(new Texture("objects/gemBlue.png"),374,535,55,55);
 		}
 		game.getBatch().end();
 	}
