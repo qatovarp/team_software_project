@@ -373,6 +373,7 @@ public class GenericLevel implements Screen {
 	public void inWaterCheck() {
 		if (player.fellIntoLiquid) {
 			player.playerLoseLife();
+			player.playerLoseLife();
 			player.fellIntoLiquid = false;
 			this.respawnPlayer = true;
 			this.playerDied();
