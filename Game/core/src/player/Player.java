@@ -320,7 +320,6 @@ public class Player {
 	
 	private void checkSlopes() {
 		if(verticleState == State.FALLING) {
-			System.out.println(body.getLinearVelocity());
 			if(body.getLinearVelocity().x > 0.3 && !faceingRight && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				checkWalkingSonds();
 				sprite.flip(true, false);
