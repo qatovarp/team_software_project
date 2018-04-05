@@ -83,6 +83,8 @@ public class GameMain extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		music.dispose();
+		screen.dispose();
 	}
 	public SpriteBatch getBatch() {
 		return this.batch;
