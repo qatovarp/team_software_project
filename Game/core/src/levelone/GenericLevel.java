@@ -71,14 +71,15 @@ public class GenericLevel implements Screen {
 	private MapObject playerSpawner;
 	private boolean respawnPlayer;
 	private boolean moved = false; 
+	private float beginX;
+	private float beginY;
+
 
 	public GenericLevel(GameMain game) {
 		this.game = game;
 
 		this.player = game.getplayer();
 		this.hud = new Hud(game);
-
-		hud.resetTimer(25000);
 
 		respawnPlayer = false;
 		game.setBackground();
@@ -107,9 +108,12 @@ public class GenericLevel implements Screen {
 
 		// creates the player in the world
 		playerSpawner = map.getLayers().get("objectsAndHitboxes").getObjects().get("player");
+		beginX= playerSpawner.getProperties().get("x", float.class);
+		beginY= playerSpawner.getProperties().get("y", float.class);
 		player.playerConstruct(world, playerSpawner);
 		mainCamera.position.set(game.getplayer().position().x, game.getplayer().position().y + 150f / GameInfo.PPM, 0);
 
+		
 		this.loadMapObjects();
 
 	}
@@ -294,6 +298,8 @@ public class GenericLevel implements Screen {
 
 		handleInput(dt);
 		offmapCheck();
+		this.timerOut();
+		
 		hud.updateTime();
 
 		world.step(1 / 60f, 6, 2);
@@ -412,6 +418,15 @@ public class GenericLevel implements Screen {
 		GameInfo.HASBLUEGEM = false;
 		GameInfo.HASORANGEGEM = false;
 		GameInfo.HASYELLOWGEM = false;
+	}
+	
+	
+	private void timerOut() {
+		if(hud.getTime() == 0) {
+			hud.resetTimer(25000);
+			player.playerLoseLife();
+			player.resetPosition(this.beginX,this.beginY);
+		}
 	}
 	public void drawKeys() {
 		game.getBatch().begin();
