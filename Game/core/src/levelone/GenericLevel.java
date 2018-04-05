@@ -293,6 +293,7 @@ public class GenericLevel implements Screen {
 	public void update(float dt) {
 
 		handleInput(dt);
+		offmapCheck();
 		hud.updateTime();
 
 		world.step(1 / 60f, 6, 2);
@@ -307,9 +308,13 @@ public class GenericLevel implements Screen {
 		}
 
 		if (this.respawnPlayer && !world.isLocked()) {
+			player.body.setLinearVelocity(0f, 0f);
 			player.resetPosition(playerSpawner.getProperties().get("x", float.class),
 					playerSpawner.getProperties().get("y", float.class));
 			respawnPlayer = false;
+			player.headHitWall = false;
+			player.hittingWallLeft = false;
+			player.hittingWallRight = false;
 		}
 		player.update();
 		this.playerDied();
@@ -378,6 +383,14 @@ public class GenericLevel implements Screen {
 			this.respawnPlayer = true;
 			this.playerDied();
 		}
+	}
+	
+	private void offmapCheck() {
+		if(player.position().y < -5) {
+			player.playerLoseLife();
+			this.respawnPlayer = true;
+			this.playerDied();
+		}		
 	}
 
 	// procedes to move game as if the player had died.
