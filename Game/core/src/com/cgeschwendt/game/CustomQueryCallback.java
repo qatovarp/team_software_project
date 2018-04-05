@@ -19,7 +19,6 @@ public class CustomQueryCallback implements QueryCallback {
 	@Override
 	public boolean reportFixture(Fixture fixture) {
 		if(fixture.getUserData() != null) {
-			System.out.println(fixture.getUserData());
 			if(fixture.getUserData().equals(this.objName)) {
 				((Item)fixture.getBody().getUserData()).destroy();
 				foundOne = true;
