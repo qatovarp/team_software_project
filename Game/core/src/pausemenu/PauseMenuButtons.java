@@ -41,7 +41,7 @@ public class PauseMenuButtons {
 		this.createAndLableButtons();
 		this.AddListners();
 		stage.addActor(this.resumeBtn);
-		stage.addActor(this.optionsBtn);
+		//stage.addActor(this.optionsBtn);
 		stage.addActor(this.quitToMenuBtn);
 		stage.addActor(this.exitGameBtn);
 		stage.addActor(musicBtn);

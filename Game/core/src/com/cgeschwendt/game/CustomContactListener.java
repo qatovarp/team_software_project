@@ -19,8 +19,6 @@ import objects.Item;
 import player.Player;
 import levelone.GenericLevel;
 
-
- 
 public class CustomContactListener implements ContactListener {
  
 	private GenericLevel parent;

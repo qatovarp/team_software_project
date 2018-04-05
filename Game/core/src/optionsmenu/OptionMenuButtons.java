@@ -79,7 +79,16 @@ public class OptionMenuButtons {
 		pinkPlayerBtn.setPosition(250, 75);
 		bluePlayerBtn.setPosition(175, 77);
 		greenPlayerBtn.setPosition(100, 75);
-		checkedBtn2.setPosition(95, 85);
+		
+		
+		if(GameInfo.playerColor == GameInfo.COLOR.BLUE)
+			checkedBtn2.setPosition(170, 85);
+		
+		if(GameInfo.playerColor == GameInfo.COLOR.GREEN)
+			checkedBtn2.setPosition(95, 85);
+		
+		if(GameInfo.playerColor == GameInfo.COLOR.PINK)
+			checkedBtn2.setPosition(245, 85);
 		
 		this.setCheckedPosition();
 	}
