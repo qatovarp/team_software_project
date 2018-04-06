@@ -320,13 +320,13 @@ public class Player {
 	
 	private void checkSlopes() {
 		if(verticleState == State.FALLING) {
-			if(body.getLinearVelocity().x > 0 && !faceingRight && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			if(body.getLinearVelocity().x > 0.3 && !faceingRight && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				checkWalkingSonds();
 				sprite.flip(true, false);
 				faceingRight = true;
 				this.flipAnimation();
 			}
-			else if(body.getLinearVelocity().x < 0 && faceingRight && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			else if(body.getLinearVelocity().x < -0.3 && faceingRight && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 				checkWalkingSonds();
 				sprite.flip(true, false);
 				faceingRight = false;

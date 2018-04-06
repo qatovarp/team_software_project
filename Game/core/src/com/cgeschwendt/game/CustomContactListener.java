@@ -57,6 +57,15 @@ public class CustomContactListener implements ContactListener {
 		}
 	}
 	
+	private boolean contactOf(Contact contact, String a) {
+		if(contact.getFixtureA().getUserData().equals(a) || contact.getFixtureB().getUserData().equals(a)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Get the Item Obj from a contact.
 	 * 
@@ -99,9 +108,41 @@ public class CustomContactListener implements ContactListener {
 		Array<Fixture> fixture = new Array<Fixture>();
 		parent.world.getFixtures(fixture);
 		for(Fixture fix: fixture) {
-			if(fix.getUserData().equals(objName))
+			if(fix.getUserData() != null && fix.getUserData().equals(objName))
 				((Item)fix.getBody().getUserData()).destroy();
 		}
+	}
+	
+	private void destroyAllConnected(Contact contact, String objName) {
+		Item obj = getItem(contact);
+		
+		float x = obj.getX();
+		float y = obj.getY();
+		float h = obj.getHeight();
+		float w = obj.getWidth();
+		//the contact
+		obj.destroy();
+		//Up
+		destroyConnected(objName, x+(w/2f), y+(h/2f)+h, 0f, h);
+		//Down
+		destroyConnected(objName, x+(w/2f), y+(h/2f)-h, 0f, (-1f*h));
+		//Right
+		destroyConnected(objName, x+(w/2f), y+(h/2f), w, 0f);
+		//Left
+		destroyConnected(objName, x+(w/2f), y+(h/2f), (-1f*w), 0f);
+	
+	}
+	
+	private void destroyConnected(String objName, float x1, float y1, float xIncrease, float yIncrease) {
+		CustomQueryCallback callback = new CustomQueryCallback(objName);
+		parent.world.QueryAABB(callback, x1, y1, x1, y1);
+		if(!callback.foundOne()) {
+			return;
+		}
+		else {
+			destroyConnected(objName, x1+xIncrease, y1+yIncrease, xIncrease, yIncrease);
+		}
+		
 	}
  
 	@Override
@@ -149,16 +190,16 @@ public class CustomContactListener implements ContactListener {
 			this.playSound("collectkey.wav");
 		}
 		else if(contactBetween(contact, "player", "green lock") && GameInfo.HASGREENKEY) {
-			getItem(contact).destroy();
+			destroyAllConnected(contact, "green lock");
 		}
 		else if(contactBetween(contact, "player", "yellow lock") && GameInfo.HASYELLOWKEY) {
-			getItem(contact).destroy();
+			destroyAllConnected(contact, "yellow lock");
 		}
 		else if(contactBetween(contact, "player", "blue lock") && GameInfo.HASBLUEKEY) {
-			getItem(contact).destroy();
+			destroyAllConnected(contact, "blue lock");
 		}
 		else if(contactBetween(contact, "player", "orange lock") && GameInfo.HASORANGEKEY) {
-			getItem(contact).destroy();
+			destroyAllConnected(contact, "orange lock");
 		}
 		else if(contactBetween(contact, "player", "yellow diamond")) {
 			getItem(contact).destroy();
@@ -215,7 +256,7 @@ public class CustomContactListener implements ContactListener {
 				}
 			}, 0.7f);
 		}
-		else if(contactBetween(contact, "player_head_right", "wall")) {
+		else if(contactOf(contact, "player_head_right")) {
 			player.headHitWall = true;
 			player.hittingWallRight = true;
 		}
@@ -225,7 +266,7 @@ public class CustomContactListener implements ContactListener {
 			player.springJump();
 		}
 
-		else if(contactBetween(contact, "player_head_left", "wall")) {
+		else if(contactOf(contact, "player_head_left")) {
 			player.headHitWall = true;
 			player.hittingWallLeft = true;
 		}
@@ -253,7 +294,7 @@ public class CustomContactListener implements ContactListener {
 		if(contactBetween(contact, "player", "exit")) {
 			GameInfo.atLvlExit = false;
 		}
-		else if(contactBetween(contact, "player_head_right", "wall")) {
+		else if(contactOf(contact, "player_head_right")) {
 			player.headHitWall = false;
 			Timer.schedule(new Task(){
 				@Override
@@ -262,7 +303,7 @@ public class CustomContactListener implements ContactListener {
 				}
 			}, 0.08f);
 		}
-		else if(contactBetween(contact, "player_head_left", "wall")) {
+		else if(contactOf(contact, "player_head_left")) {
 			player.headHitWall = false;
 			Timer.schedule(new Task(){
 				@Override
