@@ -256,28 +256,25 @@ public class CustomContactListener implements ContactListener {
 				}
 			}, 0.7f);
 		}
-		else if(contactOf(contact, "player_head_right")) {
-			player.headHitWall = true;
-			player.hittingWallRight = true;
-		}
-
 		else if(contactBetween(contact, "player", "spring")) {
 			this.getItem(contact).setTexture(new Texture("objects/springBoardUp.png"));
 			player.springJump();
-		}
-
-		else if(contactOf(contact, "player_head_left")) {
-			player.headHitWall = true;
-			player.hittingWallLeft = true;
 		}
 		else if(contactBetween(contact, "player", "red enemy")) {
 					this.parent.getPlayer().playerLoseLife();
 					if(player.faceingRight) {
 						parent.getPlayer().pushPlayer(-15.5f);
-
 					}else {
 						parent.getPlayer().pushPlayer(15.5f);
 					}
+		}
+		else if(contactOf(contact, "player_head_right")) {
+			player.headHitWall = true;
+			player.hittingWallRight = true;
+		}
+		else if(contactOf(contact, "player_head_left")) {
+			player.headHitWall = true;
+			player.hittingWallLeft = true;
 		}
 		
 	}
