@@ -14,6 +14,7 @@ public class GameInfo {
 	public static boolean difficult = false;
 	public static boolean extream = false;
 	
+	public static boolean gameStart = false;
 
 	public static enum COLOR {BLUE,GREEN,PINK };
 	public static COLOR playerColor = COLOR.GREEN;

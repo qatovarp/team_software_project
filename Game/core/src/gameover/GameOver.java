@@ -24,6 +24,8 @@ public class GameOver implements Screen {
 	private boolean NewHighScore = false;
 	private int flashTimer;
 	private int interval ;
+	
+	
 	public GameOver(final GameMain game) {
 		this.game = game;
 		// sets up the main camera for the main menu.

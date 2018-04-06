@@ -7,9 +7,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cgeschwendt.game.GameMain;
 import com.cgeschwendt.game.gameinfo.GameInfo;
 
+import levelone.GenericLevel;
 import pausemenu.PauseMenu;
 import player.Player.State;
 
@@ -26,13 +30,17 @@ public class MainMenu implements Screen {
 	private Texture Aeson;
 	private int screenTimer;
 	
-	private int konami;
+	private TextureAtlas playeratlas;
+	private Animation<TextureRegion> playerAnimation;
+	
+	private float elapsedTime = 0;
+
 	
 	private Music music;
 
 	public MainMenu(GameMain game) {
 		this.game = game;
-		konami = 0;
+		
 		// sets up the main camera for the main menu.
 		mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
 		mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
@@ -44,6 +52,9 @@ public class MainMenu implements Screen {
 		buttons = new MainMenuButtons(game);
 		screenTimer = 490;
 		
+		playeratlas = new TextureAtlas("player/bluePlayer.atlas");
+		playerAnimation = new Animation<TextureRegion>(1f / 22f, playeratlas.getRegions());
+		
 	}
 
 	@Override
@@ -54,6 +65,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
+		elapsedTime += Gdx.graphics.getDeltaTime();
 		// clears screen and starts redraw.
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -74,12 +86,31 @@ public class MainMenu implements Screen {
 			game.getBatch().setProjectionMatrix(buttons.getStage().getCamera().combined);
 			buttons.getStage().draw();
 		}
+		
+		this.drawPlayer();
 
 		// Counts the timer down each render
 		if (screenTimer != 0)
 			screenTimer = screenTimer - 1;
 	}
 	
+	int ypos = 500;
+	private void drawPlayer() {
+		if(GameInfo.gameStart) {
+		ypos+=4;
+			game.getBatch().begin();
+			game.getBatch().draw(playerAnimation.getKeyFrame(elapsedTime,true),ypos,69, 55,65);
+			game.getBatch().end();
+		}
+		
+		if(ypos >= 1200) {
+			game.getScreen().dispose();
+			game.newGameSettings();
+			game.setScreen(new GenericLevel(game));
+			GameInfo.firstMainMenu =false;
+			GameInfo.gameStart=false;
+		}
+	}
 
 	@Override
 	public void resize(int width, int height) {

@@ -18,6 +18,7 @@ import highscoremenu.HighScoreMenu;
 import levelone.GenericLevel;
 
 import optionsmenu.OptionsMenu;
+import wingamescreen.WinGameScreen;
 
 public class MainMenuButtons {
 
@@ -95,10 +96,9 @@ public class MainMenuButtons {
 		playBtn.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				game.getScreen().dispose();
-				game.newGameSettings();
-				game.setScreen(new GenericLevel(game));
-				GameInfo.firstMainMenu =false;
+			GameInfo.gameStart = true;
+			
+		
 			}	
 		});
 		
