@@ -66,8 +66,8 @@ public class PauseMenuButtons {
 		
 		this.resumeBtn.setPosition(GameInfo.WIDTH/2, (GameInfo.HEIGHT/7)*5, Align.center);
 		this.optionsBtn.setPosition(GameInfo.WIDTH/2, resumeBtn.getY() -50, Align.center);
-		this.quitToMenuBtn.setPosition(GameInfo.WIDTH/2, optionsBtn.getY() -50, Align.center);
-		this.exitGameBtn.setPosition(GameInfo.WIDTH/2, quitToMenuBtn.getY()-50, Align.center);
+		this.quitToMenuBtn.setPosition(GameInfo.WIDTH/2, optionsBtn.getY() , Align.center);
+		this.exitGameBtn.setPosition(GameInfo.WIDTH/2, quitToMenuBtn.getY()-75, Align.center);
 		this.musicBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
 		this.musicOffBtn.setPosition(GameInfo.WIDTH -10 - musicBtn.getWidth(), 5);
 	}

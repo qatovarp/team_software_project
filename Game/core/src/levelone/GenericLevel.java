@@ -57,6 +57,7 @@ import objects.spike;
 import pausemenu.PauseMenu;
 import player.Player;
 import player.Player.State;
+import wingamescreen.WinGameScreen;
 
 public class GenericLevel implements Screen {
 	private GameMain game;
@@ -269,7 +270,7 @@ public class GenericLevel implements Screen {
 					X.setVolume(id, .14f);
 				}
 				if (GameInfo.levelNum == GameInfo.levels.length - 1) {
-					game.setScreen(new GameOver(game));
+					game.setScreen(new WinGameScreen(game));
 					
 					//gives player score bonus based on difficulty:
 					if(GameInfo.difficult)
