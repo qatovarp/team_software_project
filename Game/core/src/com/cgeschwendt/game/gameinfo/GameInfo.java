@@ -39,7 +39,7 @@ public class GameInfo {
 	public  static boolean atLvlExit = false;
 
 	final public static String[] levels = {
-			"TiledLevels/levelFour.tmx",
+			"TiledLevels/levelOne.tmx",
 			"TiledLevels/levelTwo.tmx",
 			"TiledLevels/levelThree.tmx",
 		//	"TiledLevels/LevelOne.tmx"
