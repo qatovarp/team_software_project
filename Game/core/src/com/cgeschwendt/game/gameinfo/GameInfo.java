@@ -41,8 +41,6 @@ public class GameInfo {
 	final public static String[] levels = {
 			"TiledLevels/levelOne.tmx",
 			"TiledLevels/levelTwo.tmx",
-			"TiledLevels/levelThree.tmx",
-		//	"TiledLevels/LevelOne.tmx"
 	};
 	
 	final public static String[] backgrounds = {
