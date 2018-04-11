@@ -103,7 +103,7 @@ public class MainMenu implements Screen {
 			game.getBatch().end();
 		}
 		
-		if(ypos >= 1200) {
+		if(ypos >= 0/*1200*/) {
 			game.getScreen().dispose();
 			game.newGameSettings();
 			game.setScreen(new GenericLevel(game));
